@@ -4,7 +4,7 @@ import { LuLink, LuMail, LuPencil } from "react-icons/lu";
 export default function Profile() {
     return (
         <main className="flex h-screen w-full flex-col items-center justify-center px-4 py-2">
-            <div className="flex h-[90vh] w-[60%] flex-col items-center justify-between rounded-2xl border border-neutral-300 bg-white p-6 shadow">
+            <div className="absolute flex h-[90vh] w-[60%] flex-col items-center justify-between rounded-2xl border border-neutral-300 bg-white p-6 shadow">
                 <div className="flex w-full flex-col justify-start">
                     <div className="flex w-full flex-row justify-start px-3 pt-2">
                         <div
