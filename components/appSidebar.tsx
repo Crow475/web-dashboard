@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+import { useTranslations } from "next-intl";
+
 import {
     Sidebar,
     SidebarContent,
@@ -19,7 +21,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuTrigger,
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
@@ -27,8 +28,14 @@ import {
 import { notoColorEmoji } from "@/lib/fonts";
 
 import { LuLayoutGrid, LuCirclePlus, LuChevronsUpDown, LuLogOut, LuSettings, LuUser } from "react-icons/lu";
+import uuidToShort from "@/lib/uuidToShort";
 
 export function AppSidebar() {
+    const userId = "160f1377-e313-4e5d-b77a-7b2a07079120";
+    const shortUserId = uuidToShort(userId);
+
+    const t = useTranslations("sidebar");
+
     return (
         <Sidebar collapsible="icon" variant="floating">
             <SidebarHeader>
@@ -38,9 +45,9 @@ export function AppSidebar() {
                             asChild
                             className="bg-blue-600 font-semibold text-white hover:bg-blue-700 hover:text-white active:bg-blue-800 active:text-white"
                         >
-                            <Link href="/">
+                            <Link href="/app/">
                                 <LuLayoutGrid />
-                                <span>All dashboards</span>
+                                <span>{t("allDashboards")}</span>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -53,14 +60,14 @@ export function AppSidebar() {
                             <SidebarMenuButton asChild>
                                 <button>
                                     <LuCirclePlus />
-                                    New dashboard
+                                    {t("newDashboard")}
                                 </button>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarGroup>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Pinned</SidebarGroupLabel>
+                    <SidebarGroupLabel>{t("pinned")}</SidebarGroupLabel>
                     <SidebarGroupContent></SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
@@ -85,21 +92,21 @@ export function AppSidebar() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="min-w-40">
                                 <DropdownMenuItem asChild>
-                                    <Link href="/profile">
+                                    <Link href={`/app/profile/${shortUserId}`}>
                                         <LuUser size={16} />
-                                        <span>View profile</span>
+                                        <span>{t("profile")}</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link href="/settings">
                                         <LuSettings size={16} />
-                                        <span>Settings</span>
+                                        <span>{t("settings")}</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem className="text-red-700">
                                     <LuLogOut size={16} />
-                                    <span>Logout</span>
+                                    <span>{t("logout")}</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

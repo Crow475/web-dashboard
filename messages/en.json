@@ -1,0 +1,19 @@
+{
+    "landing": {
+        "title": "BOARDS",
+        "subtitle": "Business-Oriented Aggregator of Random Data and Systems",
+        "register": "Register",
+        "start": "Start!"
+    },
+    "sidebar": {
+        "allDashboards": "All Dashboards",
+        "newDashboard": "New Dashboard",
+        "pinned": "Pinned",
+        "settings": "Settings",
+        "profile": "View profile",
+        "logout": "Logout"
+    },
+    "home": {
+        "title": "Your dashboards"
+    }
+}
