@@ -9,7 +9,15 @@ import shortToUuid from "@/lib/shortToUuid";
 
 export default async function getProfileById(profileId: string) {
     const uuidProfileId = shortToUuid(profileId);
-    const profile = await db.select().from(profiles).where(eq(profiles.profileId, uuidProfileId));
+    const profile = await db
+        .select({
+            profileId: profiles.profileId,
+            username: profiles.username,
+            icon: profiles.icon,
+            publicEmail: profiles.publicEmail,
+        })
+        .from(profiles)
+        .where(eq(profiles.profileId, uuidProfileId));
 
     if (profile.length === 0) {
         return null;

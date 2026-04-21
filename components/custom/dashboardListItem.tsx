@@ -1,6 +1,8 @@
-import { notoColorEmoji } from "@/lib/fonts";
-
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+
+import { notoColorEmoji } from "@/lib/fonts";
 
 import { LuEllipsis, LuChevronRight, LuTrash2, LuSquarePen, LuPin } from "react-icons/lu";
 
@@ -14,8 +16,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function DashboardListItem() {
+    const [linkHovered, setLinkHovered] = useState(false);
+
     return (
-        <div className="col-span-1 flex flex-row items-center justify-around rounded-2xl border border-neutral-300 py-3 ps-3 shadow">
+        <div
+            className={`col-span-1 flex flex-row items-center justify-around rounded-2xl border border-neutral-300 py-3 ps-3 shadow ${linkHovered ? "border-r-blue-200 bg-linear-to-l from-blue-300 via-blue-100 via-30% to-white to-60%" : "bg-white"}`}
+        >
             <div className="flex w-11/12 flex-row space-x-3 pr-2">
                 <div className="flex w-11/12 flex-col items-start justify-between space-y-2">
                     <div className="flex w-full flex-row items-center justify-between">
@@ -36,8 +42,14 @@ export default function DashboardListItem() {
                 </div>
                 <div className="flex flex-row items-center justify-center">
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="flex cursor-pointer flex-row items-center justify-center rounded-full bg-neutral-100 px-2 py-2 text-neutral-500 shadow">
+                        <DropdownMenuTrigger
+                            className="flex cursor-pointer flex-row items-center justify-center rounded-full bg-neutral-100 px-2 py-2 text-neutral-500 shadow hover:bg-neutral-200 hover:text-neutral-600 focus-visible:bg-neutral-200 focus-visible:text-neutral-600"
+                            aria-labelledby="dashboard-options"
+                        >
                             <LuEllipsis size={20} />
+                            <span className="sr-only" id="dashboard-options">
+                                Options
+                            </span>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="min-w-40">
                             <DropdownMenuItem>
@@ -48,7 +60,7 @@ export default function DashboardListItem() {
                                 <LuSquarePen size={16} />
                                 <span>Rename</span>
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="text-red-700">
+                            <DropdownMenuItem variant="destructive">
                                 <LuTrash2 size={16} />
                                 <span>Delete</span>
                             </DropdownMenuItem>
@@ -59,10 +71,21 @@ export default function DashboardListItem() {
                 </div>
             </div>
             <Link
-                className="flex h-full flex-row items-center justify-center border-l border-neutral-300 px-2"
+                className="group flex h-full flex-row items-center justify-center border-l border-neutral-300 px-2 hover:border-neutral-600/50 focus-visible:border-neutral-600/50"
                 href="/dashboard/"
+                aria-labelledby="open-dashboard"
+                onMouseEnter={() => setLinkHovered(true)}
+                onMouseLeave={() => setLinkHovered(false)}
+                onFocus={() => setLinkHovered(true)}
+                onBlur={() => setLinkHovered(false)}
             >
-                <LuChevronRight size={30} className="text-neutral-400" />
+                <LuChevronRight
+                    size={30}
+                    className="text-neutral-400 group-hover:text-neutral-600/50 group-focus-visible:text-neutral-600/50"
+                />
+                <span className="sr-only" id="open-dashboard">
+                    Open dashboard
+                </span>
             </Link>
         </div>
     );

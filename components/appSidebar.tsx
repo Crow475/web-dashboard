@@ -104,7 +104,7 @@ export function AppSidebar() {
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem className="text-red-700">
+                                <DropdownMenuItem variant="destructive">
                                     <LuLogOut size={16} />
                                     <span>{t("logout")}</span>
                                 </DropdownMenuItem>

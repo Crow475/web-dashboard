@@ -4,7 +4,7 @@ import { AppSidebar } from "@/components/appSidebar";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={false}>
             <AppSidebar />
             <main className="flex w-full flex-row items-start justify-start">
                 <SidebarTrigger className="sticky top-0" />
