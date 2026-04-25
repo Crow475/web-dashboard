@@ -2,14 +2,14 @@
 
 import { eq } from "drizzle-orm";
 
-import { db } from "@/db/drizzle";
-import { profiles } from "@/db/schema";
+import { dataDB } from "@/db/drizzle";
+import { profiles } from "@/db/data/schema";
 
 import shortToUuid from "@/lib/shortToUuid";
 
 export default async function getProfileById(profileId: string) {
     const uuidProfileId = shortToUuid(profileId);
-    const profile = await db
+    const profile = await dataDB
         .select({
             profileId: profiles.profileId,
             username: profiles.username,

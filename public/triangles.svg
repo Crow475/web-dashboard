@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 800 600"
+   width="800"
+   height="600"
+   style="background:transparent"
+   version="1.1"
+   id="svg93"
+   sodipodi:docname="triangles.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs93" />
+  <sodipodi:namedview
+     id="namedview93"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.91098924"
+     inkscape:cx="477.5029"
+     inkscape:cy="274.97581"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg93" />
+  <polygon
+     points="800,200 800,0 620,0 "
+     id="polygon2"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="0,400 0,600 200,600 "
+     id="polygon3"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="800,420 800,600 600,600 "
+     id="polygon4"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="40,600 0,540 160,480 "
+     id="polygon11"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="800,300 800,100 680,180 "
+     id="polygon12"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="800,460 800,340 660,260 "
+     id="polygon13"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="300,600 200,600 380,560 "
+     id="polygon15"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="520,600 440,580 600,540 "
+     id="polygon16"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="640,120 560,30 700,20 "
+     id="polygon19"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="630,280 560,160 700,140 "
+     id="polygon27"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="800,340 760,300 740,200 800,180 "
+     id="polygon28"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="720,400 640,280 780,260 "
+     id="polygon32"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="450,540 380,400 520,420 "
+     id="polygon35"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="630,520 560,380 700,400 "
+     id="polygon36"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="740,560 720,420 800,460 "
+     id="polygon37"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="240,600 160,520 320,500 "
+     id="polygon38"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="660,600 600,500 740,520 "
+     id="polygon40"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="635,200 610,140 660,120 "
+     id="polygon50"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="105,590 80,540 130,520 "
+     id="polygon61"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="660,20 610,20 635,0 "
+     id="polygon67"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="650,180 600,180 625,140 "
+     id="polygon75"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="250,560 200,560 225,520 "
+     id="polygon85"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="570,440 480,300 650,260 "
+     id="polygon90"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+  <polygon
+     points="420,560 340,440 520,400 "
+     id="polygon93"
+     style="fill:none;stroke:#e5e5e5;stroke-width:0.8" />
+</svg>

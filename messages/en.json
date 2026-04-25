@@ -16,6 +16,49 @@
     "home": {
         "title": "Your dashboards"
     },
+    "signUp": {
+        "title": "Sign Up",
+        "back": "Back",
+        "email": "Email:",
+        "username": "Username:",
+        "password": "Password:",
+        "repeatPassword": "Repeat password:",
+        "profilePicture": "Profile picture:",
+        "submit": "Submit",
+        "disclaimer": "By registering, you agree to our Terms of Service and Privacy Policy.",
+        "invalidEmail": "Invalid email address",
+        "invalidUsername": "Invalid username",
+        "usernameTooShort": "Username must be at least 4 characters long",
+        "usernameTooLong": "Username must be no more than 63 characters long",
+        "invalidPassword": "Invalid password",
+        "passwordTooShort": "Password must be at least 8 characters long",
+        "invalidPasswordConfirmation": "Invalid password",
+        "passwordsDontMatch": "Passwords do not match"
+    },
+    "signIn": {
+        "title": "Sign In",
+        "back": "Back",
+        "email": "Email:",
+        "password": "Password:",
+        "forgotPassword": "Forgot password?",
+        "submit": "Continue",
+        "or": "Or log in with:",
+        "register": "First time?",
+        "registerLine": "Create an account to get started.",
+        "registerPoint1": "Access your dashboards from anywhere",
+        "registerPoint2": "Collaborate with your team",
+        "registerButton": "Register",
+        "invalidEmail": "Invalid email address",
+        "invalidPassword": "Invalid password",
+        "passwordTooShort": "Password must be at least 8 characters long"
+    },
+    "resetPassword": {
+        "title": "Reset Password",
+        "email": "Email:",
+        "submit": "Send reset link",
+        "back": "Back",
+        "resetText": "We'll send you an email with instructions to reset your password."
+    },
     "settings": {},
     "profile": {}
 }
