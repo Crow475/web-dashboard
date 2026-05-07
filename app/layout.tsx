@@ -6,7 +6,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { geistSans } from "@/lib/fonts";
 
 export const metadata: Metadata = {
-    title: "BOARDS",
+    title: "Boards",
     description: "Business-Oriented Aggregator of Disparate Systems and Data",
 };
 

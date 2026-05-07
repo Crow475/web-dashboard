@@ -4,7 +4,9 @@ import { useActionState } from "react";
 
 import { signIn } from "@/actions/signIn";
 
-import { LuMail, LuMoveRight, LuRectangleEllipsis, LuLoaderCircle } from "react-icons/lu";
+import { LuMail, LuMoveRight, LuRectangleEllipsis } from "react-icons/lu";
+
+import SubmitFormButton from "./submitFormButton";
 
 import { useTranslations } from "next-intl";
 
@@ -83,14 +85,7 @@ export default function SignInForm() {
                     {t("forgotPassword")}
                 </Link>
 
-                <button
-                    type="submit"
-                    className="flex cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-blue-400 bg-blue-500 px-3 py-2 text-sm text-white shadow hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-300"
-                    disabled={pending}
-                >
-                    <span>{t("submit")}</span>
-                    {pending ? <LuLoaderCircle className="animate-spin" /> : <LuMoveRight />}
-                </button>
+                <SubmitFormButton pending={pending} label={t("submit")} icon={<LuMoveRight />} />
             </div>
         </form>
     );

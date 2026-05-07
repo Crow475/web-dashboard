@@ -17,7 +17,7 @@ export default function LandingPage() {
         <main className="static flex h-screen w-full flex-col items-center justify-start space-y-24 bg-linear-to-t from-blue-400 via-blue-300 via-10% to-white to-40% bg-cover px-10 py-40">
             <div className="z-10 flex flex-col items-center justify-center">
                 <h1 className={`text-7xl font-black select-none md:text-9xl ${montserrat.className}`}>{t("title")}</h1>
-                <span className="text-[9px] select-none md:text-sm">{t("subtitle")}</span>
+                <span className="text-sm select-none md:text-base">{t("subtitle")}</span>
             </div>
             <div className="z-10 grid w-1/2 grid-cols-1 items-center justify-center gap-4 md:w-1/4 md:grid-cols-2">
                 <Link

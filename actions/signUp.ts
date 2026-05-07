@@ -2,6 +2,9 @@
 
 import { z } from "zod";
 import { getTranslations } from "next-intl/server";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { isAPIError } from "better-auth/api";
 
 export type SignUpActionState = {
     email?: string;
@@ -65,5 +68,39 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
 
     console.log("Signing up with:", validatedData.data);
 
-    return { email, username, password, passwordConfirmation };
+    try {
+        await auth.api.signUpEmail({
+            body: {
+                email: validatedData.data.email,
+                password: validatedData.data.password,
+                name: validatedData.data.username,
+            },
+        });
+
+        redirect("/app");
+    } catch (error) {
+        if (isAPIError(error)) {
+            return {
+                email: email,
+                username: username,
+                password: password,
+                passwordConfirmation: passwordConfirmation,
+                profileIcon: profileIcon,
+                errors: {
+                    email: [t(error.body?.code ?? "UNKNOWN_ERROR")],
+                },
+            };
+        }
+
+        return {
+            email: email,
+            username: username,
+            password: password,
+            passwordConfirmation: passwordConfirmation,
+            profileIcon: profileIcon,
+            errors: {
+                email: [t("UNKNOWN_ERROR")],
+            },
+        };
+    }
 }

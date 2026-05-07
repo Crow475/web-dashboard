@@ -2,10 +2,14 @@
 
 import { z } from "zod";
 import { getTranslations } from "next-intl/server";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { isAPIError } from "better-auth/api";
 
 export type SignInActionState = {
     email?: string;
     passsword?: string;
+    response?: Response;
     errors?: {
         email?: string[];
         password?: string[];
@@ -23,16 +27,12 @@ export async function signIn(_prevState: SignInActionState, formData: FormData):
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    // console.log("Received form data:", { email, password });
-
     const validatedData = signInSchema.safeParse({
         email,
         password,
     });
 
     if (!validatedData.success) {
-        // console.log("Validation errors:", validatedData.error.flatten().fieldErrors);
-
         return {
             email: email,
             passsword: password,
@@ -40,7 +40,40 @@ export async function signIn(_prevState: SignInActionState, formData: FormData):
         };
     }
 
-    // console.log("Signing in with:", validatedData.data);
+    try {
+        await auth.api.signInEmail({
+            body: {
+                email,
+                password,
+            },
+        });
+    } catch (error) {
+        if (isAPIError(error)) {
+            console.error("Sign-in error:", error);
 
-    return { email: email, passsword: password };
+            return {
+                email: email,
+                passsword: password,
+                errors: {
+                    password: [t(error.body?.code ?? "UNKNOWN_ERROR")],
+                },
+            };
+        }
+
+        console.error("Unexpected error during sign-in:", error);
+        console.error("Error details:", {
+            message: error instanceof Error ? error.message : String(error),
+            stack: error instanceof Error ? error.stack : "No stack trace available",
+        });
+
+        return {
+            email: email,
+            passsword: password,
+            errors: {
+                password: [t("UNKNOWN_ERROR")],
+            },
+        };
+    }
+
+    redirect("/app/");
 }

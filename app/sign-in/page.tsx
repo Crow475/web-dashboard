@@ -19,7 +19,7 @@ export default function SignInPage() {
         <main className="flex h-screen w-full flex-col items-center justify-center bg-linear-to-t from-blue-400 via-blue-300 via-10% to-white to-40% bg-cover">
             <Link
                 href="/"
-                className="absolute top-5 left-5 z-10 flex flex-row items-center justify-center space-x-2 rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm shadow"
+                className="absolute top-5 left-5 z-10 flex flex-row items-center justify-center space-x-2 rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm shadow hover:bg-neutral-100"
             >
                 <LuMoveLeft />
                 <span>{t("back")}</span>

@@ -33,7 +33,9 @@
         "invalidPassword": "Invalid password",
         "passwordTooShort": "Password must be at least 8 characters long",
         "invalidPasswordConfirmation": "Invalid password",
-        "passwordsDontMatch": "Passwords do not match"
+        "invalidProfileIcon": "Invalid profile picture",
+        "passwordsDontMatch": "Passwords do not match",
+        "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "A user with this email already exists"
     },
     "signIn": {
         "title": "Sign In",
@@ -50,14 +52,17 @@
         "registerButton": "Register",
         "invalidEmail": "Invalid email address",
         "invalidPassword": "Invalid password",
-        "passwordTooShort": "Password must be at least 8 characters long"
+        "passwordTooShort": "Password must be at least 8 characters long",
+        "INVALID_EMAIL_OR_PASSWORD": "Invalid email or password",
+        "UNKNOWN_ERROR": "An unknown error occurred. Please try again later."
     },
     "resetPassword": {
         "title": "Reset Password",
         "email": "Email:",
         "submit": "Send reset link",
         "back": "Back",
-        "resetText": "We'll send you an email with instructions to reset your password."
+        "resetText": "We'll send you an email with instructions to reset your password.",
+        "invalidEmail": "Invalid email address"
     },
     "settings": {},
     "profile": {}

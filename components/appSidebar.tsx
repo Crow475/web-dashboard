@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { useTranslations } from "next-intl";
+
+import { authClient } from "@/lib/auth-client";
+
+import type { Profile } from "@/actions/getProfileOfUser";
 
 import {
     Sidebar,
@@ -30,11 +35,16 @@ import { notoColorEmoji } from "@/lib/fonts";
 import { LuLayoutGrid, LuCirclePlus, LuChevronsUpDown, LuLogOut, LuSettings, LuUser } from "react-icons/lu";
 import uuidToShort from "@/lib/uuidToShort";
 
-export function AppSidebar() {
-    const userId = "160f1377-e313-4e5d-b77a-7b2a07079120";
-    const shortUserId = uuidToShort(userId);
+export function AppSidebar({ profile }: { profile: Profile }) {
+    const shortUserId = uuidToShort(profile?.profileId || "");
+    const router = useRouter();
 
     const t = useTranslations("sidebar");
+
+    async function handleLogout() {
+        await authClient.signOut();
+        router.push("/");
+    }
 
     return (
         <Sidebar collapsible="icon" variant="floating">
@@ -83,9 +93,9 @@ export function AppSidebar() {
                                             role="img"
                                             aria-label="Profile Picture"
                                         >
-                                            &#129315;
+                                            {profile?.icon || "👤"}
                                         </span>
-                                        <span>John Doe</span>
+                                        <span>{profile?.username}</span>
                                     </div>
                                     <LuChevronsUpDown size={16} />
                                 </SidebarMenuButton>
@@ -98,13 +108,13 @@ export function AppSidebar() {
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href="/settings">
+                                    <Link href="/app/settings">
                                         <LuSettings size={16} />
                                         <span>{t("settings")}</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem variant="destructive">
+                                <DropdownMenuItem variant="destructive" onSelect={handleLogout}>
                                     <LuLogOut size={16} />
                                     <span>{t("logout")}</span>
                                 </DropdownMenuItem>
