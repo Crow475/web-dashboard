@@ -40,7 +40,8 @@
         "invalidPasswordConfirmation": "Invalid password",
         "invalidProfileIcon": "Invalid profile picture",
         "passwordsDontMatch": "Passwords do not match",
-        "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "A user with this email already exists"
+        "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "A user with this email already exists",
+        "UNKNOWN_ERROR": "An unknown error occurred. Please try again later."
     },
     "signIn": {
         "title": "Sign In",

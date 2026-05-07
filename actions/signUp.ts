@@ -4,7 +4,7 @@ import { z } from "zod";
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { isAPIError } from "better-auth/api";
+import { APIError, isAPIError } from "better-auth/api";
 
 export type SignUpActionState = {
     email?: string;
@@ -68,6 +68,9 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
 
     console.log("Signing up with:", validatedData.data);
 
+    let success = false;
+    let apiError: APIError | null = null;
+
     try {
         await auth.api.signUpEmail({
             body: {
@@ -77,9 +80,13 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
             },
         });
 
-        redirect("/app");
+        success = true;
     } catch (error) {
+        console.error("Error during sign-up:", error);
+
         if (isAPIError(error)) {
+            apiError = error;
+
             return {
                 email: email,
                 username: username,
@@ -87,7 +94,7 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
                 passwordConfirmation: passwordConfirmation,
                 profileIcon: profileIcon,
                 errors: {
-                    email: [t(error.body?.code ?? "UNKNOWN_ERROR")],
+                    email: [t(apiError.body?.code ?? "UNKNOWN_ERROR")],
                 },
             };
         }
@@ -100,6 +107,20 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
             profileIcon: profileIcon,
             errors: {
                 email: [t("UNKNOWN_ERROR")],
+            },
+        };
+    } finally {
+        if (success) {
+            redirect("/app");
+        }
+        return {
+            email: email,
+            username: username,
+            password: password,
+            passwordConfirmation: passwordConfirmation,
+            profileIcon: profileIcon,
+            errors: {
+                email: [t(apiError?.body?.code ?? "UNKNOWN_ERROR")],
             },
         };
     }

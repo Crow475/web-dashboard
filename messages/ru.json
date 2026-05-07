@@ -40,7 +40,8 @@
         "invalidProfileIcon": "Неверное изображение профиля",
         "invalidPasswordConfirmation": "Неверное подтверждение пароля",
         "passwordsDontMatch": "Пароли не совпадают",
-        "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "Пользователь с таким адресом электронной почты уже существует"
+        "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "Пользователь с таким адресом электронной почты уже существует",
+        "UNKNOWN_ERROR": "Произошла неизвестная ошибка. Пожалуйста, попробуйте позже."
     },
     "signIn": {
         "title": "Войти",

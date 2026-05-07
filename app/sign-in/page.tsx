@@ -21,7 +21,7 @@ export default function SignInPage() {
         <main className="flex h-svh w-full flex-col items-center justify-center bg-linear-to-t from-blue-400 via-blue-300 via-10% to-white to-40% bg-cover">
             <BackLink href="/" label={t("back")} />
             <AboutLink />
-            <div className="z-10 flex h-7/12 w-[90%] grid-cols-2 grid-rows-2 flex-col gap-2 md:grid md:w-1/2">
+            <div className="z-10 flex h-7/12 w-[90%] grid-cols-2 grid-rows-2 flex-col gap-2 md:grid md:h-1/2 md:w-1/2">
                 <div className="col-span-1 col-start-1 row-span-2 row-start-1 flex flex-col items-center justify-start space-y-4 rounded-lg border border-neutral-300 bg-white py-5 shadow md:py-10">
                     <h1 className="text-2xl font-bold md:text-3xl">{t("title")}</h1>
                     <SignInForm />
