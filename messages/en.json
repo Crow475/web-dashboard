@@ -1,4 +1,9 @@
 {
+    "component": {
+        "aboutLink": {
+            "title": "About us"
+        }
+    },
     "landing": {
         "title": "BOARDS",
         "subtitle": "Business-Oriented Aggregator of Random Data and Systems",

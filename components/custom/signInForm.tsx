@@ -18,7 +18,7 @@ export default function SignInForm() {
         <form className="flex h-full w-[80%] flex-col items-center justify-between" action={formAction}>
             <div className="flex w-full flex-col items-center space-y-2">
                 <div className="flex w-full flex-col items-start justify-start space-y-1">
-                    <label htmlFor="email" className="mr-2 text-sm text-neutral-600">
+                    <label htmlFor="email" className="mr-2 text-xs text-neutral-600 md:text-sm">
                         {t("email")}
                     </label>
                     <label
@@ -33,7 +33,7 @@ export default function SignInForm() {
                             type="email"
                             id="email"
                             name="email"
-                            className="flex w-[90%] py-1 focus:outline-0"
+                            className="flex w-[90%] py-1 text-sm focus:outline-0 md:text-base"
                             required
                             data-error={state.errors?.email ? true : false}
                             defaultValue={state.email}
@@ -43,7 +43,7 @@ export default function SignInForm() {
                     </label>
                 </div>
                 <div className="flex w-full flex-col items-start justify-start space-y-1">
-                    <label htmlFor="password" className="mr-2 text-sm text-neutral-600">
+                    <label htmlFor="password" className="mr-2 text-xs text-neutral-600 md:text-sm">
                         {t("password")}
                     </label>
                     <label
@@ -58,7 +58,7 @@ export default function SignInForm() {
                             type="password"
                             id="password"
                             name="password"
-                            className="flex w-[90%] py-1 focus:outline-0"
+                            className="flex w-[90%] py-1 text-sm focus:outline-0 md:text-base"
                             required
                             data-error={state.errors?.password ? true : false}
                             defaultValue={state.passsword}
@@ -67,21 +67,18 @@ export default function SignInForm() {
                         />
                     </label>
                 </div>
-            </div>
-
-            {state.errors && (
-                <div className="flex w-full flex-col items-start justify-start space-y-1 pt-1">
-                    {state.errors.email && (
-                        <span className="text-sm text-red-500/50">{state.errors.email.join(", ")}</span>
+                <div className="flex min-h-6 w-full flex-col items-start justify-start space-y-1 pt-1">
+                    {state.errors?.email && (
+                        <span className="text-xs text-red-500/50 md:text-sm">{state.errors.email.join(", ")}</span>
                     )}
-                    {state.errors.password && (
-                        <span className="text-sm text-red-500/50">{state.errors.password.join(", ")}</span>
+                    {state.errors?.password && (
+                        <span className="text-xs text-red-500/50 md:text-sm">{state.errors.password.join(", ")}</span>
                     )}
                 </div>
-            )}
+            </div>
 
             <div className="flex w-full flex-row items-center justify-between pt-2">
-                <Link href="/password-reset" className="text-sm text-neutral-400 hover:underline">
+                <Link href="/password-reset" className="text-xs text-neutral-400 hover:underline md:text-sm">
                     {t("forgotPassword")}
                 </Link>
 

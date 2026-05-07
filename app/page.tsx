@@ -8,16 +8,18 @@ import { LuRocket, LuUserPlus } from "react-icons/lu";
 import { montserrat } from "@/lib/fonts";
 
 import LanguageSelector from "@/components/custom/languageSelector";
+import AboutLink from "@/components/custom/aboutLink";
 import setLocale from "@/lib/setLocale";
 
 export default function LandingPage() {
     const t = useTranslations("landing");
 
     return (
-        <main className="static flex h-screen w-full flex-col items-center justify-start space-y-24 bg-linear-to-t from-blue-400 via-blue-300 via-10% to-white to-40% bg-cover px-10 py-40">
+        <main className="static flex h-svh w-full flex-col items-center justify-start space-y-24 bg-linear-to-t from-blue-400 via-blue-300 via-10% to-white to-40% bg-cover px-10 py-40">
+            <AboutLink />
             <div className="z-10 flex flex-col items-center justify-center">
                 <h1 className={`text-7xl font-black select-none md:text-9xl ${montserrat.className}`}>{t("title")}</h1>
-                <span className="text-sm select-none md:text-base">{t("subtitle")}</span>
+                <span className="text-[0.6rem] select-none md:text-base">{t("subtitle")}</span>
             </div>
             <div className="z-10 grid w-1/2 grid-cols-1 items-center justify-center gap-4 md:w-1/4 md:grid-cols-2">
                 <Link
