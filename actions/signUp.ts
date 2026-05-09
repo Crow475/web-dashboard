@@ -77,6 +77,7 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
                 email: validatedData.data.email,
                 password: validatedData.data.password,
                 name: validatedData.data.username,
+                image: validatedData.data.profileIcon,
             },
         });
 
@@ -111,7 +112,7 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
         };
     } finally {
         if (success) {
-            redirect("/app");
+            redirect("/verify-email?email=" + email);
         }
         return {
             email: email,

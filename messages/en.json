@@ -10,6 +10,20 @@
         "register": "Register",
         "start": "Start!"
     },
+    "about": {
+        "back": "Back",
+        "title": "About us",
+        "heading1": "What is BOARDS?",
+        "paragraph1": "In today's fast-paced world, staying organized shouldn't require juggling a dozen different tools. BOARDS is an interactive web dashboard designed to bring everything you need into one clean, intuitive interface — whether you're managing a team project or simply keeping your personal life on track. We built BOARDS because we believe that clarity and simplicity are the foundation of great work.",
+        "heading2": "Who is it for?",
+        "paragraph2": "BOARDS is built for everyone. Teams use it to coordinate projects, allocate resources, and keep everyone aligned — all in real time. Individuals use it as a personal organizer to capture notes, track tasks, and surface the information that matters most. No matter how you work, BOARDS adapts to fit your flow, not the other way around.",
+        "heading3": "What is our mission?",
+        "paragraph3": "Our mission is straightforward: eliminate the friction between you and your goals. By combining task management, note-taking, and information organization into a single unified workspace, BOARDS helps you spend less time searching and more time doing. One place. Everything you need. Always in reach.",
+        "home": "Home",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "ARR": "All rights reserved."
+    },
     "sidebar": {
         "allDashboards": "All Dashboards",
         "newDashboard": "New Dashboard",
@@ -69,6 +83,14 @@
         "back": "Back",
         "resetText": "We'll send you an email with instructions to reset your password.",
         "invalidEmail": "Invalid email address"
+    },
+    "verifyEmail": {
+        "title": "Verify your email",
+        "thanks": "Thanks for signing up! To complete the registration process, please verify your email address.",
+        "paragraph1": "A verification email has been sent to ",
+        "paragraph2": ". Please check your inbox and click the verification link to verify your email address.",
+        "resend": "Resend Verification Email",
+        "continue": "Continue"
     },
     "settings": {},
     "profile": {}

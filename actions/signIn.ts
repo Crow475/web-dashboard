@@ -51,6 +51,10 @@ export async function signIn(_prevState: SignInActionState, formData: FormData):
         if (isAPIError(error)) {
             console.error("Sign-in error:", error);
 
+            if (error.body?.code === "EMAIL_NOT_VERIFIED") {
+                redirect(`/verify-email?email=${email}`);
+            }
+
             return {
                 email: email,
                 passsword: password,

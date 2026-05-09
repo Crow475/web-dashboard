@@ -11,6 +11,10 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 
+    if (session.user.emailVerified === false) {
+        return NextResponse.redirect(new URL(`/verify-email?email=${session.user.email}`, request.url));
+    }
+
     return NextResponse.next();
 }
 
