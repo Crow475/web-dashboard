@@ -11,9 +11,18 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 
-    if (session.user.emailVerified === false) {
-        return NextResponse.redirect(new URL(`/verify-email?email=${session.user.email}`, request.url));
-    }
+    console.log("Session found in proxy middleware:", {
+        user: {
+            email: session.user.email,
+            name: session.user.name,
+            id: session.user.id,
+            emailVerified: session.user.emailVerified,
+        },
+    });
+
+    // if (session.user.emailVerified === false) {
+    //     return NextResponse.redirect(new URL(`/verify-email?email=${session.user.email}`, request.url));
+    // }
 
     return NextResponse.next();
 }

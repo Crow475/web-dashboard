@@ -60,5 +60,6 @@ export const auth = betterAuth({
             },
         },
     },
+    trustedOrigins: ["https://boardsproject.app", "http://localhost:3000", "https://webdashboard-project.netlify.app"],
     plugins: [nextCookies()],
 });
