@@ -1,6 +1,8 @@
-import { notFound } from "next/navigation";
+import { notFound, forbidden } from "next/navigation";
+import { headers } from "next/headers";
 
 import getProfileById from "@/actions/getProfileById";
+import { auth } from "@/lib/auth";
 
 import { LuUserPen } from "react-icons/lu";
 
@@ -10,8 +12,16 @@ export default async function ProfileEditPage({ params }: { params: { id: string
     const { id } = await params;
     const profile = await getProfileById(id);
 
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
     if (!profile) {
         notFound();
+    }
+
+    if (!session || session.user.id !== profile.userId) {
+        forbidden();
     }
 
     return (

@@ -92,6 +92,12 @@
         "resend": "Resend Verification Email",
         "continue": "Continue"
     },
-    "settings": {},
+    "settings": {
+        "title": "Settings",
+        "language": {
+            "label": "Language",
+            "description": "Select your preferred interface language. (Affects only the current session)"
+        }
+    },
     "profile": {}
 }

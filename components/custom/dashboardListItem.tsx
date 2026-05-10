@@ -72,7 +72,7 @@ export default function DashboardListItem() {
             </div>
             <Link
                 className="group flex h-full flex-row items-center justify-center border-l border-neutral-300 px-2 hover:border-neutral-600/50 focus-visible:border-neutral-600/50"
-                href="/dashboard/"
+                href="/app/dashboard/"
                 aria-labelledby="open-dashboard"
                 onMouseEnter={() => setLinkHovered(true)}
                 onMouseLeave={() => setLinkHovered(false)}

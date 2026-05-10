@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, forbidden } from "next/navigation";
+import { headers } from "next/headers";
 
 import getProfileById from "@/actions/getProfileById";
+import { auth } from "@/lib/auth";
 
 import { LuMail, LuPencil } from "react-icons/lu";
 
@@ -26,8 +28,16 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     const { id } = await params;
     const profile = await getProfileById(id);
 
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
     if (!profile) {
         notFound();
+    }
+
+    if (!session) {
+        forbidden();
     }
 
     return (
@@ -54,13 +64,15 @@ export default async function ProfilePage({ params }: { params: { id: string } }
                     </div>
                 </div>
                 <div className="flex w-full flex-row items-center justify-end">
-                    <Link
-                        className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-amber-300 hover:bg-amber-200 hover:text-amber-500 hover:shadow-amber-200"
-                        href={`/app/profile/${id}/edit`}
-                    >
-                        <LuPencil />
-                        <span>Edit</span>
-                    </Link>
+                    {session.user.id === profile.userId && (
+                        <Link
+                            className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-amber-300 hover:bg-amber-200 hover:text-amber-500 hover:shadow-amber-200"
+                            href={`/app/profile/${id}/edit`}
+                        >
+                            <LuPencil />
+                            <span>Edit</span>
+                        </Link>
+                    )}
                 </div>
             </div>
         </main>
