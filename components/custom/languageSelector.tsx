@@ -3,6 +3,8 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 
 import { LuGlobe } from "react-icons/lu";
 
+import { notoColorEmoji } from "@/lib/fonts";
+
 export default function LanguageSelector({ localeChangeHandler }: { localeChangeHandler: (locale: string) => void }) {
     return (
         <DropdownMenu>
@@ -11,11 +13,11 @@ export default function LanguageSelector({ localeChangeHandler }: { localeChange
             </DropdownMenuTrigger>
             <DropdownMenuContent className="-translate-x-10">
                 <DropdownMenuItem onSelect={() => localeChangeHandler("en")}>
-                    <span>🇬🇧</span>
+                    <span className={notoColorEmoji.className}>🇬🇧</span>
                     <span>English</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => localeChangeHandler("ru")}>
-                    <span>🇷🇺</span>
+                    <span className={notoColorEmoji.className}>🇷🇺</span>
                     <span>Русский</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>

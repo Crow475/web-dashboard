@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`${geistSans.className} h-full antialiased`}>
-            <body className="w-screen">
+            <body className="w-full">
                 <NextIntlClientProvider>{children}</NextIntlClientProvider>
             </body>
         </html>

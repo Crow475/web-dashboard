@@ -2,6 +2,18 @@
     "component": {
         "aboutLink": {
             "title": "About us"
+        },
+        "dashboardCard": {
+            "lastEdited": "Last edited: ",
+            "created": "Created: ",
+            "by": "by ",
+            "pin": "Pin to sidebar",
+            "unpin": "Unpin from sidebar",
+            "delete": "Delete",
+            "rename": "Rename",
+            "options": "Options",
+            "open": "Open dashboard",
+            "icon": "Dashboard icon"
         }
     },
     "landing": {
@@ -33,7 +45,10 @@
         "logout": "Logout"
     },
     "home": {
-        "title": "Your dashboards"
+        "title": "Your dashboards",
+        "noDashboardsTitle": "Nothing to see here :(",
+        "noDashboardsSubtitle": "No dashboards found. Create a new one by clicking the button below.",
+        "createDashboard": "Create your first dashboard"
     },
     "signUp": {
         "title": "Sign Up",

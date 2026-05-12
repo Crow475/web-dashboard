@@ -141,7 +141,7 @@ function IconPicker({
 }) {
     return (
         <div className="flex w-full flex-col items-start justify-start space-y-1">
-            <label htmlFor="profileIcon" className="mr-2 text-xs text-neutral-600 md:text-sm">
+            <label htmlFor="profileIcon" className="emojiFont mr-2 text-xs text-neutral-600 md:text-sm">
                 {label}
             </label>
             <Popover>

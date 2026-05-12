@@ -2,6 +2,18 @@
     "component": {
         "aboutLink": {
             "title": "О нас"
+        },
+        "dashboardCard": {
+            "lastEdited": "Последнее изменение: ",
+            "created": "Создано: ",
+            "by": "от ",
+            "pin": "Закрепить",
+            "unpin": "Открепить",
+            "delete": "Удалить",
+            "rename": "Переименовать",
+            "options": "Опции",
+            "open": "Открыть дэшборд",
+            "icon": "Иконка дэшборда"
         }
     },
     "landing": {
@@ -33,7 +45,10 @@
         "logout": "Выйти"
     },
     "home": {
-        "title": "Ваши дэшборды"
+        "title": "Ваши дэшборды",
+        "noDashboardsTitle": "Здесь пока ничего нет :(",
+        "noDashboardsSubtitle": "Дэшборды не найдены. Создайте новый, нажав кнопку ниже.",
+        "createDashboard": "Создайте ваш первый дэшборд"
     },
     "signUp": {
         "title": "Регистрация",

@@ -6,6 +6,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 
+import { notoColorEmoji } from "@/lib/fonts";
+
+import DefaultHeader from "@/components/custom/defaultHeader";
+
+import { LuSettings } from "react-icons/lu";
+
 export default function Settings() {
     const t = useTranslations("settings");
     const locale = useLocale();
@@ -13,11 +19,10 @@ export default function Settings() {
     console.log("Current locale:", locale);
 
     return (
-        <main className="flex w-full flex-col items-center justify-start px-4">
-            <header className="flex w-full flex-row items-center justify-start border-b border-neutral-300 px-5 pt-6 pb-2 md:px-10 md:pt-10">
-                <h1 className="text-3xl font-bold md:text-5xl">{t("title")}</h1>
-            </header>
-            <ScrollArea className="flex h-[85vh] w-full flex-col items-start justify-start py-5 pr-4 md:w-3/4 md:px-10 md:py-10">
+        <main className="flex w-full flex-col items-center justify-start">
+            <DefaultHeader title={t("title")} icon={<LuSettings size={32} />} />
+            <ScrollArea className="flex h-[90vh] w-full flex-col items-start justify-start pr-4 md:w-3/4 md:px-10">
+                <div className="flex w-full pt-10"></div>
                 <div className="flex w-full flex-row items-center justify-between px-1">
                     <div className="flex flex-col items-start justify-start">
                         <label className="text-base font-bold md:text-lg" id="languageSelect">
@@ -31,11 +36,11 @@ export default function Settings() {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="en">
-                                <span>🇬🇧</span>
+                                <span className={notoColorEmoji.className}>🇬🇧</span>
                                 <span>English</span>
                             </SelectItem>
                             <SelectItem value="ru">
-                                <span>🇷🇺</span>
+                                <span className={notoColorEmoji.className}>🇷🇺</span>
                                 <span>Русский</span>
                             </SelectItem>
                         </SelectContent>

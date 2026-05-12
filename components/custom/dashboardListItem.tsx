@@ -2,9 +2,14 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { useTranslations } from "next-intl";
+
 import { notoColorEmoji } from "@/lib/fonts";
 
 import { LuEllipsis, LuChevronRight, LuTrash2, LuSquarePen, LuPin } from "react-icons/lu";
+
+import uuidToShort from "@/lib/uuidToShort";
+import toStandardTime from "@/lib/toStandardTime";
 
 import {
     DropdownMenu,
@@ -15,8 +20,23 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-export default function DashboardListItem() {
+export default function DashboardListItem({
+    title,
+    editedAt,
+    username,
+    id,
+    createdAt,
+    icon,
+}: {
+    title: string;
+    editedAt: string | null;
+    username: string;
+    id: string;
+    createdAt: string | null;
+    icon: string;
+}) {
     const [linkHovered, setLinkHovered] = useState(false);
+    const t = useTranslations("component.dashboardCard");
 
     return (
         <div
@@ -29,15 +49,19 @@ export default function DashboardListItem() {
                             <span
                                 className={`${notoColorEmoji.className} text-4xl select-none`}
                                 role="img"
-                                aria-label="Dashboard icon"
+                                aria-label={t("icon")}
                             >
-                                &#129315;
+                                {icon}
                             </span>
-                            <h2 className="text-xl font-semibold">Not my Dashboard</h2>
+                            <h2 className="text-xl font-semibold">{title}</h2>
                         </div>
-                        <span className="text-sm text-neutral-500">by John Doe</span>
+                        <span className="text-sm text-neutral-500">
+                            {t("by")} {username}
+                        </span>
                     </div>
-                    <span className="text-sm text-neutral-500">Last edited 30.09.2025</span>
+                    <span className="text-sm text-neutral-500">
+                        {t("lastEdited")} {editedAt ? toStandardTime(editedAt) : toStandardTime(createdAt ?? "")}
+                    </span>
                     <div className="flex w-full flex-row items-center justify-between space-x-2"></div>
                 </div>
                 <div className="flex flex-row items-center justify-center">
@@ -48,31 +72,33 @@ export default function DashboardListItem() {
                         >
                             <LuEllipsis size={20} />
                             <span className="sr-only" id="dashboard-options">
-                                Options
+                                {t("options")}
                             </span>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="min-w-40">
+                        <DropdownMenuContent className="min-w-48">
                             <DropdownMenuItem>
                                 <LuPin size={16} />
-                                <span>Pin to sidebar</span>
+                                <span>{t("pin")}</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <LuSquarePen size={16} />
-                                <span>Rename</span>
+                                <span>{t("rename")}</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem variant="destructive">
                                 <LuTrash2 size={16} />
-                                <span>Delete</span>
+                                <span>{t("delete")}</span>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuLabel>Created: 10.10.2024</DropdownMenuLabel>
+                            <DropdownMenuLabel>
+                                {t("created")} {toStandardTime(createdAt ?? "")}
+                            </DropdownMenuLabel>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
             </div>
             <Link
                 className="group flex h-full flex-row items-center justify-center border-l border-neutral-300 px-2 hover:border-neutral-600/50 focus-visible:border-neutral-600/50"
-                href="/app/dashboard/"
+                href={`/app/dashboard/${uuidToShort(id)}`}
                 aria-labelledby="open-dashboard"
                 onMouseEnter={() => setLinkHovered(true)}
                 onMouseLeave={() => setLinkHovered(false)}
@@ -84,7 +110,7 @@ export default function DashboardListItem() {
                     className="text-neutral-400 group-hover:text-neutral-600/50 group-focus-visible:text-neutral-600/50"
                 />
                 <span className="sr-only" id="open-dashboard">
-                    Open dashboard
+                    {t("open")}
                 </span>
             </Link>
         </div>

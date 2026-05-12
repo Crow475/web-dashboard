@@ -23,10 +23,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     return (
         <SidebarProvider defaultOpen={false}>
             <AppSidebar profile={profile} />
-            <main className="flex w-full flex-row items-start justify-start">
+            <div className="flex w-full flex-row items-start justify-start">
                 <SidebarTrigger className="sticky top-0" />
                 <div className="flex w-full">{children}</div>
-            </main>
+            </div>
         </SidebarProvider>
     );
 }

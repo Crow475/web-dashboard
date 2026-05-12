@@ -133,4 +133,7 @@
     .gridEditing {
         grid-template-columns: 2fr 49fr 49fr;
     }
+    .emojiFont {
+        font-variant-emoji: emoji;
+    }
 }
