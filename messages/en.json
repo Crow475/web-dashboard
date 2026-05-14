@@ -5,6 +5,7 @@
         },
         "dashboardCard": {
             "lastEdited": "Last edited: ",
+            "edited": "Edited: ",
             "created": "Created: ",
             "by": "by ",
             "pin": "Pin to sidebar",
@@ -46,7 +47,7 @@
     },
     "home": {
         "title": "Your dashboards",
-        "noDashboardsTitle": "Nothing to see here :(",
+        "noDashboardsTitle": "Nothing to see here\n:(",
         "noDashboardsSubtitle": "No dashboards found. Create a new one by clicking the button below.",
         "createDashboard": "Create your first dashboard",
         "createNew": "Create new dashboard"

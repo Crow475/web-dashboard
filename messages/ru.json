@@ -5,6 +5,7 @@
         },
         "dashboardCard": {
             "lastEdited": "Последнее изменение: ",
+            "edited": "Изменено: ",
             "created": "Создано: ",
             "by": "от ",
             "pin": "Закрепить",
@@ -46,9 +47,9 @@
     },
     "home": {
         "title": "Ваши дэшборды",
-        "noDashboardsTitle": "Здесь пока ничего нет :(",
+        "noDashboardsTitle": "Здесь пока ничего нет\n:(",
         "noDashboardsSubtitle": "Дэшборды не найдены. Создайте новый, нажав кнопку ниже.",
-        "createDashboard": "Создайте ваш первый дэшборд",
+        "createDashboard": "Создайте дэшборд",
         "createNew": "Создать новый дэшборд"
     },
     "signUp": {

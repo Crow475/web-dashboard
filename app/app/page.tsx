@@ -40,7 +40,8 @@ export default async function Home() {
             <DefaultHeader title={t("title")} icon={<LuLayoutGrid size={32} />} />
             <ScrollArea className="flex h-[90vh] w-[90%] flex-col items-center justify-start px-2">
                 {/* <div className="sticky top-0 flex h-10 w-full flex-row bg-neutral-200"></div> */}
-                <div className="grid w-full grid-cols-2 gap-4 px-2 py-4">
+                <div className="absolute bottom-0 left-0 z-10 h-5 w-full bg-linear-to-t from-white to-transparent"></div>
+                <div className="grid w-full grid-cols-2 gap-3 px-2 py-4 md:gap-4">
                     {dashboards.map((dashboard) => (
                         <DashboardListItem
                             key={dashboard.dashboardId}
@@ -54,25 +55,27 @@ export default async function Home() {
                     ))}
                     {dashboards.length > 0 && (
                         <Link
-                            className="col-span-2 row-span-1 flex w-full flex-row items-center justify-center space-x-4 rounded-lg border border-neutral-300 px-4 py-4 text-neutral-600 shadow hover:bg-neutral-100 hover:text-black"
+                            className="col-span-2 row-span-1 flex w-full flex-row items-center justify-center space-x-2 rounded-2xl border border-neutral-300 px-4 py-4 text-neutral-600 shadow hover:bg-neutral-100 hover:text-black md:space-x-4"
                             href="/app/dashboard/create"
                         >
-                            <LuCirclePlus size={30} />
-                            <span className="text-lg font-semibold">{t("createNew")}</span>
+                            <LuCirclePlus className="size-5 md:size-8" />
+                            <span className="text-base font-semibold md:text-lg">{t("createNew")}</span>
                         </Link>
                     )}
-                    <div className="col-span-2 hidden h-[80svh] w-full flex-col items-center justify-around rounded-xl bg-neutral-50 px-10 py-10 only:flex">
+                    <div className="col-span-2 hidden h-[80svh] w-full flex-col items-center justify-around rounded-xl bg-neutral-50 px-5 py-6 only:flex md:px-10 md:py-10">
                         <div className="flex flex-col items-center justify-center space-y-4">
-                            <LuCircleOff className="size-20 text-neutral-400" />
-                            <h2 className="text-3xl font-semibold text-neutral-600">{t("noDashboardsTitle")}</h2>
+                            <LuCircleOff className="size-15 text-neutral-400 md:size-20" />
+                            <h2 className="text-center text-xl font-semibold whitespace-pre text-neutral-600 md:text-3xl">
+                                {t("noDashboardsTitle")}
+                            </h2>
                         </div>
-                        <p className="text-lg text-neutral-600">{t("noDashboardsSubtitle")}</p>
+                        <p className="text-sm text-neutral-600 md:text-lg">{t("noDashboardsSubtitle")}</p>
                         <Link
-                            className="flex w-1/3 cursor-pointer flex-row items-center justify-center space-x-3 rounded-md border border-blue-400 bg-blue-500 py-4 shadow hover:bg-blue-600"
+                            className="flex w-full cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border border-blue-400 bg-blue-500 py-4 shadow hover:bg-blue-600 md:w-1/3 md:space-x-3"
                             href="/app/dashboard/create"
                         >
-                            <LuCirclePlus size={30} className="text-white" />
-                            <span className="text-lg font-semibold text-white">{t("createDashboard")}</span>
+                            <LuCirclePlus className="size-5 text-white md:size-8" />
+                            <span className="text-sm font-semibold text-white md:text-lg">{t("createDashboard")}</span>
                         </Link>
                     </div>
                 </div>
