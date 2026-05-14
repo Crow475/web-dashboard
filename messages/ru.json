@@ -134,5 +134,9 @@
         "invalidSession": "Неверная сессия",
         "invalidProfile": "Неверный профиль"
     },
-    "profile": {}
+    "profile": {
+        "edit": "Изменить",
+        "yourDashboards": "Ваши дэшборды:",
+        "commonDashboards": "Общие дэшборды:"
+    }
 }

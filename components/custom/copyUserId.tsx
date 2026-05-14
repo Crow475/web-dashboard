@@ -17,7 +17,7 @@ export default function CopyUserId({ userId }: { userId: string }) {
 
     return (
         <button
-            className="flex cursor-pointer flex-row items-center justify-start space-x-1 rounded-md bg-neutral-100 px-2 py-1 text-sm text-neutral-500"
+            className="flex cursor-pointer flex-row items-center justify-start space-x-1 rounded-md bg-neutral-100 px-2 py-1 text-xs text-neutral-500 md:text-sm"
             onClick={handleCopy}
         >
             {copied ? <LuCheck /> : <LuCopy />}

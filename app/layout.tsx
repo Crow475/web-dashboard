@@ -16,7 +16,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${geistSans.className} h-full antialiased`}>
+        <html lang="en" className={`${geistSans.className} h-svh antialiased`}>
             <body className="w-full">
                 <NextIntlClientProvider>{children}</NextIntlClientProvider>
             </body>
