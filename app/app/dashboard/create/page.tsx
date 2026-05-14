@@ -20,12 +20,15 @@ export default function CreateDashboardPage() {
     const t = useTranslations("createDashboard");
 
     return (
-        <div className="flex h-screen w-full flex-col items-center justify-center bg-linear-to-tl from-blue-400 via-blue-300 via-10% to-white to-40%">
-            <main className="flex h-[90%] w-[40%] flex-col rounded-lg border border-neutral-200 bg-white pt-2 shadow">
+        <div className="flex h-screen w-full flex-col items-center justify-center bg-linear-to-tl from-blue-400 via-blue-300 via-10% to-white to-50% md:to-40%">
+            <main className="flex h-[70%] w-[90%] flex-col rounded-lg border border-neutral-200 bg-white pt-2 shadow md:h-[90%] md:w-[40%]">
                 <div className="flex w-full flex-row items-center justify-center">
-                    <h1 className="p-4 text-4xl font-semibold">{t("pageTitle")}</h1>
+                    <h1 className="p-4 text-2xl font-semibold md:text-4xl">{t("pageTitle")}</h1>
                 </div>
-                <form className="flex h-full flex-col items-center justify-between px-10 py-5" action={formAction}>
+                <form
+                    className="flex h-full flex-col items-center justify-between px-5 py-5 md:px-10"
+                    action={formAction}
+                >
                     <div className="flex w-[90%] flex-col items-start justify-start space-y-2">
                         <div className="flex w-full flex-row items-center justify-start">
                             <IconPicker
@@ -68,7 +71,7 @@ export default function CreateDashboardPage() {
                         </div>
                         <div className="flex w-full flex-col items-start justify-start space-y-1">
                             <div className="flex w-full flex-row items-center justify-between">
-                                <label htmlFor="isPrivate" className="mr-2">
+                                <label htmlFor="isPrivate" className="mr-2 text-sm md:text-base">
                                     {t("private")}
                                 </label>
                                 <input
@@ -79,7 +82,7 @@ export default function CreateDashboardPage() {
                                     defaultChecked={state.messages.isPrivate}
                                 />
                             </div>
-                            <p className="px-3 text-xs text-neutral-500">{t("privateDescription")}</p>
+                            <p className="px-3 text-[0.7rem] text-neutral-500 md:text-xs">{t("privateDescription")}</p>
                             <div className="min-h-6">
                                 {state.errors?.isPrivate && (
                                     <span className="text-xs text-red-500/50">{state.errors.isPrivate.join(", ")}</span>

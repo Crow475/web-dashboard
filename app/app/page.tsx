@@ -62,14 +62,16 @@ export default async function Home() {
                             <span className="text-base font-semibold md:text-lg">{t("createNew")}</span>
                         </Link>
                     )}
-                    <div className="col-span-2 hidden h-[80svh] w-full flex-col items-center justify-around rounded-xl bg-neutral-50 px-5 py-6 only:flex md:px-10 md:py-10">
-                        <div className="flex flex-col items-center justify-center space-y-4">
-                            <LuCircleOff className="size-15 text-neutral-400 md:size-20" />
-                            <h2 className="text-center text-xl font-semibold whitespace-pre text-neutral-600 md:text-3xl">
-                                {t("noDashboardsTitle")}
-                            </h2>
+                    <div className="col-span-2 hidden h-[80svh] w-full flex-col items-center justify-between rounded-xl bg-neutral-50 px-5 py-6 only:flex md:px-10 md:py-10">
+                        <div className="flex h-3/4 flex-col items-center justify-center space-y-10">
+                            <div className="flex flex-col items-center justify-center space-y-4">
+                                <LuCircleOff className="size-15 text-neutral-400 md:size-20" />
+                                <h2 className="text-center text-xl font-semibold whitespace-pre text-neutral-600 md:text-3xl">
+                                    {t("noDashboardsTitle")}
+                                </h2>
+                            </div>
+                            <p className="text-sm text-neutral-400 md:text-lg">{t("noDashboardsSubtitle")}</p>
                         </div>
-                        <p className="text-sm text-neutral-600 md:text-lg">{t("noDashboardsSubtitle")}</p>
                         <Link
                             className="flex w-full cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border border-blue-400 bg-blue-500 py-4 shadow hover:bg-blue-600 md:w-1/3 md:space-x-3"
                             href="/app/dashboard/create"
