@@ -1,15 +1,19 @@
 "use server";
 
+import type { actionState } from "@/lib/types";
+
 import { z } from "zod";
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { isAPIError } from "better-auth/api";
 
-export type SignInActionState = {
-    email?: string;
-    passsword?: string;
-    response?: Response;
+export type SignInActionState = actionState & {
+    messages: {
+        email?: string;
+        passsword?: string;
+        response?: Response;
+    };
     errors?: {
         email?: string[];
         password?: string[];
@@ -34,8 +38,10 @@ export async function signIn(_prevState: SignInActionState, formData: FormData):
 
     if (!validatedData.success) {
         return {
-            email: email,
-            passsword: password,
+            messages: {
+                email: email,
+                passsword: password,
+            },
             errors: validatedData.error.flatten().fieldErrors,
         };
     }
@@ -56,8 +62,10 @@ export async function signIn(_prevState: SignInActionState, formData: FormData):
             }
 
             return {
-                email: email,
-                passsword: password,
+                messages: {
+                    email: email,
+                    passsword: password,
+                },
                 errors: {
                     password: [t(error.body?.code ?? "UNKNOWN_ERROR")],
                 },
@@ -71,8 +79,10 @@ export async function signIn(_prevState: SignInActionState, formData: FormData):
         });
 
         return {
-            email: email,
-            passsword: password,
+            messages: {
+                email: email,
+                passsword: password,
+            },
             errors: {
                 password: [t("UNKNOWN_ERROR")],
             },

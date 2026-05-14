@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 
 export default function SignInForm() {
     const t = useTranslations("signIn");
-    const [state, formAction, pending] = useActionState(signIn, {});
+    const [state, formAction, pending] = useActionState(signIn, { messages: {}, errors: {} });
 
     return (
         <form className="flex h-full w-[80%] flex-col items-center justify-between" action={formAction}>
@@ -36,7 +36,7 @@ export default function SignInForm() {
                             className="flex w-[90%] py-1 text-sm focus:outline-0 md:text-base"
                             required
                             data-error={state.errors?.email ? true : false}
-                            defaultValue={state.email}
+                            defaultValue={state.messages.email}
                             aria-invalid={state.errors?.email ? true : false}
                             placeholder="user@example.com"
                         />
@@ -61,7 +61,7 @@ export default function SignInForm() {
                             className="flex w-[90%] py-1 text-sm focus:outline-0 md:text-base"
                             required
                             data-error={state.errors?.password ? true : false}
-                            defaultValue={state.passsword}
+                            defaultValue={state.messages.passsword}
                             aria-invalid={state.errors?.password ? true : false}
                             placeholder="○○○○○○○○"
                         />

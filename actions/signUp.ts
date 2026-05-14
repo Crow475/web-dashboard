@@ -6,12 +6,16 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { APIError, isAPIError } from "better-auth/api";
 
-export type SignUpActionState = {
-    email?: string;
-    username?: string;
-    password?: string;
-    passwordConfirmation?: string;
-    profileIcon?: string;
+import type { actionState } from "@/lib/types";
+
+export type SignUpActionState = actionState & {
+    messages: {
+        email?: string;
+        username?: string;
+        password?: string;
+        passwordConfirmation?: string;
+        profileIcon?: string;
+    };
     errors?: {
         email?: string[];
         username?: string[];
@@ -43,7 +47,7 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
     const passwordConfirmation = formData.get("repeatPassword") as string;
     const profileIcon = formData.get("profileIcon") as string;
 
-    console.log("Received form data:", { email, username, password, passwordConfirmation });
+    console.log("Received form data:", { email, username, password, passwordConfirmation, profileIcon });
 
     const validatedData = signUpSchema.safeParse({
         email,
@@ -57,11 +61,13 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
         console.log("Validation errors:", validatedData.error.flatten().fieldErrors);
 
         return {
-            email: email,
-            username: username,
-            password: password,
-            passwordConfirmation: passwordConfirmation,
-            profileIcon: profileIcon,
+            messages: {
+                email: email,
+                username: username,
+                password: password,
+                passwordConfirmation: passwordConfirmation,
+                profileIcon: profileIcon,
+            },
             errors: validatedData.error.flatten().fieldErrors,
         };
     }
@@ -89,11 +95,13 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
             apiError = error;
 
             return {
-                email: email,
-                username: username,
-                password: password,
-                passwordConfirmation: passwordConfirmation,
-                profileIcon: profileIcon,
+                messages: {
+                    email: email,
+                    username: username,
+                    password: password,
+                    passwordConfirmation: passwordConfirmation,
+                    profileIcon: profileIcon,
+                },
                 errors: {
                     email: [t(apiError.body?.code ?? "UNKNOWN_ERROR")],
                 },
@@ -101,11 +109,13 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
         }
 
         return {
-            email: email,
-            username: username,
-            password: password,
-            passwordConfirmation: passwordConfirmation,
-            profileIcon: profileIcon,
+            messages: {
+                email: email,
+                username: username,
+                password: password,
+                passwordConfirmation: passwordConfirmation,
+                profileIcon: profileIcon,
+            },
             errors: {
                 email: [t("UNKNOWN_ERROR")],
             },
@@ -115,11 +125,13 @@ export async function signUp(_prevState: SignUpActionState, formData: FormData):
             redirect("/verify-email?email=" + email);
         }
         return {
-            email: email,
-            username: username,
-            password: password,
-            passwordConfirmation: passwordConfirmation,
-            profileIcon: profileIcon,
+            messages: {
+                email: email,
+                username: username,
+                password: password,
+                passwordConfirmation: passwordConfirmation,
+                profileIcon: profileIcon,
+            },
             errors: {
                 email: [t(apiError?.body?.code ?? "UNKNOWN_ERROR")],
             },

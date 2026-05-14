@@ -48,7 +48,8 @@
         "title": "Your dashboards",
         "noDashboardsTitle": "Nothing to see here :(",
         "noDashboardsSubtitle": "No dashboards found. Create a new one by clicking the button below.",
-        "createDashboard": "Create your first dashboard"
+        "createDashboard": "Create your first dashboard",
+        "createNew": "Create new dashboard"
     },
     "signUp": {
         "title": "Sign Up",
@@ -113,6 +114,24 @@
             "label": "Language",
             "description": "Select your preferred interface language. (Affects only the current session)"
         }
+    },
+    "createDashboard": {
+        "pageTitle": "New dashboard",
+        "icon": "Icon",
+        "title": "Title",
+        "titlePlaceholder": "My dashboard",
+        "private": "Private dashboard",
+        "privateDescription": "Make the dashboard private. Only you will be able to see it. You won't be able to add collaborators.",
+        "cancel": "Cancel",
+        "submit": "Create",
+        "invalidTitle": "Invalid title",
+        "titleTooShort": "Title must be at least 4 characters long",
+        "titleTooLong": "Title must be no more than 63 characters long",
+        "invalidPrivate": "Invalid private dashboard",
+        "invalidIcon": "Invalid icon",
+        "invalidUserId": "Invalid user ID",
+        "invalidSession": "Invalid session",
+        "invalidProfile": "Invalid profile"
     },
     "profile": {}
 }

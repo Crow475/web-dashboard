@@ -68,10 +68,10 @@ export function AppSidebar({ profile }: { profile: Profile }) {
                     <SidebarMenu>
                         <SidebarMenuItem>
                             <SidebarMenuButton asChild>
-                                <button>
+                                <Link href="/app/dashboard/create">
                                     <LuCirclePlus />
                                     {t("newDashboard")}
-                                </button>
+                                </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     </SidebarMenu>
