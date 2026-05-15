@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { useTranslations } from "next-intl";
@@ -19,6 +20,20 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogMedia,
+    AlertDialogFooter,
+    AlertDialogCancel,
+    AlertDialogAction,
+    AlertDialogTitle,
+    AlertDialogDescription,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+
+import { deleteDashboard } from "@/actions/deleteDashboard";
 
 export default function DashboardListItem({
     title,
@@ -36,7 +51,20 @@ export default function DashboardListItem({
     icon: string;
 }) {
     const [linkHovered, setLinkHovered] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const t = useTranslations("component.dashboardCard");
+    const router = useRouter();
+
+    async function handleDelete() {
+        const result = await deleteDashboard(uuidToShort(id));
+
+        if (result) {
+            router.refresh();
+            toast.success(t("deleteDialog.success") + '"' + result.deletedTitle + '"');
+        } else {
+            toast.error(t("deleteDialog.failure"));
+        }
+    }
 
     return (
         <div
@@ -85,7 +113,7 @@ export default function DashboardListItem({
                                 <LuSquarePen size={16} />
                                 <span>{t("rename")}</span>
                             </DropdownMenuItem>
-                            <DropdownMenuItem variant="destructive">
+                            <DropdownMenuItem variant="destructive" onSelect={() => setDeleteDialogOpen(true)}>
                                 <LuTrash2 size={16} />
                                 <span>{t("delete")}</span>
                             </DropdownMenuItem>
@@ -115,6 +143,31 @@ export default function DashboardListItem({
                     {t("open")}
                 </span>
             </Link>
+            <AlertDialog open={deleteDialogOpen} onOpenChange={() => setDeleteDialogOpen(!deleteDialogOpen)}>
+                <AlertDialogContent size="sm">
+                    <AlertDialogHeader>
+                        <AlertDialogMedia>
+                            <span
+                                className={`${notoColorEmoji.className} text-2xl select-none md:text-4xl`}
+                                role="img"
+                                aria-label={t("icon")}
+                            >
+                                {icon}
+                            </span>
+                        </AlertDialogMedia>
+                    </AlertDialogHeader>
+                    <AlertDialogTitle className="text-center">{t("deleteDialog.title")}</AlertDialogTitle>
+                    <AlertDialogDescription className="text-center">
+                        {t("deleteDialog.paragraph")} &quot;<strong>{title}</strong>&quot;?
+                    </AlertDialogDescription>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>{t("deleteDialog.cancel")}</AlertDialogCancel>
+                        <AlertDialogAction variant="destructive" onClick={() => handleDelete()}>
+                            {t("deleteDialog.delete")}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }

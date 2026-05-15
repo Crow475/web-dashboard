@@ -60,6 +60,7 @@ export default function CreateDashboardPage() {
                                     defaultValue={state.messages.title}
                                     aria-invalid={state.errors?.title ? true : false}
                                     placeholder={t("titlePlaceholder")}
+                                    autoComplete="off"
                                     required
                                 />
                             </label>

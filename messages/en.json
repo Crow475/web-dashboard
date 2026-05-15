@@ -14,7 +14,15 @@
             "rename": "Rename",
             "options": "Options",
             "open": "Open dashboard",
-            "icon": "Dashboard icon"
+            "icon": "Dashboard icon",
+            "deleteDialog": {
+                "title": "Delete dashboard?",
+                "paragraph": "Are you sure you want to delete dashboard ",
+                "cancel": "Cancel",
+                "delete": "Delete",
+                "success": "Deleted dashboard ",
+                "failure": "Failed to delete dashboard"
+            }
         }
     },
     "landing": {

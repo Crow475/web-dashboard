@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { NextIntlClientProvider } from "next-intl";
+import { Toaster } from "@/components/ui/sonner";
 
 import { geistSans } from "@/lib/fonts";
 
@@ -18,7 +19,10 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${geistSans.className} h-svh antialiased`}>
             <body className="w-full">
-                <NextIntlClientProvider>{children}</NextIntlClientProvider>
+                <NextIntlClientProvider>
+                    {children}
+                    <Toaster />
+                </NextIntlClientProvider>
             </body>
         </html>
     );
