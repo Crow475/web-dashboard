@@ -134,6 +134,25 @@
         "invalidSession": "Неверная сессия",
         "invalidProfile": "Неверный профиль"
     },
+    "dashboard": {
+        "edit": "Изменить"
+    },
+    "editDashboard": {
+        "cancel": "Отмена",
+        "submit": "Сохранить",
+        "title": "Название",
+        "icon": "Иконка",
+        "sidePanel": "Открыть/закрыть боковую панель",
+        "widgets": "Виджеты",
+        "settings": "Настройки",
+        "users": "Люди",
+        "moveRowUp": "Поднять ряд",
+        "moveRowDown": "Опустить ряд",
+        "deleteRow": "Удалить ряд",
+        "addRow": "Добавить ряд",
+        "private": "Приватный",
+        "privateDescription": "Удаляет всех участников и сделает дэшборд приватным."
+    },
     "profile": {
         "edit": "Изменить",
         "yourDashboards": "Ваши дэшборды:",

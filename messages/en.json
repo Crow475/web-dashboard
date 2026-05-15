@@ -134,6 +134,25 @@
         "invalidSession": "Invalid session",
         "invalidProfile": "Invalid profile"
     },
+    "dashboard": {
+        "edit": "Edit"
+    },
+    "editDashboard": {
+        "cancel": "Cancel",
+        "submit": "Save",
+        "title": "Title",
+        "icon": "Icon",
+        "sidePanel": "Open/close side panel",
+        "widgets": "Widgets",
+        "settings": "Settings",
+        "users": "Users",
+        "moveRowUp": "Move row up",
+        "moveRowDown": "Move row down",
+        "deleteRow": "Delete row",
+        "addRow": "Add row",
+        "private": "Private",
+        "privateDescription": "Removes all collaborators and makes the dashboard private."
+    },
     "profile": {
         "edit": "Edit",
         "yourDashboards": "Your dashboards:",

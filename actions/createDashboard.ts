@@ -7,7 +7,7 @@ import { auth } from "@/lib/auth";
 import { dataDB } from "@/db/drizzle";
 import { dashboards } from "@/db/data/schema";
 
-import type { actionState } from "@/lib/types";
+import type { actionState, dashboardProps } from "@/lib/types";
 import uuidToShort from "@/lib/uuidToShort";
 import getProfileOfUser from "@/actions/getProfileOfUser";
 
@@ -103,6 +103,12 @@ export async function createDashboard(
 
     console.log("Creating dashboard:", validatedData.data);
 
+    const props: dashboardProps = {
+        rows: 4,
+        elements: [],
+        preferences: {},
+    };
+
     const result = await dataDB
         .insert(dashboards)
         .values({
@@ -110,7 +116,7 @@ export async function createDashboard(
             isPrivate: validatedData.data.isPrivate,
             icon: validatedData.data.icon,
             ownerId: validatedData.data.profileId,
-            properties: {},
+            properties: JSON.stringify(props),
         })
         .returning({
             createdId: dashboards.dashboardId,
