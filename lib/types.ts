@@ -1,4 +1,5 @@
 import getDashboard from "@/actions/getDashboard";
+import React from "react";
 
 type messages = {
     [key: string]: string | boolean;
@@ -19,6 +20,7 @@ export type dashboardElement = {
     };
     type: string;
     content: unknown;
+    component: React.ReactElement;
 };
 
 export type dashboardProps = {

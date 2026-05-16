@@ -159,7 +159,14 @@
         "deleteRow": "Delete row",
         "addRow": "Add row",
         "private": "Private",
-        "privateDescription": "Removes all collaborators and makes the dashboard private."
+        "privateDescription": "Removes all collaborators and makes the dashboard private.",
+        "delteTarget": "Delete",
+        "deleteDialog": {
+            "title": "Delete row?",
+            "paragraph": "This row contains widgets. They will be deleted as well.",
+            "cancel": "Cancel",
+            "delete": "Delete"
+        }
     },
     "profile": {
         "edit": "Edit",
