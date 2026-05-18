@@ -1,3 +1,5 @@
+import React from "react";
+
 import { notFound, forbidden } from "next/navigation";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -6,12 +8,28 @@ import { auth } from "@/lib/auth";
 
 import { LuPencil } from "react-icons/lu";
 
+import type { dashboardProps, dashboardElement } from "@/lib/types";
+
 import getDashboard from "@/actions/getDashboard";
 import getProfileOfUser from "@/actions/getProfileOfUser";
 
 import { notoColorEmoji } from "@/lib/fonts";
 
 import { getTranslations } from "next-intl/server";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+import WidgetRegular from "@/components/custom/widgetRegular";
+
+function ElementAtPosition({ row, col, props }: { row: number; col: number; props: dashboardProps }) {
+    const element = props.elements.find((element) => element.position.row === row && element.position.col === col);
+
+    if (!element) {
+        return null;
+    }
+
+    return <WidgetRegular widget={element} />;
+}
 
 export default async function DashboardPage({ params }: { params: { id: string } }) {
     const { id } = await params;
@@ -38,6 +56,10 @@ export default async function DashboardPage({ params }: { params: { id: string }
         notFound();
     }
 
+    const props = dashboard.properties as dashboardProps;
+
+    const mockRows = Array.from({ length: props.rows }, (_, i) => i + 1);
+
     return (
         <div className="flex h-svh w-full flex-col items-center justify-start">
             <header className="flex w-[98%] flex-row items-center justify-between border-b border-neutral-300 px-4 py-4">
@@ -57,7 +79,31 @@ export default async function DashboardPage({ params }: { params: { id: string }
                     </Link>
                 </div>
             </header>
-            <div className="grid grid-cols-2"></div>
+            <div className="flex w-full flex-row items-center justify-center pr-4">
+                <ScrollArea className="flex h-[88vh] w-full flex-col items-center justify-start px-4">
+                    <div className="h-5 w-full" role="presentation"></div>
+                    <div className="absolute bottom-0 left-0 z-10 h-3 w-[99%] bg-linear-to-t from-white to-transparent"></div>
+                    <div className="grid w-full grid-cols-2 gap-2">
+                        {mockRows.map((row) => (
+                            <React.Fragment key={row}>
+                                <div
+                                    id={`${row}-1`}
+                                    className="flex h-[50vh] w-full rounded-xl border border-neutral-100 empty:border-transparent"
+                                >
+                                    <ElementAtPosition row={row} col={1} props={props} />
+                                </div>
+                                <div
+                                    id={`${row}-2`}
+                                    className="flex h-[50vh] w-full rounded-xl border border-neutral-100 empty:border-transparent"
+                                >
+                                    <ElementAtPosition row={row} col={2} props={props} />
+                                </div>
+                            </React.Fragment>
+                        ))}
+                    </div>
+                    <div className="h-10 w-full" role="presentation"></div>
+                </ScrollArea>
+            </div>
         </div>
     );
 }

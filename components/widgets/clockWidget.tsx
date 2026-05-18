@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useContext } from "react";
 import { WidgetDataContex } from "@/components/custom/widget";
+import { WidgetDataContexRegular } from "@/components/custom/widgetRegular";
 
 import { useTranslations } from "next-intl";
 
@@ -86,7 +87,30 @@ function ClockSettings() {
 }
 
 function ClockRegular() {
-    return <ClockExpanded />;
+    const [time, setTime] = useState(new Date());
+    const value = useContext(WidgetDataContexRegular);
+    const state = value.widgetProps as clockProps;
+
+    useEffect(() => {
+        setInterval(() => setTime(new Date()), 1000);
+    }, []);
+
+    return (
+        <div className="flex h-full w-full flex-col items-center justify-center rounded-xl bg-white">
+            {state.showSeconds === "true" ? (
+                <span className="text-3xl">
+                    {time.toLocaleString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+                </span>
+            ) : (
+                <span className="text-5xl">{time.toLocaleString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span>
+            )}
+            {state.showDate === "true" && (
+                <span className="text-lg">
+                    {time.toLocaleString("en-GB", { weekday: "long", month: "long", day: "numeric" })}
+                </span>
+            )}
+        </div>
+    );
 }
 
 export const ClockWidget: widgetCombo = {

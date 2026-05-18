@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -61,7 +61,9 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                     isDropped
                     type={element.type as WidgetType}
                     defaultProps={element.content}
-                    onPropsChange={(newProps) => handlePropsChange(element.id, newProps)}
+                    onPropsChange={(newProps) =>
+                        handlePropsChange(`${element.position.row}-${element.position.col}-${element.id}`, newProps)
+                    }
                 />
             ),
         };
@@ -72,6 +74,12 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
     const [privateDashboard, setPrivateDashboard] = useState(defaultPrivate);
     const [rowCount, setRowCount] = useState(properties.rows);
     const [elements, setElements] = useState<dashboardElement[]>(defaultElements);
+
+    const elementsRef = useRef(elements);
+
+    useEffect(() => {
+        elementsRef.current = elements;
+    }, [elements]);
 
     const [sidePanelOpen, setSidePanelOpen] = useState(false);
     const [lastOpenTab, setLastOpenTab] = useState("widgets");
@@ -84,18 +92,25 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
     const mockRows = Array.from({ length: rowCount }, (_, i) => i + 1);
 
     function handlePropsChange(elementId: string, newProps: { [key: string]: string }) {
-        const elementToUpdate = elements.find((element) => element.id === elementId);
+        const elementRow = parseInt(elementId.split("-")[0]);
+        const elementCol = parseInt(elementId.split("-")[1]);
+        const elementUnique = elementId.split("-")[2];
+
+        const currentElements = elementsRef.current;
+
+        const elementToUpdate = currentElements.find((element) => element.id === elementUnique);
 
         if (!elementToUpdate) {
             return;
         }
 
-        elementToUpdate.content = newProps;
+        const updated = {
+            ...elementToUpdate,
+            content: newProps,
+            position: { row: elementRow, col: elementCol },
+        };
 
-        const newElements = [...elements].filter((element) => element.id !== elementId);
-        newElements.push(elementToUpdate);
-
-        setElements(newElements);
+        setElements([...currentElements.filter((el) => el.id !== elementUnique), updated]);
     }
 
     async function handleSubmit() {
@@ -302,7 +317,9 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                             id={posRow + "-" + posCol + "-" + sourceUnique}
                                             type={event.operation.source?.data.type as WidgetType}
                                             defaultProps={event.operation.source?.data.props}
-                                            onPropsChange={(newProps) => handlePropsChange(sourceUnique, newProps)}
+                                            onPropsChange={(newProps) =>
+                                                handlePropsChange(`${posRow}-${posCol}-${sourceUnique}`, newProps)
+                                            }
                                         />
                                     ),
                                 },
@@ -327,6 +344,8 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                 return;
                             }
 
+                            const newId = posRow + "-" + posCol + "-" + newUnique;
+
                             const newElements = [
                                 ...elements,
                                 {
@@ -340,10 +359,10 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                     component: (
                                         <Widget
                                             isDropped
-                                            id={posRow + "-" + posCol + "-" + newUnique}
+                                            id={newId}
                                             type={event.operation.source?.data.type as WidgetType}
                                             defaultProps={event.operation.source?.data.props}
-                                            onPropsChange={(newProps) => handlePropsChange(newUnique, newProps)}
+                                            onPropsChange={(newProps) => handlePropsChange(newId, newProps)}
                                         />
                                     ),
                                 },
@@ -453,7 +472,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                             type={WidgetType.TEST}
                                             defaultProps={{}}
                                             onPropsChange={(newProps) =>
-                                                handlePropsChange(decimalTranslator.generate(), newProps)
+                                                handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                             }
                                         />
                                         <Widget
@@ -461,7 +480,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                             type={WidgetType.CLOCK}
                                             defaultProps={{}}
                                             onPropsChange={(newProps) =>
-                                                handlePropsChange(decimalTranslator.generate(), newProps)
+                                                handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                             }
                                         />
                                     </div>
