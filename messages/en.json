@@ -23,6 +23,20 @@
                 "success": "Deleted dashboard ",
                 "failure": "Failed to delete dashboard"
             }
+        },
+        "widgets": {
+            "general": {
+                "settings": "Settings",
+                "fullScreen": "Full screen"
+            },
+            "clock": {
+                "title": "Clock",
+                "showSeconds": "Show seconds",
+                "showDate": "Show date"
+            },
+            "test": {
+                "title": "Test"
+            }
         }
     },
     "landing": {
@@ -166,7 +180,21 @@
             "paragraph": "This row contains widgets. They will be deleted as well.",
             "cancel": "Cancel",
             "delete": "Delete"
-        }
+        },
+        "errors": {
+            "auth": "Authentication error:",
+            "INVALID_SESSION": "Invalid session",
+            "INVALID_PROFILE": "Invalid profile",
+            "INVALID_DASHBOARD": "Invalid dashboard",
+            "NO_ACCESS": "No access",
+            "DB_ERROR": "Database error",
+            "TITLE_TOO_SHORT": "Title must be at least 4 characters long",
+            "TITLE_TOO_LONG": "Title must be no more than 63 characters long",
+            "INVALID_ICON": "Invalid icon",
+            "INVALID_PRIVATE": "Invalid private dashboard",
+            "INVALID_TITLE": "Invalid title"
+        },
+        "success": "Successfully updated dashboard"
     },
     "profile": {
         "edit": "Edit",

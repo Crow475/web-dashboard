@@ -150,7 +150,7 @@ export default function WidgetSlot({
     if (odd) {
         return (
             <div
-                className="relative flex h-[40vh] w-full rounded-xl border border-neutral-100 bg-white shadow-inner"
+                className="relative flex h-[50vh] w-full rounded-xl border border-neutral-100 bg-white shadow-inner"
                 ref={ref}
             >
                 {children}
@@ -185,7 +185,7 @@ export default function WidgetSlot({
             <HoverCard>
                 <HoverCardTrigger asChild>
                     <div
-                        className="relative flex h-[40vh] w-full rounded-xl border border-neutral-100 bg-white shadow-inner"
+                        className="relative flex h-[50vh] w-full rounded-xl border border-neutral-100 bg-white shadow-inner"
                         ref={ref}
                     >
                         {children}

@@ -16,7 +16,7 @@ export default function DeleteTarget({ show }: { show: boolean }) {
 
     return (
         <div
-            className="absolute top-0 z-10 flex h-[99%] w-[90%] flex-col items-center justify-center rounded-lg bg-linear-to-t from-red-100/50 to-neutral-100/50 to-40% outline-4 outline-neutral-300 backdrop-blur-xs"
+            className="absolute top-0 z-10 flex h-[99%] w-[90%] flex-col items-center justify-center rounded-lg bg-linear-to-t from-red-200/50 via-red-100/50 via-5% to-neutral-100/50 to-40% outline-4 outline-neutral-300 backdrop-blur-xs"
             ref={ref}
         >
             <LuTrash2 className="size-10 text-neutral-300" />

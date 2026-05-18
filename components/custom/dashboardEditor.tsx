@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import EmojiPicker from "emoji-picker-react";
 import { EmojiStyle } from "emoji-picker-react";
@@ -14,6 +15,7 @@ import { useTranslations } from "next-intl";
 import { createTranslator } from "short-uuid";
 
 import type { dashboardSelectReturn, dashboardProps, dashboardElement } from "@/lib/types";
+import { WidgetType } from "@/lib/widgetRegistry";
 import { notoColorEmoji } from "@/lib/fonts";
 import uuidToShort from "@/lib/uuidToShort";
 
@@ -21,11 +23,12 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
 
 import WidgetSlot from "@/components/custom/widgetSlot";
 import DeleteTarget from "@/components/custom/deleteTarget";
 
-import DragElement from "../dragElement";
+import Widget from "@/components/custom/widget";
 
 import {
     LuCheck,
@@ -39,15 +42,36 @@ import {
     LuUsers,
 } from "react-icons/lu";
 
+import { updateDashboard, dashboardData } from "@/actions/updateDashboard";
+
 export default function DashboardEditor({ dashboard }: { dashboard: dashboardSelectReturn }) {
+    const router = useRouter();
     const properties = dashboard.properties as dashboardProps;
     const defaultPrivate: boolean = dashboard.isPrivate ? true : false;
 
+    const defaultElements: dashboardElement[] = properties.elements.map((element) => {
+        return {
+            id: element.id,
+            position: element.position,
+            type: element.type,
+            content: element.content,
+            component: (
+                <Widget
+                    id={`${element.position.row}-${element.position.col}-${element.id}`}
+                    isDropped
+                    type={element.type as WidgetType}
+                    defaultProps={element.content}
+                    onPropsChange={(newProps) => handlePropsChange(element.id, newProps)}
+                />
+            ),
+        };
+    });
+
     const [title, setTitle] = useState(dashboard.title);
-    const [icon, setIcon] = useState(dashboard.icon);
+    const [icon, setIcon] = useState(dashboard.icon?.trim());
     const [privateDashboard, setPrivateDashboard] = useState(defaultPrivate);
     const [rowCount, setRowCount] = useState(properties.rows);
-    const [elements, setElements] = useState<dashboardElement[]>([]);
+    const [elements, setElements] = useState<dashboardElement[]>(defaultElements);
 
     const [sidePanelOpen, setSidePanelOpen] = useState(false);
     const [lastOpenTab, setLastOpenTab] = useState("widgets");
@@ -58,6 +82,68 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
     const decimalTranslator = createTranslator("0123456789");
 
     const mockRows = Array.from({ length: rowCount }, (_, i) => i + 1);
+
+    function handlePropsChange(elementId: string, newProps: { [key: string]: string }) {
+        const elementToUpdate = elements.find((element) => element.id === elementId);
+
+        if (!elementToUpdate) {
+            return;
+        }
+
+        elementToUpdate.content = newProps;
+
+        const newElements = [...elements].filter((element) => element.id !== elementId);
+        newElements.push(elementToUpdate);
+
+        setElements(newElements);
+    }
+
+    async function handleSubmit() {
+        const data: dashboardData = {
+            title: title,
+            icon: icon ?? "",
+            private: privateDashboard,
+            props: {
+                rows: rowCount,
+                elements: elements,
+                preferences: {},
+            },
+        };
+
+        console.log(data);
+
+        const result = await updateDashboard(dashboard.dashboardId, data);
+
+        if (!result.success) {
+            if (result.errors) {
+                if (result.errors.auth) {
+                    toast.error(t("errors.auth") + " " + t(`errors.${result.errors.auth[0]}`));
+                    return;
+                }
+                if (result.errors.db) {
+                    toast.error(t(`errors.${result.errors.db[0]}`));
+                    return;
+                }
+                if (result.errors.title) {
+                    toast.error(t(`errors.${result.errors.title[0]}`));
+                    return;
+                }
+                if (result.errors.icon) {
+                    toast.error(t(`errors.${result.errors.icon[0]}`));
+                    return;
+                }
+                if (result.errors.private) {
+                    toast.error(t(`errors.${result.errors.private[0]}`));
+                    return;
+                }
+            }
+
+            return;
+        }
+
+        router.push(`/app/dashboard/${uuidToShort(dashboard.dashboardId)}`);
+        toast.success(t("success") + ' "' + data.title + '"');
+    }
 
     return (
         <div className="flex w-full flex-col items-center justify-start">
@@ -122,7 +208,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                     </Link>
                     <button
                         className="flex cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-blue-400 bg-blue-500 px-4 py-2 text-white shadow hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-300 md:text-sm"
-                        onClick={() => console.log(elements)}
+                        onClick={() => handleSubmit()}
                     >
                         <span className="text-xs md:text-sm">{t("submit")}</span>
                         <LuCheck className="size-3" />
@@ -209,12 +295,14 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                         col: posCol,
                                     },
                                     type: event.operation.source?.data.type,
-                                    content: "test",
+                                    content: event.operation.source?.data.props,
                                     component: (
-                                        <DragElement
+                                        <Widget
                                             isDropped
-                                            isDragging={isDragging}
                                             id={posRow + "-" + posCol + "-" + sourceUnique}
+                                            type={event.operation.source?.data.type as WidgetType}
+                                            defaultProps={event.operation.source?.data.props}
+                                            onPropsChange={(newProps) => handlePropsChange(sourceUnique, newProps)}
                                         />
                                     ),
                                 },
@@ -248,12 +336,14 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                         col: posCol,
                                     },
                                     type: event.operation.source?.data.type,
-                                    content: "test",
+                                    content: event.operation.source?.data.props,
                                     component: (
-                                        <DragElement
+                                        <Widget
                                             isDropped
-                                            isDragging={isDragging}
                                             id={posRow + "-" + posCol + "-" + newUnique}
+                                            type={event.operation.source?.data.type as WidgetType}
+                                            defaultProps={event.operation.source?.data.props}
+                                            onPropsChange={(newProps) => handlePropsChange(newUnique, newProps)}
                                         />
                                     ),
                                 },
@@ -358,8 +448,22 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                 <TabsContent value="widgets">
                                     <div className="relative flex h-full w-full flex-col items-start justify-start space-y-2 px-4">
                                         <DeleteTarget show={showDelete && isDragging} />
-                                        <DragElement id={`0-0-${decimalTranslator.generate()}`} />
-                                        <DragElement id={`0-0-${decimalTranslator.generate()}`} />
+                                        <Widget
+                                            id={`0-0-${decimalTranslator.generate()}`}
+                                            type={WidgetType.TEST}
+                                            defaultProps={{}}
+                                            onPropsChange={(newProps) =>
+                                                handlePropsChange(decimalTranslator.generate(), newProps)
+                                            }
+                                        />
+                                        <Widget
+                                            id={`0-0-${decimalTranslator.generate()}`}
+                                            type={WidgetType.CLOCK}
+                                            defaultProps={{}}
+                                            onPropsChange={(newProps) =>
+                                                handlePropsChange(decimalTranslator.generate(), newProps)
+                                            }
+                                        />
                                     </div>
                                 </TabsContent>
                                 <TabsContent value="settings">

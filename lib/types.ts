@@ -19,7 +19,7 @@ export type dashboardElement = {
         col: number;
     };
     type: string;
-    content: unknown;
+    content: { [key: string]: string };
     component: React.ReactElement;
 };
 
@@ -29,6 +29,14 @@ export type dashboardProps = {
     preferences: {
         [key: string]: string;
     };
+};
+
+export type widgetCombo = {
+    name: string;
+    expanded: React.ReactElement;
+    regular: React.ReactElement;
+    settings?: React.ReactElement;
+    fullScreen?: React.ReactElement;
 };
 
 export type dashboardSelectReturn = NonNullable<Awaited<ReturnType<typeof getDashboard>>>;
