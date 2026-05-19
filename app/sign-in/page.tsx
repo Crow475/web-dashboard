@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import { LuUserPlus } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
 
 import { useTranslations } from "next-intl";
 
@@ -11,6 +10,7 @@ import LanguageSelector from "@/components/custom/languageSelector";
 import BackLink from "@/components/custom/backLink";
 import AboutLink from "@/components/custom/aboutLink";
 import SignInForm from "@/components/custom/signInForm";
+import GithubSignInButton from "@/components/custom/githubSignInButton";
 
 import setLocale from "@/lib/setLocale";
 
@@ -35,10 +35,7 @@ export default function SignInPage() {
                             <FcGoogle className="size-6 md:size-10" />
                             <span className="text-base font-bold md:text-xl">Google</span>
                         </button>
-                        <button className="flex h-min w-1/2 cursor-pointer flex-row items-center justify-center space-y-0 space-x-2 rounded-md border border-black bg-black px-3 py-2 text-white shadow md:h-full md:flex-col md:justify-around md:space-x-0">
-                            <FaGithub className="size-6 text-white md:size-10" />
-                            <span className="text-base font-bold md:text-xl">GitHub</span>
-                        </button>
+                        <GithubSignInButton />
                     </div>
                 </div>
                 <div className="col-span-1 col-start-2 row-span-1 row-start-1 flex flex-col justify-between space-y-1 rounded-lg border border-neutral-200 bg-white px-4 py-3 shadow md:py-4 [@media(max-height:668px)]:flex-row [@media(max-height:668px)]:space-y-0">

@@ -1,4 +1,4 @@
-import { betterAuth } from "better-auth";
+import { betterAuth, email } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
@@ -7,6 +7,7 @@ import { user, session, account, verification } from "@/db/auth/schema";
 
 import { sendEmail } from "@/actions/sendEmail";
 import { createProfile } from "@/actions/createProfile";
+import { createAuthMiddleware } from "better-auth/api";
 
 export const auth = betterAuth({
     database: drizzleAdapter(authDB, {
@@ -59,6 +60,25 @@ export const auth = betterAuth({
                 max: 3, //3 emails per window
             },
         },
+    },
+    socialProviders: {
+        github: {
+            clientId: process.env.GITHUB_CLIENT_ID as string,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+            mapProfileToUser: (profile) => ({
+                email: profile.email ?? `${profile.id}@github.placeholder.local`,
+            }),
+        },
+    },
+    hooks: {
+        after: createAuthMiddleware(async (ctx) => {
+            if (ctx.path === "/callback/:id" && ctx.params?.id === "github") {
+                const newSession = ctx.context.newSession;
+                if (newSession) {
+                    await createProfile(newSession.user.id, newSession.user.name, "👤");
+                }
+            }
+        }),
     },
     trustedOrigins: ["https://boardsproject.app", "http://localhost:3000", "https://webdashboard-project.netlify.app"],
     plugins: [nextCookies()],
