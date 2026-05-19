@@ -104,6 +104,8 @@
         "forgotPassword": "Forgot password?",
         "submit": "Continue",
         "or": "Or log in with:",
+        "withGoogle": "Sign in with Google",
+        "withGithub": "Sign in with GitHub",
         "register": "First time?",
         "registerLine": "Create an account to get started.",
         "registerPoint1": "Access your dashboards from anywhere",

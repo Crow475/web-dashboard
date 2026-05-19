@@ -69,10 +69,15 @@ export const auth = betterAuth({
                 email: profile.email ?? `${profile.id}@github.placeholder.local`,
             }),
         },
+        google: {
+            prompt: "select_account",
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        },
     },
     hooks: {
         after: createAuthMiddleware(async (ctx) => {
-            if (ctx.path === "/callback/:id" && ctx.params?.id === "github") {
+            if (ctx.path === "/callback/:id" && (ctx.params?.id === "github" || ctx.params?.id === "google")) {
                 const newSession = ctx.context.newSession;
                 if (newSession) {
                     await createProfile(newSession.user.id, newSession.user.name, "👤");
