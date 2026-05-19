@@ -175,6 +175,17 @@
         "private": "Private",
         "privateDescription": "Removes all collaborators and makes the dashboard private.",
         "delteTarget": "Delete",
+        "theme": "Theme",
+        "themeTypes": {
+            "none": "None",
+            "sunset": "Sunset",
+            "metallic": "Metallic",
+            "northern": "Northern",
+            "cool": "Cool",
+            "forrest": "Forrest",
+            "slate": "Slate",
+            "progressive": "Progressive"
+        },
         "deleteDialog": {
             "title": "Delete row?",
             "paragraph": "This row contains widgets. They will be deleted as well.",

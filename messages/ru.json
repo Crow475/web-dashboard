@@ -175,6 +175,17 @@
         "private": "Приватный",
         "privateDescription": "Удаляет всех участников и сделает дэшборд приватным.",
         "delteTarget": "Удалить",
+        "theme": "Тема",
+        "themeTypes": {
+            "none": "Нет",
+            "sunset": "Закат",
+            "metallic": "Металл",
+            "northern": "Север",
+            "cool": "Прохлада",
+            "forrest": "Лес",
+            "slate": "Сланец",
+            "progressive": "Прогрессивная"
+        },
         "deleteDialog": {
             "title": "Удалить ряд?",
             "paragraph": "В этом ряду есть виджеты. Они также будут удалены.",

@@ -8,12 +8,13 @@ import { auth } from "@/lib/auth";
 
 import { LuPencil } from "react-icons/lu";
 
-import type { dashboardProps, dashboardElement } from "@/lib/types";
+import type { dashboardProps } from "@/lib/types";
 
 import getDashboard from "@/actions/getDashboard";
 import getProfileOfUser from "@/actions/getProfileOfUser";
 
 import { notoColorEmoji } from "@/lib/fonts";
+import { themeRegistry } from "@/lib/themeRegistry";
 
 import { getTranslations } from "next-intl/server";
 
@@ -80,9 +81,23 @@ export default async function DashboardPage({ params }: { params: { id: string }
                 </div>
             </header>
             <div className="flex w-full flex-row items-center justify-center pr-4">
-                <ScrollArea className="flex h-[88vh] w-full flex-col items-center justify-start px-4">
+                <ScrollArea
+                    className={`flex h-[88vh] w-full flex-col items-center justify-start bg-fixed px-4 ${themeRegistry[props.preferences.theme].className}`}
+                >
+                    <div className="absolute top-0 left-0 z-0 h-5 w-full bg-linear-to-b from-white to-transparent"></div>
                     <div className="h-5 w-full" role="presentation"></div>
-                    <div className="absolute bottom-0 left-0 z-10 h-3 w-[99%] bg-linear-to-t from-white to-transparent"></div>
+                    <div
+                        className="absolute top-0 left-0 h-[88vh] w-3 bg-linear-to-r from-white to-transparent"
+                        role="presentation"
+                    ></div>
+                    <div
+                        className="absolute top-0 right-0 h-[88vh] w-3 bg-linear-to-l from-white to-transparent"
+                        role="presentation"
+                    ></div>
+                    <div
+                        className="absolute bottom-0 left-0 z-10 h-3 w-full bg-linear-to-t from-white to-transparent"
+                        role="presentation"
+                    ></div>
                     <div className="grid w-full grid-cols-2 gap-2">
                         {mockRows.map((row) => (
                             <React.Fragment key={row}>

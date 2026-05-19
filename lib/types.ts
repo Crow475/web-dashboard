@@ -1,5 +1,6 @@
 import getDashboard from "@/actions/getDashboard";
 import React from "react";
+import { themeTypes } from "@/lib/themeRegistry";
 
 type messages = {
     [key: string]: string | boolean;
@@ -27,6 +28,7 @@ export type dashboardProps = {
     rows: number;
     elements: dashboardElement[];
     preferences: {
+        theme: themeTypes;
         [key: string]: string;
     };
 };

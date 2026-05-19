@@ -7,6 +7,7 @@ import { auth } from "@/lib/auth";
 import { dataDB } from "@/db/drizzle";
 import { dashboards } from "@/db/data/schema";
 
+import { themeTypes } from "@/lib/themeRegistry";
 import type { actionState, dashboardProps } from "@/lib/types";
 import uuidToShort from "@/lib/uuidToShort";
 import getProfileOfUser from "@/actions/getProfileOfUser";
@@ -106,7 +107,9 @@ export async function createDashboard(
     const props: dashboardProps = {
         rows: 4,
         elements: [],
-        preferences: {},
+        preferences: {
+            theme: themeTypes.none,
+        },
     };
 
     const result = await dataDB

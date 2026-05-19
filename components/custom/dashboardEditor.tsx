@@ -20,6 +20,7 @@ import { notoColorEmoji } from "@/lib/fonts";
 import uuidToShort from "@/lib/uuidToShort";
 
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -44,9 +45,12 @@ import {
 
 import { updateDashboard, dashboardData } from "@/actions/updateDashboard";
 
+import { themeRegistry, themeTypes } from "@/lib/themeRegistry";
+
 export default function DashboardEditor({ dashboard }: { dashboard: dashboardSelectReturn }) {
     const router = useRouter();
     const properties = dashboard.properties as dashboardProps;
+    const preferences = properties.preferences;
     const defaultPrivate: boolean = dashboard.isPrivate ? true : false;
 
     const defaultElements: dashboardElement[] = properties.elements.map((element) => {
@@ -74,6 +78,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
     const [privateDashboard, setPrivateDashboard] = useState(defaultPrivate);
     const [rowCount, setRowCount] = useState(properties.rows);
     const [elements, setElements] = useState<dashboardElement[]>(defaultElements);
+    const [theme, setTheme] = useState(preferences.theme ?? "none");
 
     const elementsRef = useRef(elements);
 
@@ -121,7 +126,9 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
             props: {
                 rows: rowCount,
                 elements: elements,
-                preferences: {},
+                preferences: {
+                    theme: theme,
+                },
             },
         };
 
@@ -392,10 +399,22 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                     }}
                 >
                     <ScrollArea
-                        className={`flex h-[88vh] ${sidePanelOpen ? "w-[78%]" : "w-full"} flex-col items-center justify-start px-4`}
+                        className={`flex h-[88vh] bg-fixed ${themeRegistry[theme].className} ${sidePanelOpen ? "w-[78%]" : "w-full"} flex-col items-center justify-start px-4`}
                     >
+                        <div className="absolute top-0 left-0 z-0 h-5 w-full bg-linear-to-b from-white to-transparent"></div>
                         <div className="h-5 w-full" role="presentation"></div>
-                        <div className="absolute bottom-0 left-0 z-10 h-3 w-[99%] bg-linear-to-t from-white to-transparent"></div>
+                        <div
+                            className="absolute top-0 left-0 h-[88vh] w-3 bg-linear-to-r from-white to-transparent"
+                            role="presentation"
+                        ></div>
+                        <div
+                            className="absolute top-0 right-0 h-[88vh] w-3 bg-linear-to-l from-white to-transparent"
+                            role="presentation"
+                        ></div>
+                        <div
+                            className="absolute bottom-0 left-0 z-10 h-3 w-full bg-linear-to-t from-white to-transparent"
+                            role="presentation"
+                        ></div>
                         <div className="grid grid-cols-2 gap-2">
                             {mockRows.map((row) => (
                                 <React.Fragment key={row}>
@@ -431,7 +450,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                 </React.Fragment>
                             ))}
                             <button
-                                className="border-neutral col-span-2 flex w-full cursor-pointer flex-row items-center justify-center space-x-3 rounded-xl border py-4 text-neutral-600 shadow hover:bg-neutral-100"
+                                className="border-neutral col-span-2 flex w-full cursor-pointer flex-row items-center justify-center space-x-3 rounded-xl border bg-white py-4 text-neutral-600 shadow hover:bg-neutral-100"
                                 type="button"
                                 onClick={() => setRowCount(rowCount + 1)}
                             >
@@ -486,9 +505,33 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                     </div>
                                 </TabsContent>
                                 <TabsContent value="settings">
-                                    <div className="flex w-full flex-col items-center justify-start pr-2 pl-4">
+                                    <div className="flex w-full flex-col items-center justify-start space-y-3 pr-2 pl-4">
+                                        <div className="flex w-full flex-row items-center justify-between space-x-2 px-6 py-2">
+                                            <label htmlFor="theme" className="w-1/3">
+                                                {t("theme")}
+                                            </label>
+                                            <Select
+                                                name="theme"
+                                                value={theme}
+                                                onValueChange={(value) => setTheme(value as themeTypes)}
+                                            >
+                                                <SelectTrigger className="w-2/3">
+                                                    <SelectValue placeholder={t("theme")} />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        {Object.values(themeTypes).map((theme) => (
+                                                            <SelectItem key={theme} value={theme}>
+                                                                {t(`themeTypes.${theme}`)}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                        <Separator className="w-full" />
                                         <div className="flex flex-col items-start justify-start space-y-1 py-2">
-                                            <div className="flex w-full flex-row items-center justify-around">
+                                            <div className="flex w-full flex-row items-center justify-between px-6">
                                                 <label htmlFor="privateCheckbox" className="w-2/3">
                                                     {t("private")}
                                                 </label>
