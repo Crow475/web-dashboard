@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 
 import { createTranslator } from "short-uuid";
 
-import type { dashboardSelectReturn, dashboardProps, dashboardElement } from "@/lib/types";
+import type { dashboardSelectReturn, dashboardUserSelectReturn, dashboardProps, dashboardElement } from "@/lib/types";
 import { WidgetType } from "@/lib/widgetRegistry";
 import { notoColorEmoji } from "@/lib/fonts";
 import uuidToShort from "@/lib/uuidToShort";
@@ -28,6 +28,9 @@ import { toast } from "sonner";
 
 import WidgetSlot from "@/components/custom/widgetSlot";
 import DeleteTarget from "@/components/custom/deleteTarget";
+import AddUserDialog from "@/components/custom/addUserDialog";
+import UserCard from "@/components/custom/userCard";
+import OwnerCard from "@/components/custom/ownerCard";
 
 import Widget from "@/components/custom/widget";
 
@@ -41,13 +44,21 @@ import {
     LuAppWindow,
     LuSlidersHorizontal,
     LuUsers,
+    LuUserPlus,
+    LuCircleOff,
 } from "react-icons/lu";
 
 import { updateDashboard, dashboardData } from "@/actions/updateDashboard";
 
 import { themeRegistry, themeTypes } from "@/lib/themeRegistry";
 
-export default function DashboardEditor({ dashboard }: { dashboard: dashboardSelectReturn }) {
+export default function DashboardEditor({
+    dashboard,
+    users,
+}: {
+    dashboard: dashboardSelectReturn;
+    users: dashboardUserSelectReturn;
+}) {
     const router = useRouter();
     const properties = dashboard.properties as dashboardProps;
     const preferences = properties.preferences;
@@ -78,6 +89,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
     const [privateDashboard, setPrivateDashboard] = useState(defaultPrivate);
     const [rowCount, setRowCount] = useState(properties.rows);
     const [elements, setElements] = useState<dashboardElement[]>(defaultElements);
+    const [currentUsers, setCurrentUsers] = useState(users);
     const [theme, setTheme] = useState(preferences.theme ?? "none");
 
     const elementsRef = useRef(elements);
@@ -90,6 +102,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
     const [lastOpenTab, setLastOpenTab] = useState("widgets");
     const [isDragging, setIsDragging] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
+    const [addUserOpen, setAddUserOpen] = useState(false);
 
     const t = useTranslations("editDashboard");
     const decimalTranslator = createTranslator("0123456789");
@@ -133,6 +146,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
         };
 
         console.log(data);
+        console.log(currentUsers);
 
         const result = await updateDashboard(dashboard.dashboardId, data);
 
@@ -222,7 +236,7 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                         )}
                     </button>
                     <Link
-                        className="hover:test-bg-neutral-800 flex cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-neutral-300 bg-white px-4 py-2 text-xs text-neutral-500 shadow hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 md:text-sm"
+                        className="flex cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-neutral-300 bg-white px-4 py-2 text-xs text-neutral-500 shadow hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 md:text-sm"
                         href={`/app/dashboard/${uuidToShort(dashboard.dashboardId)}`}
                     >
                         <LuMoveLeft className="size-3" />
@@ -541,7 +555,14 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                                     id="privateCheckbox"
                                                     name="privateCheckbox"
                                                     checked={privateDashboard}
-                                                    onChange={(e) => setPrivateDashboard(e.target.checked)}
+                                                    onChange={(e) => {
+                                                        if (e.target.checked) {
+                                                            setCurrentUsers([]);
+                                                        } else {
+                                                            setCurrentUsers(users);
+                                                        }
+                                                        setPrivateDashboard(e.target.checked);
+                                                    }}
                                                 />
                                             </div>
                                             <p className="px-6 text-xs text-neutral-500">{t("privateDescription")}</p>
@@ -549,12 +570,48 @@ export default function DashboardEditor({ dashboard }: { dashboard: dashboardSel
                                         <Separator className="w-full" />
                                     </div>
                                 </TabsContent>
-                                <TabsContent value="users">3</TabsContent>
+                                <TabsContent value="users">
+                                    <div className="flex w-full flex-col items-center justify-start space-y-4 px-6">
+                                        <OwnerCard profileId={uuidToShort(dashboard.ownerId)} />
+                                        <Separator className="w-full" />
+                                        <div
+                                            className={`${privateDashboard ? "flex" : "hidden"} w-full flex-col items-center justify-center space-y-3 rounded-md bg-neutral-100 px-6 py-4 text-xs text-neutral-500`}
+                                        >
+                                            <LuCircleOff className="size-5" />
+                                            <span className="text-center">{t("addToPrivateDashboard")}</span>
+                                        </div>
+                                        {currentUsers.map((user) => (
+                                            <UserCard
+                                                key={user.profile?.profileId}
+                                                profile={user}
+                                                currentUsers={currentUsers}
+                                                setCurrentUsers={setCurrentUsers}
+                                            />
+                                        ))}
+                                        <button
+                                            className="flex w-full cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border border-neutral-300 bg-white px-4 py-2 text-xs shadow hover:bg-neutral-100 disabled:cursor-default disabled:text-neutral-400 disabled:hover:bg-white md:text-sm"
+                                            type="button"
+                                            disabled={privateDashboard}
+                                            onClick={() => setAddUserOpen(true)}
+                                        >
+                                            <LuUserPlus className="size-5" />
+                                            <span>{t("addUser")}</span>
+                                        </button>
+                                    </div>
+                                </TabsContent>
                             </Tabs>
                         </div>
                     )}
                 </DragDropProvider>
             </div>
+            <AddUserDialog
+                opened={addUserOpen}
+                onOpenChange={(open) => setAddUserOpen(open)}
+                currentUsers={currentUsers}
+                setCurrentUsers={setCurrentUsers}
+                dashboardId={dashboard.dashboardId}
+                ownerId={dashboard.ownerId}
+            />
         </div>
     );
 }

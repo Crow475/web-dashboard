@@ -1,4 +1,6 @@
 import getDashboard from "@/actions/getDashboard";
+import getUsersOfDashboard from "@/actions/getUsersOfDashboard";
+import getProfileById from "@/actions/getProfileById";
 import React from "react";
 import { themeTypes } from "@/lib/themeRegistry";
 
@@ -42,3 +44,5 @@ export type widgetCombo = {
 };
 
 export type dashboardSelectReturn = NonNullable<Awaited<ReturnType<typeof getDashboard>>>;
+export type dashboardUserSelectReturn = NonNullable<Awaited<ReturnType<typeof getUsersOfDashboard>>>;
+export type profileSelectReturn = NonNullable<Awaited<ReturnType<typeof getProfileById>>>;

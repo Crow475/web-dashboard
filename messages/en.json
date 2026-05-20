@@ -178,6 +178,21 @@
         "privateDescription": "Removes all collaborators and makes the dashboard private.",
         "delteTarget": "Delete",
         "theme": "Theme",
+        "addToPrivateDashboard": "Can't add users to a private dashboard",
+        "addUser": "Add user",
+        "addUserDialog": {
+            "title": "Add user",
+            "role": "Role",
+            "viewer": "Viewer",
+            "editor": "Editor",
+            "admin": "Admin",
+            "confirm": "Confirm",
+            "add": "Add",
+            "userId": "User id",
+            "idRequired": "User id is required",
+            "userNotFound": "User not found",
+            "userAlreadyExists": "User already exists"
+        },
         "themeTypes": {
             "none": "None",
             "sunset": "Sunset",

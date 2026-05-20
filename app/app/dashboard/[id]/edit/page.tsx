@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 
 import getDashboard from "@/actions/getDashboard";
 import getProfileOfUser from "@/actions/getProfileOfUser";
+import getUsersOfDashboard from "@/actions/getUsersOfDashboard";
 
 import { auth } from "@/lib/auth";
 
@@ -31,5 +32,7 @@ export default async function DashboardEditPage({ params }: { params: { id: stri
         notFound();
     }
 
-    return <DashboardEditor dashboard={dashboard} />;
+    const users = await getUsersOfDashboard(id);
+
+    return <DashboardEditor dashboard={dashboard} users={users ?? []} />;
 }
