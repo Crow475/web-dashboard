@@ -24,6 +24,7 @@ export default function AddUserDialog({
     setCurrentUsers,
     dashboardId,
     ownerId,
+    setUsersChanged,
 }: {
     opened: boolean;
     onOpenChange: (open: boolean) => void;
@@ -31,6 +32,7 @@ export default function AddUserDialog({
     setCurrentUsers: (users: dashboardUserSelectReturn) => void;
     dashboardId: string;
     ownerId: string;
+    setUsersChanged: (changed: boolean) => void;
 }) {
     const [role, setRole] = useState<"viewer" | "editor" | "admin">("viewer");
     const [state, formAction, pending] = useActionState(addUser, {
@@ -72,6 +74,8 @@ export default function AddUserDialog({
             toast.error(t("userAlreadyExists"));
             return;
         }
+
+        setUsersChanged(true);
 
         setCurrentUsers([...currentUsers, user]);
         onOpenChange(false);

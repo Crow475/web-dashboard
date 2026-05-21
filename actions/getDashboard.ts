@@ -5,6 +5,8 @@ import { eq } from "drizzle-orm";
 
 import shortToUuid from "@/lib/shortToUuid";
 
+import getRoleInDashboard from "./getRoleInDashboard";
+
 export default async function getDashboard(shortId: string, requesterProfileId: string) {
     const dashboardId = shortToUuid(shortId);
 
@@ -26,9 +28,23 @@ export default async function getDashboard(shortId: string, requesterProfileId: 
         return null;
     }
 
-    // Replace with better check for access
-    if (requesterProfileId !== result[0].ownerId) {
-        return null;
+    const isOwner = requesterProfileId === result[0].ownerId;
+    const role = await getRoleInDashboard(result[0].dashboardId, requesterProfileId);
+
+    if (!isOwner) {
+        if (!role) {
+            return null;
+        }
+
+        if (role === "admin") {
+            return result[0];
+        }
+        if (role === "editor") {
+            return result[0];
+        }
+        if (role === "viewer") {
+            return result[0];
+        }
     }
 
     return result[0];

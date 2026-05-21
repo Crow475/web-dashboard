@@ -181,6 +181,7 @@
         "addToPrivateDashboard": "Can't add users to a private dashboard",
         "addUser": "Add user",
         "addUserDialog": {
+            "removeUser": "Remove user",
             "title": "Add user",
             "role": "Role",
             "viewer": "Viewer",
@@ -192,6 +193,14 @@
             "idRequired": "User id is required",
             "userNotFound": "User not found",
             "userAlreadyExists": "User already exists"
+        },
+        "leaveDashboardDialog": {
+            "button": "Leave dashboard",
+            "title": "Leave dashboard ",
+            "paragraph": "Are you sure you want to leave the dashboard? You will not be able to access it unless someone invites you back.",
+            "cancel": "Cancel",
+            "leave": "Leave",
+            "error": "Failed to leave dashboard"
         },
         "themeTypes": {
             "none": "None",

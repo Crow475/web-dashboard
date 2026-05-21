@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import getDashboard from "@/actions/getDashboard";
 import getProfileOfUser from "@/actions/getProfileOfUser";
 import getUsersOfDashboard from "@/actions/getUsersOfDashboard";
+import getRoleInDashboard from "@/actions/getRoleInDashboard";
 
 import { auth } from "@/lib/auth";
 
@@ -32,7 +33,12 @@ export default async function DashboardEditPage({ params }: { params: { id: stri
         notFound();
     }
 
+    const role = await getRoleInDashboard(dashboard.dashboardId, profile.profileId);
+    if (role === "viewer") {
+        forbidden();
+    }
+
     const users = await getUsersOfDashboard(id);
 
-    return <DashboardEditor dashboard={dashboard} users={users ?? []} />;
+    return <DashboardEditor dashboard={dashboard} users={users ?? []} role={role ?? "owner"} />;
 }

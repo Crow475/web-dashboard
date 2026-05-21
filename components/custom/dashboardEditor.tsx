@@ -31,6 +31,7 @@ import DeleteTarget from "@/components/custom/deleteTarget";
 import AddUserDialog from "@/components/custom/addUserDialog";
 import UserCard from "@/components/custom/userCard";
 import OwnerCard from "@/components/custom/ownerCard";
+import PrivateCheckbox from "@/components/custom/privateCheckbox";
 
 import Widget from "@/components/custom/widget";
 
@@ -49,20 +50,25 @@ import {
 } from "react-icons/lu";
 
 import { updateDashboard, dashboardData } from "@/actions/updateDashboard";
+import updateDashboardUsers from "@/actions/updateDashboardUsers";
 
 import { themeRegistry, themeTypes } from "@/lib/themeRegistry";
 
 export default function DashboardEditor({
     dashboard,
     users,
+    role,
 }: {
     dashboard: dashboardSelectReturn;
     users: dashboardUserSelectReturn;
+    role: "admin" | "editor" | "viewer" | "owner";
 }) {
     const router = useRouter();
     const properties = dashboard.properties as dashboardProps;
     const preferences = properties.preferences;
     const defaultPrivate: boolean = dashboard.isPrivate ? true : false;
+
+    console.log(role);
 
     const defaultElements: dashboardElement[] = properties.elements.map((element) => {
         return {
@@ -90,6 +96,7 @@ export default function DashboardEditor({
     const [rowCount, setRowCount] = useState(properties.rows);
     const [elements, setElements] = useState<dashboardElement[]>(defaultElements);
     const [currentUsers, setCurrentUsers] = useState(users);
+    const [usersChanged, setUsersChanged] = useState(false);
     const [theme, setTheme] = useState(preferences.theme ?? "none");
 
     const elementsRef = useRef(elements);
@@ -177,6 +184,27 @@ export default function DashboardEditor({
             return;
         }
 
+        if (usersChanged) {
+            const resultUsers = await updateDashboardUsers(dashboard.dashboardId, currentUsers);
+
+            if (!resultUsers.success) {
+                if (resultUsers.errors) {
+                    if (resultUsers.errors.auth) {
+                        toast.error(t(`errors.${resultUsers.errors.auth[0]}`));
+                        return;
+                    }
+                    if (resultUsers.errors.db) {
+                        toast.error(t(`errors.${resultUsers.errors.db[0]}`));
+                        return;
+                    }
+                }
+
+                return;
+            }
+
+            toast.success("Updated users");
+        }
+
         router.push(`/app/dashboard/${uuidToShort(dashboard.dashboardId)}`);
         toast.success(t("success") + ' "' + data.title + '"');
     }
@@ -188,13 +216,13 @@ export default function DashboardEditor({
                     <label>
                         <span className="sr-only">{t("icon")}</span>
                         <Popover>
-                            <PopoverTrigger asChild>
+                            <PopoverTrigger asChild disabled={!["admin", "owner"].includes(role)}>
                                 <button
-                                    className={`${notoColorEmoji.className} group relative flex flex-row items-center justify-center rounded-full border border-neutral-300 bg-white px-1.5 py-1.5 text-3xl shadow`}
+                                    className={`${notoColorEmoji.className} group relative flex cursor-pointer flex-row items-center justify-center rounded-full border border-neutral-300 bg-white px-1.5 py-1.5 text-3xl shadow disabled:cursor-default disabled:bg-neutral-50`}
                                     type="button"
                                 >
                                     {icon}
-                                    <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col items-center justify-center rounded-full bg-blue-300/20 opacity-0 backdrop-blur-xs transition-opacity duration-200 group-hover:opacity-100">
+                                    <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col items-center justify-center rounded-full bg-blue-300/20 opacity-0 backdrop-blur-xs transition-opacity duration-200 group-hover:opacity-100 group-disabled:hidden">
                                         <LuPencil className="size-8 text-white" />
                                     </div>
                                 </button>
@@ -212,13 +240,14 @@ export default function DashboardEditor({
                     <label htmlFor="title" className="w-2/3">
                         <span className="sr-only">{t("title")}</span>
                         <input
-                            className="w-full rounded-md border border-neutral-200 px-2 py-1 text-3xl font-bold shadow outline-0 focus-within:border-blue-500"
+                            className="w-full rounded-md border border-neutral-200 px-2 py-1 text-3xl font-bold shadow outline-0 focus-within:border-blue-500 disabled:bg-neutral-50 disabled:text-neutral-500"
                             type="text"
                             autoComplete="off"
                             name="title"
                             id="title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
+                            disabled={!["admin", "owner"].includes(role)}
                         />
                     </label>
                 </div>
@@ -491,10 +520,12 @@ export default function DashboardEditor({
                                             <LuSlidersHorizontal />
                                             {t("settings")}
                                         </TabsTrigger>
-                                        <TabsTrigger value="users">
-                                            <LuUsers />
-                                            {t("users")}
-                                        </TabsTrigger>
+                                        {["admin", "owner"].includes(role) && (
+                                            <TabsTrigger value="users">
+                                                <LuUsers />
+                                                {t("users")}
+                                            </TabsTrigger>
+                                        )}
                                     </TabsList>
                                 </div>
                                 <TabsContent value="widgets">
@@ -544,30 +575,17 @@ export default function DashboardEditor({
                                             </Select>
                                         </div>
                                         <Separator className="w-full" />
-                                        <div className="flex flex-col items-start justify-start space-y-1 py-2">
-                                            <div className="flex w-full flex-row items-center justify-between px-6">
-                                                <label htmlFor="privateCheckbox" className="w-2/3">
-                                                    {t("private")}
-                                                </label>
-                                                <input
-                                                    type="checkbox"
-                                                    className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-sm shadow outline-0 focus-within:border-blue-500"
-                                                    id="privateCheckbox"
-                                                    name="privateCheckbox"
-                                                    checked={privateDashboard}
-                                                    onChange={(e) => {
-                                                        if (e.target.checked) {
-                                                            setCurrentUsers([]);
-                                                        } else {
-                                                            setCurrentUsers(users);
-                                                        }
-                                                        setPrivateDashboard(e.target.checked);
-                                                    }}
-                                                />
-                                            </div>
-                                            <p className="px-6 text-xs text-neutral-500">{t("privateDescription")}</p>
-                                        </div>
-                                        <Separator className="w-full" />
+                                        {role === "owner" && (
+                                            <PrivateCheckbox
+                                                setCurrentUsers={setCurrentUsers}
+                                                users={users}
+                                                privateDashboard={privateDashboard}
+                                                setPrivateDashboard={setPrivateDashboard}
+                                                label={t("private")}
+                                                description={t("privateDescription")}
+                                                setUsersChanged={setUsersChanged}
+                                            />
+                                        )}
                                     </div>
                                 </TabsContent>
                                 <TabsContent value="users">
@@ -586,6 +604,7 @@ export default function DashboardEditor({
                                                 profile={user}
                                                 currentUsers={currentUsers}
                                                 setCurrentUsers={setCurrentUsers}
+                                                setUsersChanged={setUsersChanged}
                                             />
                                         ))}
                                         <button
@@ -611,6 +630,7 @@ export default function DashboardEditor({
                 setCurrentUsers={setCurrentUsers}
                 dashboardId={dashboard.dashboardId}
                 ownerId={dashboard.ownerId}
+                setUsersChanged={setUsersChanged}
             />
         </div>
     );

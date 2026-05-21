@@ -14,6 +14,7 @@ import { z } from "zod";
 
 import getProfileOfUser from "@/actions/getProfileOfUser";
 import getDashboard from "@/actions/getDashboard";
+import getRoleInDashboard from "./getRoleInDashboard";
 
 export type dashboardData = {
     title: string;
@@ -75,14 +76,39 @@ export async function updateDashboard(dashboardId: string, data: dashboardData):
         private: data.private !== dashboard.isPrivate,
     };
 
-    // if (!Object.values(changed).includes(true)) {
-    //     return {
-    //         success: false,
-    //     };
-    // }
+    const role = await getRoleInDashboard(dashboardId, profile.profileId);
+    const isOwner = dashboard.ownerId === profile.profileId;
 
-    // Replace with better check for access
-    if (dashboard.ownerId !== profile.profileId) {
+    if (!isOwner) {
+        if (!role) {
+            return {
+                success: false,
+                errors: {
+                    auth: ["NO_ACCESS"],
+                },
+            };
+        }
+
+        if (role === "viewer") {
+            return {
+                success: false,
+                errors: {
+                    auth: ["NO_ACCESS"],
+                },
+            };
+        }
+    }
+
+    if (changed.private && !isOwner) {
+        return {
+            success: false,
+            errors: {
+                auth: ["NO_ACCESS"],
+            },
+        };
+    }
+
+    if ((changed.title || changed.icon) && !isOwner && role !== "admin") {
         return {
             success: false,
             errors: {
