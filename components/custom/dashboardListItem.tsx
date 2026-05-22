@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 
 import { notoColorEmoji } from "@/lib/fonts";
 
-import { LuEllipsis, LuChevronRight, LuTrash2, LuSquarePen, LuPin } from "react-icons/lu";
+import { LuEllipsis, LuChevronRight, LuTrash2, LuPin, LuLogOut, LuCircleAlert, LuLink } from "react-icons/lu";
 
 import uuidToShort from "@/lib/uuidToShort";
 import toStandardTime from "@/lib/toStandardTime";
@@ -34,6 +34,7 @@ import {
 import { toast } from "sonner";
 
 import { deleteDashboard } from "@/actions/deleteDashboard";
+import leaveDashboard from "@/actions/leaveDashboard";
 
 export default function DashboardListItem({
     title,
@@ -42,6 +43,7 @@ export default function DashboardListItem({
     id,
     createdAt,
     icon,
+    isOwner,
 }: {
     title: string;
     editedAt: string | null;
@@ -49,11 +51,15 @@ export default function DashboardListItem({
     id: string;
     createdAt: string | null;
     icon: string;
+    isOwner: boolean;
 }) {
     const [linkHovered, setLinkHovered] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const t = useTranslations("component.dashboardCard");
+    const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
     const router = useRouter();
+
+    const t = useTranslations("component.dashboardCard");
+    const t2 = useTranslations("component.leaveDashboardDialog");
 
     async function handleDelete() {
         const result = await deleteDashboard(uuidToShort(id));
@@ -63,6 +69,17 @@ export default function DashboardListItem({
             toast.success(t("deleteDialog.success") + '"' + result.deletedTitle + '"');
         } else {
             toast.error(t("deleteDialog.failure"));
+        }
+    }
+
+    async function handleLeaveDashboard() {
+        setLeaveDialogOpen(false);
+        const result = await leaveDashboard(id);
+
+        if (result) {
+            router.refresh();
+        } else {
+            toast.error(t2("error"));
         }
     }
 
@@ -109,14 +126,28 @@ export default function DashboardListItem({
                                 <LuPin size={16} />
                                 <span>{t("pin")}</span>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <LuSquarePen size={16} />
-                                <span>{t("rename")}</span>
+                            <DropdownMenuItem
+                                onSelect={() => {
+                                    navigator.clipboard.writeText(
+                                        `${window.location.origin}/app/dashboard/${uuidToShort(id)}`,
+                                    );
+                                    toast.success(t("copied"));
+                                }}
+                            >
+                                <LuLink size={16} />
+                                <span>{t("copy")}</span>
                             </DropdownMenuItem>
-                            <DropdownMenuItem variant="destructive" onSelect={() => setDeleteDialogOpen(true)}>
-                                <LuTrash2 size={16} />
-                                <span>{t("delete")}</span>
-                            </DropdownMenuItem>
+                            {isOwner ? (
+                                <DropdownMenuItem variant="destructive" onSelect={() => setDeleteDialogOpen(true)}>
+                                    <LuTrash2 size={16} />
+                                    <span>{t("delete")}</span>
+                                </DropdownMenuItem>
+                            ) : (
+                                <DropdownMenuItem variant="destructive" onSelect={() => setLeaveDialogOpen(true)}>
+                                    <LuLogOut size={16} />
+                                    <span>{t2("button")}</span>
+                                </DropdownMenuItem>
+                            )}
                             <DropdownMenuSeparator />
                             <DropdownMenuLabel className="block md:hidden">
                                 {t("edited")}
@@ -164,6 +195,23 @@ export default function DashboardListItem({
                         <AlertDialogCancel>{t("deleteDialog.cancel")}</AlertDialogCancel>
                         <AlertDialogAction variant="destructive" onClick={() => handleDelete()}>
                             {t("deleteDialog.delete")}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+            <AlertDialog open={leaveDialogOpen} onOpenChange={() => setLeaveDialogOpen(!leaveDialogOpen)}>
+                <AlertDialogContent size="sm">
+                    <AlertDialogHeader>
+                        <AlertDialogMedia>
+                            <LuCircleAlert className="text-red-500" />
+                        </AlertDialogMedia>
+                    </AlertDialogHeader>
+                    <AlertDialogTitle className="text-center">{t2("title")}</AlertDialogTitle>
+                    <AlertDialogDescription className="text-center">{t2("paragraph")}</AlertDialogDescription>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>{t2("cancel")}</AlertDialogCancel>
+                        <AlertDialogAction variant="destructive" onClick={() => handleLeaveDashboard()}>
+                            {t2("leave")}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

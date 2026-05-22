@@ -7,10 +7,9 @@ import { getTranslations } from "next-intl/server";
 import { LuLayoutGrid, LuCircleOff, LuCirclePlus } from "react-icons/lu";
 
 import { auth } from "@/lib/auth";
-import uuidToShort from "@/lib/uuidToShort";
 
 import getProfileOfUser from "@/actions/getProfileOfUser";
-import getOwnedDashboards from "@/actions/getOwnedDashboards";
+import getAllUserDashboards from "@/actions/getAllUserDashboards";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -31,9 +30,12 @@ export default async function Home() {
     const userId = session.user.id;
     const profile = await getProfileOfUser(userId);
 
-    const profileIdShort = uuidToShort(profile?.profileId || "");
+    const dashboards = await getAllUserDashboards();
+    if (!dashboards) {
+        forbidden();
+    }
 
-    const dashboards = await getOwnedDashboards(profileIdShort, userId);
+    console.log("Dashboards:", dashboards);
 
     return (
         <main className="flex max-h-screen w-full flex-col items-center justify-start overflow-hidden">
@@ -51,6 +53,7 @@ export default async function Home() {
                             id={dashboard.dashboardId}
                             createdAt={dashboard.createdAt}
                             icon={dashboard.icon ?? "🚫"}
+                            isOwner={dashboard.ownerId === profile?.profileId}
                         />
                     ))}
                     {dashboards.length > 0 && (

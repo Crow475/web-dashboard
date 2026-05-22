@@ -3,7 +3,12 @@ import { notFound, forbidden } from "next/navigation";
 import { headers } from "next/headers";
 
 import getProfileById from "@/actions/getProfileById";
+import getProfileOfUser from "@/actions/getProfileOfUser";
 import getOwnedDashboards from "@/actions/getOwnedDashboards";
+import getCommonDashboards from "@/actions/getCommonDashboards";
+
+import shortToUuid from "@/lib/shortToUuid";
+
 import { auth } from "@/lib/auth";
 
 import { getTranslations } from "next-intl/server";
@@ -48,9 +53,19 @@ export default async function ProfilePage({ params }: { params: { id: string } }
         forbidden();
     }
 
+    const viewingProfile = await getProfileOfUser(session.user.id);
+
+    if (!viewingProfile) {
+        forbidden();
+    }
+
     const isCurrentUser = session.user.id === profile.userId;
 
-    const dashboards = await getOwnedDashboards(id, session.user.id);
+    const dashboards = isCurrentUser
+        ? await getOwnedDashboards(id, session.user.id)
+        : ((await getCommonDashboards(shortToUuid(id))) ?? []);
+
+    console.log("Dashboards:", dashboards);
 
     return (
         <main className="flex h-svh w-full flex-col items-center justify-center px-0 py-2 md:px-4">
@@ -82,6 +97,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
                         </div>
                         <ScrollArea className="flex h-[45vh] w-full flex-col items-center justify-start overflow-hidden px-0 md:px-2">
                             <div className="absolute bottom-0 left-0 z-10 h-5 w-full bg-linear-to-t from-white to-transparent"></div>
+                            <div className="absolute top-0 left-0 z-10 h-5 w-full bg-linear-to-b from-white to-transparent"></div>
                             <div className="grid w-full grid-cols-1 gap-3 px-2 py-4 md:gap-4">
                                 {dashboards.map((dashboard) => (
                                     <DashboardListItem
@@ -92,6 +108,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
                                         id={dashboard.dashboardId}
                                         createdAt={dashboard.createdAt}
                                         icon={dashboard.icon ?? "🚫"}
+                                        isOwner={isCurrentUser ? true : dashboard.ownerId === viewingProfile.profileId}
                                     />
                                 ))}
                             </div>

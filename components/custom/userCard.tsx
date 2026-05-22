@@ -48,7 +48,7 @@ export default function UserCard({
     const router = useRouter();
 
     const t = useTranslations("editDashboard.addUserDialog");
-    const t2 = useTranslations("editDashboard.leaveDashboardDialog");
+    const t2 = useTranslations("component.leaveDashboardDialog");
 
     const currentUser = session?.user.id;
     const isCurrentUser = profile.profile?.userId === currentUser;

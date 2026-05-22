@@ -12,6 +12,7 @@ import type { dashboardProps } from "@/lib/types";
 
 import getDashboard from "@/actions/getDashboard";
 import getProfileOfUser from "@/actions/getProfileOfUser";
+import getRoleInDashboard from "@/actions/getRoleInDashboard";
 
 import { notoColorEmoji } from "@/lib/fonts";
 import { themeRegistry } from "@/lib/themeRegistry";
@@ -59,6 +60,9 @@ export default async function DashboardPage({ params }: { params: { id: string }
 
     const props = dashboard.properties as dashboardProps;
 
+    console.log("Id:", id, "ProfileId:", profile.profileId);
+    const role = await getRoleInDashboard(dashboard.dashboardId, profile.profileId);
+
     const mockRows = Array.from({ length: props.rows }, (_, i) => i + 1);
 
     return (
@@ -71,13 +75,15 @@ export default async function DashboardPage({ params }: { params: { id: string }
                     <h1 className="border border-transparent px-2 py-1 text-4xl font-bold">{dashboard.title}</h1>
                 </div>
                 <div className="flex flex-row items-center justify-end">
-                    <Link
-                        className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-amber-300 hover:bg-amber-200 hover:text-amber-500 hover:shadow-amber-200"
-                        href={`/app/dashboard/${id}/edit`}
-                    >
-                        <LuPencil className="size-3" />
-                        <span className="text-xs md:text-sm">{t("edit")}</span>
-                    </Link>
+                    {dashboard.ownerId === profile.profileId || ["admin", "editor"].includes(role ?? "") ? (
+                        <Link
+                            className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-amber-300 hover:bg-amber-200 hover:text-amber-500 hover:shadow-amber-200"
+                            href={`/app/dashboard/${id}/edit`}
+                        >
+                            <LuPencil className="size-3" />
+                            <span className="text-xs md:text-sm">{t("edit")}</span>
+                        </Link>
+                    ) : null}
                 </div>
             </header>
             <div className="flex w-full flex-row items-center justify-center pr-4">
