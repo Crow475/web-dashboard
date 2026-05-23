@@ -238,5 +238,24 @@
         "edit": "Edit",
         "yourDashboards": "Your dashboards:",
         "commonDashboards": "Common dashboards:"
+    },
+    "editProfile": {
+        "title": "Edit Profile",
+        "username": "Username",
+        "publicEmail": "Public Email",
+        "publicEmailDescription": "Email address that can be used to contact you. Will be visible to other users.",
+        "profileIcon": "Profile Icon",
+        "save": "Save",
+        "cancel": "Cancel",
+        "errors": {
+            "INVALID_SESSION": "Invalid session",
+            "INVALID_PROFILE": "Invalid profile",
+            "DB_ERROR": "Database error",
+            "INVALID_USERNAME": "Invalid username",
+            "USERNAME_TOO_SHORT": "Username must be at least 4 characters long",
+            "USERNAME_TOO_LONG": "Username must be no more than 63 characters long",
+            "INVALID_EMAIL": "Invalid email address",
+            "INVALID_PROFILE_ICON": "Invalid profile picture"
+        }
     }
 }

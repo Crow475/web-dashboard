@@ -47,6 +47,7 @@ import {
     LuUsers,
     LuUserPlus,
     LuCircleOff,
+    LuLoaderCircle,
 } from "react-icons/lu";
 
 import { updateDashboard, dashboardData } from "@/actions/updateDashboard";
@@ -110,6 +111,7 @@ export default function DashboardEditor({
     const [isDragging, setIsDragging] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [addUserOpen, setAddUserOpen] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     const t = useTranslations("editDashboard");
     const decimalTranslator = createTranslator("0123456789");
@@ -154,6 +156,8 @@ export default function DashboardEditor({
 
         console.log(data);
         console.log(currentUsers);
+
+        setSubmitted(true);
 
         const result = await updateDashboard(dashboard.dashboardId, data);
 
@@ -272,11 +276,13 @@ export default function DashboardEditor({
                         <span>{t("cancel")}</span>
                     </Link>
                     <button
-                        className="flex cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-blue-400 bg-blue-500 px-4 py-2 text-white shadow hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-300 md:text-sm"
+                        className="group flex cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-blue-400 bg-blue-500 px-4 py-2 text-white shadow hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-300 md:text-sm"
                         onClick={() => handleSubmit()}
+                        disabled={submitted}
                     >
                         <span className="text-xs md:text-sm">{t("submit")}</span>
-                        <LuCheck className="size-3" />
+                        <LuCheck className="block size-3 group-disabled:hidden" />
+                        <LuLoaderCircle className="hidden size-3 animate-spin group-disabled:block" />
                     </button>
                 </div>
             </header>
