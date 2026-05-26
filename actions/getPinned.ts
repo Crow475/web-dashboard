@@ -52,7 +52,7 @@ export default async function getPinned() {
         .leftJoin(usersOfDashboard, eq(usersOfDashboard.dashboardId, dashboards.dashboardId))
         .where(and(inArray(dashboards.dashboardId, pinned ?? []), memberOrOwner(profile.profileId)));
 
-    const filterNonAccessible = pinned.filter(
+    const filterNonAccessible = (pinned ?? []).filter(
         (dashboardId) => !result.find((dashboard) => dashboard.dashboardId === dashboardId),
     );
 

@@ -17,7 +17,9 @@ export async function createProfile(userId: string, username: string, icon: stri
         username: username,
         icon: icon,
         userId: userId,
-        preferences: "{}",
+        preferences: {
+            pinned: [],
+        },
     });
 
     console.log("Profile creation result:", result);
