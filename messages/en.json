@@ -16,14 +16,24 @@
             "options": "Options",
             "open": "Open dashboard",
             "icon": "Dashboard icon",
-            "deleteDialog": {
-                "title": "Delete dashboard?",
-                "paragraph": "Are you sure you want to delete dashboard ",
-                "cancel": "Cancel",
-                "delete": "Delete",
-                "success": "Deleted dashboard ",
-                "failure": "Failed to delete dashboard"
-            }
+            "leave": "Leave dashboard"
+        },
+        "deleteDialog": {
+            "title": "Delete dashboard?",
+            "paragraph": "Are you sure you want to delete dashboard ",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "success": "Deleted dashboard ",
+            "failure": "Failed to delete dashboard",
+            "icon": "Dashboard icon"
+        },
+        "leaveDashboardDialog": {
+            "button": "Leave dashboard",
+            "title": "Leave dashboard ",
+            "paragraph": "Are you sure you want to leave the dashboard? You will not be able to access it unless someone invites you back.",
+            "cancel": "Cancel",
+            "leave": "Leave",
+            "error": "Failed to leave dashboard"
         },
         "widgets": {
             "general": {
@@ -53,14 +63,6 @@
                 "placeholderTitle": "No link provided",
                 "placeholderParagraph": "Your content will be displayed here once you add a link."
             }
-        },
-        "leaveDashboardDialog": {
-            "button": "Leave dashboard",
-            "title": "Leave dashboard ",
-            "paragraph": "Are you sure you want to leave the dashboard? You will not be able to access it unless someone invites you back.",
-            "cancel": "Cancel",
-            "leave": "Leave",
-            "error": "Failed to leave dashboard"
         }
     },
     "landing": {

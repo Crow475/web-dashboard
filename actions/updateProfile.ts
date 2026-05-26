@@ -13,7 +13,7 @@ import { eq } from "drizzle-orm";
 
 import { getTranslations } from "next-intl/server";
 
-import type { actionState } from "@/lib/types";
+import type { actionState, profilePreferences } from "@/lib/types";
 import uuidToShort from "@/lib/uuidToShort";
 
 import getProfileOfUser from "./getProfileOfUser";
@@ -100,12 +100,15 @@ export async function updateProfile(_prevState: profileActionState, formData: Fo
         };
     }
 
+    const preferences = profile.preferences as profilePreferences;
+
     const result = await dataDB
         .update(profiles)
         .set({
             username: validatedData.data.username,
             icon: validatedData.data.profileIcon,
             publicEmail: validatedData.data.publicEmail,
+            preferences: preferences.pinned ? profile.preferences : { pinned: [] },
         })
         .where(eq(profiles.profileId, profile.profileId))
         .returning({ updatedId: profiles.profileId });

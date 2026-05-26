@@ -8,6 +8,8 @@ import getProfileOfUser from "@/actions/getProfileOfUser";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/appSidebar";
 
+import getPinned from "@/actions/getPinned";
+
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
     const session = await auth.api.getSession({
         headers: await headers(),
@@ -20,9 +22,17 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     const userId = session.user.id;
     const profile = await getProfileOfUser(userId);
 
+    const pinned = await getPinned();
+
+    console.log("Pinned:", pinned);
+
+    if (!pinned) {
+        forbidden();
+    }
+
     return (
         <SidebarProvider defaultOpen={false}>
-            <AppSidebar profile={profile} />
+            <AppSidebar profile={profile} pinned={pinned} />
             <div className="flex w-full flex-row items-start justify-start">
                 <SidebarTrigger className="sticky top-0" />
                 <div className="flex w-full">{children}</div>

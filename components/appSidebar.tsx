@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { authClient } from "@/lib/auth-client";
 
 import type { Profile } from "@/actions/getProfileOfUser";
+import type { pinnedSelectReturn } from "@/lib/types";
 
 import {
     Sidebar,
@@ -35,7 +36,9 @@ import { notoColorEmoji } from "@/lib/fonts";
 import { LuLayoutGrid, LuCirclePlus, LuChevronsUpDown, LuLogOut, LuSettings, LuUser } from "react-icons/lu";
 import uuidToShort from "@/lib/uuidToShort";
 
-export function AppSidebar({ profile }: { profile: Profile }) {
+import DashboardPinnedItem from "@/components/custom/dashboardPinnedItem";
+
+export function AppSidebar({ profile, pinned }: { profile: Profile; pinned: pinnedSelectReturn }) {
     const shortUserId = uuidToShort(profile?.profileId || "");
     const router = useRouter();
 
@@ -78,7 +81,21 @@ export function AppSidebar({ profile }: { profile: Profile }) {
                 </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupLabel>{t("pinned")}</SidebarGroupLabel>
-                    <SidebarGroupContent></SidebarGroupContent>
+                    <SidebarGroupContent>
+                        <SidebarMenu className="flex flex-col gap-1">
+                            {pinned.map((dashboard) => {
+                                const isOwner = dashboard.ownerId === profile?.profileId;
+
+                                return (
+                                    <DashboardPinnedItem
+                                        key={dashboard.dashboardId}
+                                        dashboard={dashboard}
+                                        isOwner={isOwner}
+                                    />
+                                );
+                            })}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>

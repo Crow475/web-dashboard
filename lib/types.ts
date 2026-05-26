@@ -1,6 +1,7 @@
 import getDashboard from "@/actions/getDashboard";
 import getUsersOfDashboard from "@/actions/getUsersOfDashboard";
 import getProfileById from "@/actions/getProfileById";
+import getPinned from "@/actions/getPinned";
 import React from "react";
 import { themeTypes } from "@/lib/themeRegistry";
 
@@ -42,6 +43,11 @@ export type widgetCombo = {
     fullScreen?: React.ReactElement;
 };
 
+export type profilePreferences = {
+    pinned: string[];
+};
+
 export type dashboardSelectReturn = NonNullable<Awaited<ReturnType<typeof getDashboard>>>;
 export type dashboardUserSelectReturn = NonNullable<Awaited<ReturnType<typeof getUsersOfDashboard>>>;
 export type profileSelectReturn = NonNullable<Awaited<ReturnType<typeof getProfileById>>>;
+export type pinnedSelectReturn = NonNullable<Awaited<ReturnType<typeof getPinned>>>;

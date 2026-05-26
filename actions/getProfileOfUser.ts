@@ -13,6 +13,7 @@ export default async function getProfileOfUser(userId: string) {
             icon: profiles.icon,
             publicEmail: profiles.publicEmail,
             userId: profiles.userId,
+            preferences: profiles.preferences,
         })
         .from(profiles)
         .where(eq(profiles.userId, userId));

@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useTranslations } from "next-intl";
 
 import { notoColorEmoji } from "@/lib/fonts";
 
-import { LuEllipsis, LuChevronRight, LuTrash2, LuPin, LuLogOut, LuCircleAlert, LuLink } from "react-icons/lu";
+import { LuEllipsis, LuChevronRight, LuTrash2, LuPin, LuLogOut, LuLink, LuPinOff } from "react-icons/lu";
 
 import uuidToShort from "@/lib/uuidToShort";
 import toStandardTime from "@/lib/toStandardTime";
@@ -20,21 +20,15 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogHeader,
-    AlertDialogMedia,
-    AlertDialogFooter,
-    AlertDialogCancel,
-    AlertDialogAction,
-    AlertDialogTitle,
-    AlertDialogDescription,
-} from "@/components/ui/alert-dialog";
+
 import { toast } from "sonner";
 
-import { deleteDashboard } from "@/actions/deleteDashboard";
-import leaveDashboard from "@/actions/leaveDashboard";
+import DeleteDialog from "@/components/custom/deleteDialog";
+import LeaveDialog from "@/components/custom/leaveDialog";
+
+import getPinned from "@/actions/getPinned";
+import addToPinned from "@/actions/addToPinned";
+import deleteFromPinned from "@/actions/deleteFromPinned";
 
 export default function DashboardListItem({
     title,
@@ -56,30 +50,40 @@ export default function DashboardListItem({
     const [linkHovered, setLinkHovered] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+    const [isPinned, setIsPinned] = useState(false);
     const router = useRouter();
 
+    useEffect(() => {
+        const getIsPinned = async () => {
+            const result = await getPinned();
+
+            if (result) {
+                const pinnedDashboards = result.map((dashboard) => dashboard.dashboardId);
+
+                if (pinnedDashboards.includes(id)) {
+                    setIsPinned(true);
+                }
+            }
+        };
+
+        getIsPinned();
+    });
+
     const t = useTranslations("component.dashboardCard");
-    const t2 = useTranslations("component.leaveDashboardDialog");
 
-    async function handleDelete() {
-        const result = await deleteDashboard(uuidToShort(id));
-
+    async function handlePin() {
+        const result = await addToPinned(id);
         if (result) {
             router.refresh();
-            toast.success(t("deleteDialog.success") + '"' + result.deletedTitle + '"');
-        } else {
-            toast.error(t("deleteDialog.failure"));
+            setIsPinned(true);
         }
     }
 
-    async function handleLeaveDashboard() {
-        setLeaveDialogOpen(false);
-        const result = await leaveDashboard(id);
-
+    async function handleUnpin() {
+        const result = await deleteFromPinned(id);
         if (result) {
             router.refresh();
-        } else {
-            toast.error(t2("error"));
+            setIsPinned(false);
         }
     }
 
@@ -122,10 +126,17 @@ export default function DashboardListItem({
                             </span>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="min-w-48">
-                            <DropdownMenuItem>
-                                <LuPin size={16} />
-                                <span>{t("pin")}</span>
-                            </DropdownMenuItem>
+                            {isPinned ? (
+                                <DropdownMenuItem onSelect={() => handleUnpin()}>
+                                    <LuPinOff size={16} />
+                                    <span>unpin</span>
+                                </DropdownMenuItem>
+                            ) : (
+                                <DropdownMenuItem onSelect={() => handlePin()}>
+                                    <LuPin size={16} />
+                                    <span>{t("pin")}</span>
+                                </DropdownMenuItem>
+                            )}
                             <DropdownMenuItem
                                 onSelect={() => {
                                     navigator.clipboard.writeText(
@@ -145,7 +156,7 @@ export default function DashboardListItem({
                             ) : (
                                 <DropdownMenuItem variant="destructive" onSelect={() => setLeaveDialogOpen(true)}>
                                     <LuLogOut size={16} />
-                                    <span>{t2("button")}</span>
+                                    <span>{t("leave")}</span>
                                 </DropdownMenuItem>
                             )}
                             <DropdownMenuSeparator />
@@ -174,48 +185,14 @@ export default function DashboardListItem({
                     {t("open")}
                 </span>
             </Link>
-            <AlertDialog open={deleteDialogOpen} onOpenChange={() => setDeleteDialogOpen(!deleteDialogOpen)}>
-                <AlertDialogContent size="sm">
-                    <AlertDialogHeader>
-                        <AlertDialogMedia>
-                            <span
-                                className={`${notoColorEmoji.className} text-2xl select-none md:text-4xl`}
-                                role="img"
-                                aria-label={t("icon")}
-                            >
-                                {icon}
-                            </span>
-                        </AlertDialogMedia>
-                    </AlertDialogHeader>
-                    <AlertDialogTitle className="text-center">{t("deleteDialog.title")}</AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">
-                        {t("deleteDialog.paragraph")} &quot;<strong>{title}</strong>&quot;?
-                    </AlertDialogDescription>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>{t("deleteDialog.cancel")}</AlertDialogCancel>
-                        <AlertDialogAction variant="destructive" onClick={() => handleDelete()}>
-                            {t("deleteDialog.delete")}
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
-            <AlertDialog open={leaveDialogOpen} onOpenChange={() => setLeaveDialogOpen(!leaveDialogOpen)}>
-                <AlertDialogContent size="sm">
-                    <AlertDialogHeader>
-                        <AlertDialogMedia>
-                            <LuCircleAlert className="text-red-500" />
-                        </AlertDialogMedia>
-                    </AlertDialogHeader>
-                    <AlertDialogTitle className="text-center">{t2("title")}</AlertDialogTitle>
-                    <AlertDialogDescription className="text-center">{t2("paragraph")}</AlertDialogDescription>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>{t2("cancel")}</AlertDialogCancel>
-                        <AlertDialogAction variant="destructive" onClick={() => handleLeaveDashboard()}>
-                            {t2("leave")}
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <DeleteDialog
+                open={deleteDialogOpen}
+                onOpenChange={(open) => setDeleteDialogOpen(open)}
+                id={id}
+                title={title}
+                icon={icon}
+            />
+            <LeaveDialog open={leaveDialogOpen} onOpenChange={(open) => setLeaveDialogOpen(open)} id={id} />
         </div>
     );
 }
