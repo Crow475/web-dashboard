@@ -23,7 +23,6 @@ export type dashboardElement = {
     };
     type: string;
     content: { [key: string]: string };
-    component: React.ReactElement;
 };
 
 export type dashboardProps = {

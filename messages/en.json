@@ -37,6 +37,16 @@
             },
             "test": {
                 "title": "Test"
+            },
+            "links": {
+                "title": "Links",
+                "titleLabel": "Title",
+                "linkLabelLabel": "Label",
+                "linkUrlLabel": "Url",
+                "linkLabelPlaceholder": "Link",
+                "add": "Add link",
+                "remove": "Remove link",
+                "save": "Save"
             }
         },
         "leaveDashboardDialog": {

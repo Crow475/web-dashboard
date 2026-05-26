@@ -12,7 +12,8 @@ import { useTranslations } from "next-intl";
 export const WidgetDataContex = createContext<{
     widgetProps: unknown;
     setWidgetProps: (widgetProps: { [key: string]: string }) => void;
-}>({ widgetProps: {}, setWidgetProps: () => {} });
+    setShowSettings: (showSettings: boolean) => void;
+}>({ widgetProps: {}, setWidgetProps: () => {}, setShowSettings: () => {} });
 
 export default function Widget({
     isDropped,
@@ -54,7 +55,13 @@ export default function Widget({
             ref={ref}
             className={`flex w-full flex-col justify-start space-x-2 border border-neutral-200 bg-white transition-all duration-100 ${expanded ? "h-full w-full rounded-xl" : "items-center rounded-md"}`}
         >
-            <WidgetDataContex.Provider value={{ widgetProps: widgetProps, setWidgetProps: handlePropsChange }}>
+            <WidgetDataContex.Provider
+                value={{
+                    widgetProps: widgetProps,
+                    setWidgetProps: handlePropsChange,
+                    setShowSettings: setShowSettings,
+                }}
+            >
                 <div
                     className={`flex w-full flex-row items-center justify-between bg-neutral-50 py-1 pr-2 ${expanded ? "rounded-t-xl border-b border-neutral-200" : "rounded-t-md rounded-b-md"}`}
                 >

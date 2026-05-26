@@ -77,17 +77,17 @@ export default function DashboardEditor({
             position: element.position,
             type: element.type,
             content: element.content,
-            component: (
-                <Widget
-                    id={`${element.position.row}-${element.position.col}-${element.id}`}
-                    isDropped
-                    type={element.type as WidgetType}
-                    defaultProps={element.content}
-                    onPropsChange={(newProps) =>
-                        handlePropsChange(`${element.position.row}-${element.position.col}-${element.id}`, newProps)
-                    }
-                />
-            ),
+            // component: (
+            //     <Widget
+            //         id={`${element.position.row}-${element.position.col}-${element.id}`}
+            //         isDropped
+            //         type={element.type as WidgetType}
+            //         defaultProps={element.content}
+            //         onPropsChange={(newProps) =>
+            //             handlePropsChange(`${element.position.row}-${element.position.col}-${element.id}`, newProps)
+            //         }
+            //     />
+            // ),
         };
     });
 
@@ -467,35 +467,35 @@ export default function DashboardEditor({
                         <div className="grid grid-cols-2 gap-2">
                             {mockRows.map((row) => (
                                 <React.Fragment key={row}>
-                                    <WidgetSlot
-                                        id={`${row}-1`}
-                                        odd={false}
-                                        elements={elements}
-                                        setElements={setElements}
-                                        rowCount={rowCount}
-                                        setRowCount={setRowCount}
-                                    >
-                                        {
-                                            elements.find(
-                                                (element) => element.position.row === row && element.position.col === 1,
-                                            )?.component
-                                        }
-                                    </WidgetSlot>
-                                    <WidgetSlot
-                                        key={`${row}-2`}
-                                        id={`${row}-2`}
-                                        odd
-                                        elements={elements}
-                                        setElements={setElements}
-                                        rowCount={rowCount}
-                                        setRowCount={setRowCount}
-                                    >
-                                        {
-                                            elements.find(
-                                                (element) => element.position.row === row && element.position.col === 2,
-                                            )?.component
-                                        }
-                                    </WidgetSlot>
+                                    {[1, 2].map((col) => {
+                                        const element = elements.find(
+                                            (e) => e.position.row === row && e.position.col === col,
+                                        );
+                                        return (
+                                            <WidgetSlot
+                                                key={`${row}-${col}`}
+                                                id={`${row}-${col}`}
+                                                odd={col === 2}
+                                                elements={elements}
+                                                setElements={setElements}
+                                                rowCount={rowCount}
+                                                setRowCount={setRowCount}
+                                            >
+                                                {element && (
+                                                    <Widget
+                                                        key={element.id}
+                                                        id={`${row}-${col}-${element.id}`}
+                                                        isDropped
+                                                        type={element.type as WidgetType}
+                                                        defaultProps={element.content}
+                                                        onPropsChange={(newProps) =>
+                                                            handlePropsChange(`${row}-${col}-${element.id}`, newProps)
+                                                        }
+                                                    />
+                                                )}
+                                            </WidgetSlot>
+                                        );
+                                    })}
                                 </React.Fragment>
                             ))}
                             <button
@@ -549,6 +549,16 @@ export default function DashboardEditor({
                                             id={`0-0-${decimalTranslator.generate()}`}
                                             type={WidgetType.CLOCK}
                                             defaultProps={{}}
+                                            onPropsChange={(newProps) =>
+                                                handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
+                                            }
+                                        />
+                                        <Widget
+                                            id={`0-0-${decimalTranslator.generate()}`}
+                                            type={WidgetType.LINKS}
+                                            defaultProps={{
+                                                links: `[{"label": "Link 1", "url": "https://example.com"}]`,
+                                            }}
                                             onPropsChange={(newProps) =>
                                                 handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                             }

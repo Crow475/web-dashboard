@@ -45,6 +45,16 @@
             },
             "test": {
                 "title": "Тест"
+            },
+            "links": {
+                "title": "Ссылки",
+                "titleLabel": "Заголовок",
+                "linkLabelLabel": "Название",
+                "linkUrlLabel": "Url",
+                "linkLabelPlaceholder": "Ссылка",
+                "add": "Добавить ссылку",
+                "remove": "Удалить ссылку",
+                "save": "Сохранить"
             }
         }
     },
