@@ -150,12 +150,12 @@ export default function WidgetSlot({
     if (odd) {
         return (
             <div
-                className="relative flex h-[50vh] w-full rounded-xl border border-neutral-100 bg-white shadow-inner"
+                className="relative flex h-[50vh] w-full rounded-xl border border-neutral-100 bg-white/70 shadow-inner"
                 ref={ref}
             >
                 {children}
                 <div className="hidden w-full flex-col items-center justify-center only:flex">
-                    <LuScan className="size-20 text-neutral-100" />
+                    <LuScan className="size-20 text-neutral-200/80" />
                 </div>
             </div>
         );
@@ -185,12 +185,12 @@ export default function WidgetSlot({
             <HoverCard>
                 <HoverCardTrigger asChild>
                     <div
-                        className="relative flex h-[50vh] w-full rounded-xl border border-neutral-100 bg-white shadow-inner"
+                        className="relative flex h-[50vh] w-full rounded-xl border border-neutral-100 bg-white/70 shadow-inner"
                         ref={ref}
                     >
                         {children}
                         <div className="hidden w-full flex-col items-center justify-center only:flex">
-                            <LuScan className="size-20 text-neutral-100" />
+                            <LuScan className="size-20 text-neutral-200/80" />
                         </div>
                     </div>
                 </HoverCardTrigger>

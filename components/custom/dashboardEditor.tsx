@@ -557,7 +557,17 @@ export default function DashboardEditor({
                                             id={`0-0-${decimalTranslator.generate()}`}
                                             type={WidgetType.LINKS}
                                             defaultProps={{
-                                                links: `[{"label": "Link 1", "url": "https://example.com"}]`,
+                                                links: `[{"label": "", "url": ""}]`,
+                                            }}
+                                            onPropsChange={(newProps) =>
+                                                handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
+                                            }
+                                        />
+                                        <Widget
+                                            id={`0-0-${decimalTranslator.generate()}`}
+                                            type={WidgetType.EMBED}
+                                            defaultProps={{
+                                                url: "",
                                             }}
                                             onPropsChange={(newProps) =>
                                                 handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)

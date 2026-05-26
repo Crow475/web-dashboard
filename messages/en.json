@@ -47,6 +47,11 @@
                 "add": "Add link",
                 "remove": "Remove link",
                 "save": "Save"
+            },
+            "embed": {
+                "title": "Embed",
+                "placeholderTitle": "No link provided",
+                "placeholderParagraph": "Your content will be displayed here once you add a link."
             }
         },
         "leaveDashboardDialog": {
