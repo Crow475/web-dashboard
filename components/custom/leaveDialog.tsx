@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 
 import {
     AlertDialog,
@@ -30,14 +29,13 @@ export default function LeaveDialog({
     id: string;
 }) {
     const t = useTranslations("component.leaveDashboardDialog");
-    const router = useRouter();
 
     async function handleLeaveDashboard() {
         onOpenChange(false);
         const result = await leaveDashboard(id);
 
         if (result) {
-            router.refresh();
+            window.location.href = "/app";
         } else {
             toast.error(t("error"));
         }

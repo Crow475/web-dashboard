@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import {
     AlertDialog,
     AlertDialogContent,
@@ -34,14 +32,13 @@ export default function DeleteDialog({
     title: string;
     icon: string;
 }) {
-    const router = useRouter();
     const t = useTranslations("component.deleteDialog");
 
     async function handleDelete() {
         const result = await deleteDashboard(uuidToShort(id));
 
         if (result) {
-            router.refresh();
+            window.location.href = "/app";
             toast.success(t("success") + '"' + result.deletedTitle + '"');
         } else {
             toast.error(t("failure"));
