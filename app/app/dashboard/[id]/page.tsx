@@ -67,12 +67,16 @@ export default async function DashboardPage({ params }: { params: { id: string }
 
     return (
         <div className="flex h-svh w-full flex-col items-center justify-start">
-            <header className="flex w-[98%] flex-row items-center justify-between border-b border-neutral-300 px-4 py-4">
+            <header className="flex w-[98%] flex-row items-center justify-between border-b border-neutral-300 px-4 py-2 md:py-4">
                 <div className="flex flex-row items-center justify-start space-x-2">
-                    <div className={`${notoColorEmoji.className} flex flex-row items-center justify-center text-4xl`}>
+                    <div
+                        className={`${notoColorEmoji.className} flex flex-row items-center justify-center text-2xl md:text-4xl`}
+                    >
                         {dashboard.icon}
                     </div>
-                    <h1 className="border border-transparent px-2 py-1 text-4xl font-bold">{dashboard.title}</h1>
+                    <h1 className="border border-transparent px-2 py-1 text-2xl font-bold md:text-4xl">
+                        {dashboard.title}
+                    </h1>
                 </div>
                 <div className="flex flex-row items-center justify-end">
                     {dashboard.ownerId === profile.profileId || ["admin", "editor"].includes(role ?? "") ? (
@@ -86,36 +90,36 @@ export default async function DashboardPage({ params }: { params: { id: string }
                     ) : null}
                 </div>
             </header>
-            <div className="flex w-full flex-row items-center justify-center pr-4">
+            <div className="flex w-full flex-row items-center justify-center pr-1 md:pr-4">
                 <ScrollArea
-                    className={`flex h-[88vh] w-full flex-col items-center justify-start bg-fixed px-4 ${themeRegistry[props.preferences.theme].className}`}
+                    className={`flex h-[90vh] w-full flex-col items-center justify-start bg-fixed px-2 md:h-[88vh] md:px-4 ${themeRegistry[props.preferences.theme].className}`}
                 >
                     <div className="absolute top-0 left-0 z-0 h-5 w-full bg-linear-to-b from-white to-transparent"></div>
                     <div className="h-5 w-full" role="presentation"></div>
                     <div
-                        className="absolute top-0 left-0 h-[88vh] w-3 bg-linear-to-r from-white to-transparent"
+                        className="absolute top-0 left-0 h-[90vh] w-3 bg-linear-to-r from-white to-transparent md:h-[88vh]"
                         role="presentation"
                     ></div>
                     <div
-                        className="absolute top-0 right-0 h-[88vh] w-3 bg-linear-to-l from-white to-transparent"
+                        className="absolute top-0 right-0 h-[90vh] w-3 bg-linear-to-l from-white to-transparent md:h-[88vh]"
                         role="presentation"
                     ></div>
                     <div
                         className="absolute bottom-0 left-0 z-10 h-3 w-full bg-linear-to-t from-white to-transparent"
                         role="presentation"
                     ></div>
-                    <div className="grid w-full grid-cols-2 gap-2">
+                    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2">
                         {mockRows.map((row) => (
                             <React.Fragment key={row}>
                                 <div
                                     id={`${row}-1`}
-                                    className="flex h-[50vh] w-full rounded-xl border border-neutral-100 empty:border-transparent"
+                                    className="flex h-[33vh] w-full rounded-xl border border-neutral-100 empty:border-transparent md:h-[50vh]"
                                 >
                                     <ElementAtPosition row={row} col={1} props={props} />
                                 </div>
                                 <div
                                     id={`${row}-2`}
-                                    className="flex h-[50vh] w-full rounded-xl border border-neutral-100 empty:border-transparent"
+                                    className="flex h-[33vh] w-full rounded-xl border border-neutral-100 empty:border-transparent md:h-[50vh]"
                                 >
                                     <ElementAtPosition row={row} col={2} props={props} />
                                 </div>

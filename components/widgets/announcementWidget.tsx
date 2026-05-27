@@ -121,13 +121,13 @@ function AnnouncementRegular() {
             </div>
             <div className="flex w-full flex-row items-center justify-center px-4 py-2">
                 <h1
-                    className={`text-center text-3xl font-bold ${type === "info" ? "text-black" : type === "warning" ? "text-amber-400" : "text-red-500"}`}
+                    className={`text-center text-2xl font-bold md:text-3xl ${type === "info" ? "text-black" : type === "warning" ? "text-amber-400" : "text-red-500"}`}
                 >
                     {state.title}
                 </h1>
             </div>
             <div className="flex w-full flex-row items-center justify-center px-4 py-2">
-                <p className="text-center text-sm">{state.paragraph}</p>
+                <p className="text-center text-xs md:text-sm">{state.paragraph}</p>
             </div>
         </div>
     );

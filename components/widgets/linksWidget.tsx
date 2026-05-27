@@ -206,7 +206,7 @@ function LinksRegular() {
     return (
         <div className="flex h-full w-full flex-col items-center justify-start rounded-xl bg-white">
             <div className="flex w-full flex-row items-center justify-start px-4 py-2">
-                <h1 className="text-3xl font-bold">{title}</h1>
+                <h1 className="text-2xl font-bold md:text-3xl">{title}</h1>
             </div>
             <div className="flex w-full flex-col items-center justify-start px-3">
                 <ScrollArea className="flex h-72 w-full overflow-y-hidden">
@@ -218,7 +218,7 @@ function LinksRegular() {
                             >
                                 <a
                                     href={link.url}
-                                    className="text-lg text-blue-500 underline hover:text-blue-600"
+                                    className="text-base text-blue-500 underline hover:text-blue-600 md:text-lg"
                                     target="_blank"
                                     rel="noreferrer"
                                 >

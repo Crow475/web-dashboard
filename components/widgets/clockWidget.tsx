@@ -105,7 +105,7 @@ function ClockRegular() {
                 <span className="text-5xl">{time.toLocaleString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span>
             )}
             {state.showDate === "true" && (
-                <span className="text-lg">
+                <span className="text-base md:text-lg">
                     {time.toLocaleString("en-GB", { weekday: "long", month: "long", day: "numeric" })}
                 </span>
             )}
