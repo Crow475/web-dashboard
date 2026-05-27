@@ -3,12 +3,14 @@ import { TestWidget } from "@/components/widgets/testWidget";
 import { ClockWidget } from "@/components/widgets/clockWidget";
 import { LinksWidget } from "@/components/widgets/linksWidget";
 import { EmbedWidget } from "@/components/widgets/embedWidget";
+import { AnnouncementWidget } from "@/components/widgets/announcementWidget";
 
 export enum WidgetType {
     TEST = "TEST",
     CLOCK = "CLOCK",
     LINKS = "LINKS",
     EMBED = "EMBED",
+    ANNOUNCEMENT = "ANNOUNCEMENT",
 }
 
 export const WidgetList: { [key in WidgetType]: widgetCombo } = {
@@ -16,4 +18,5 @@ export const WidgetList: { [key in WidgetType]: widgetCombo } = {
     CLOCK: ClockWidget,
     LINKS: LinksWidget,
     EMBED: EmbedWidget,
+    ANNOUNCEMENT: AnnouncementWidget,
 };

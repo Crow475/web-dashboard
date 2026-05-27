@@ -62,6 +62,16 @@
                 "title": "Embed",
                 "placeholderTitle": "No link provided",
                 "placeholderParagraph": "Your content will be displayed here once you add a link."
+            },
+            "announcement": {
+                "title": "Announcement",
+                "type": "Type",
+                "titleLabel": "Title",
+                "paragraphLabel": "Paragraph",
+                "titlePlaceholder": "Announcement",
+                "info": "Info",
+                "warning": "Warning",
+                "alert": "Alert"
             }
         }
     },

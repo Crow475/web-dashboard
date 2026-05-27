@@ -62,6 +62,16 @@
                 "title": "Вставка",
                 "placeholderTitle": "Ссылка не указана",
                 "placeholderParagraph": "Ваше контент будет отображаться здесь, когда вы добавите ссылку."
+            },
+            "announcement": {
+                "title": "Объявление",
+                "type": "Тип",
+                "titleLabel": "Заголовок",
+                "paragraphLabel": "Параграф",
+                "titlePlaceholder": "Объявление",
+                "info": "Информация",
+                "warning": "Предупреждение",
+                "alert": "Опасность"
             }
         }
     },
