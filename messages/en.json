@@ -161,6 +161,22 @@
         "resetText": "We'll send you an email with instructions to reset your password.",
         "invalidEmail": "Invalid email address"
     },
+    "resetSent": {
+        "title": "Reset Password",
+        "sentText": "A link to reset your password has been sent to your email address."
+    },
+    "newPassword": {
+        "title": "Reset Password",
+        "password": "New password:",
+        "repeatPassword": "Repeat new password:",
+        "submit": "Submit",
+        "invalidPassword": "Invalid password",
+        "invalidPasswordConfirmation": "Invalid password confirmation",
+        "passwordsDontMatch": "Passwords do not match",
+        "passwordTooShort": "Password must be at least 8 characters long",
+        "invalidToken": "Invalid token",
+        "UNKNOWN_ERROR": "An unknown error occurred. Please try again later."
+    },
     "verifyEmail": {
         "title": "Verify your email",
         "thanks": "Thanks for signing up! To complete the registration process, please verify your email address.",

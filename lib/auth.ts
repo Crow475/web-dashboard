@@ -24,6 +24,20 @@ export const auth = betterAuth({
         minPasswordLength: 8,
         requireEmailVerification: true,
         autoSignIn: true,
+        revokeSessionOnPasswordReset: true,
+        sendResetPassword: async ({ user, url, token }, request) => {
+            void sendEmail(
+                user.email,
+                "Reset your password for BOARDS",
+                `
+                    <p>Hello ${user.name}!</p>
+                    <p>You requested a password reset for Boards. Please click the link below to reset your password:</p>
+                    <a href="${url}" style="display: inline-block; padding: 10px 20px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                    <p>If you did not request a password reset, please ignore this email.</p>
+                    <p>Best regards,<br/>The Boards Team</p>
+                `,
+            );
+        },
     },
     emailVerification: {
         sendOnSignUp: true,

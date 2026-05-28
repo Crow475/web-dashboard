@@ -1,9 +1,10 @@
 "use server";
+import { redirect } from "next/navigation";
 
 import { z } from "zod";
 import { getTranslations } from "next-intl/server";
 
-import { sendEmail } from "./sendEmail";
+import { auth } from "@/lib/auth";
 
 export type ResetPasswordActionState = {
     email?: string;
@@ -35,9 +36,12 @@ export async function resetPassword(
         };
     }
 
-    await sendEmail(email, "reset password test", "<p>test</p>");
+    const data = await auth.api.requestPasswordReset({
+        body: {
+            email: email,
+            redirectTo: `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/new-password`,
+        },
+    });
 
-    return {
-        email: email,
-    };
+    redirect("/password-reset/sent");
 }
