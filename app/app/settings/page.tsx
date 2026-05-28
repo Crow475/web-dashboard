@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { useTranslations, useLocale } from "next-intl";
 
 import setLocale from "@/lib/setLocale";
@@ -10,7 +12,7 @@ import { notoColorEmoji } from "@/lib/fonts";
 
 import DefaultHeader from "@/components/custom/defaultHeader";
 
-import { LuSettings } from "react-icons/lu";
+import { LuSettings, LuChevronRight } from "react-icons/lu";
 
 export default function Settings() {
     const t = useTranslations("settings");
@@ -45,6 +47,22 @@ export default function Settings() {
                             </SelectItem>
                         </SelectContent>
                     </Select>
+                </div>
+                <Separator className="my-6" />
+                <div className="flex w-full flex-row items-center justify-between px-1">
+                    <div className="flex flex-col items-start justify-start">
+                        <label className="text-base font-bold md:text-lg" id="languageSelect">
+                            {t("changePassword.label")}
+                        </label>
+                        <p className="text-xs text-neutral-500 md:text-sm">{t("changePassword.description")}</p>
+                    </div>
+                    <Link
+                        className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-amber-300 hover:bg-amber-200 hover:text-amber-500 hover:shadow-amber-200"
+                        href="/app/change-password"
+                    >
+                        {t("changePassword.button")}
+                        <LuChevronRight className="size-4 md:size-5" />
+                    </Link>
                 </div>
                 <Separator className="my-6" />
             </ScrollArea>

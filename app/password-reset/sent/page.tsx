@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { useTranslations } from "next-intl";
 
 import AboutLink from "@/components/custom/aboutLink";
@@ -20,6 +22,16 @@ export default function PasswordResetSentPage() {
                 </div>
             </div>
             <LanguageSelector localeChangeHandler={setLocale} />
+            <Image
+                src="/random.svg"
+                alt="Background Image"
+                role="presentation"
+                className="pointer-events-none absolute right-0 bottom-0 z-0 m-0 h-full w-2/3 object-cover opacity-50 md:w-full"
+                unoptimized
+                width={100}
+                height={100}
+                loading="eager"
+            />
         </main>
     );
 }

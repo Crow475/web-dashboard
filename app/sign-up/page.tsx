@@ -73,7 +73,7 @@ function PasswordField({ state, label }: { state: SignUpActionState; label: stri
                     type="password"
                     id="password"
                     name="password"
-                    className="nd:text-base flex w-[88%] py-1 text-sm focus:outline-0"
+                    className="flex w-[88%] py-1 text-sm focus:outline-0 md:text-base"
                     data-error={state.errors?.password ? true : false}
                     defaultValue={state.messages.password}
                     aria-invalid={state.errors?.password ? true : false}

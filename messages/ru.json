@@ -190,7 +190,27 @@
         "language": {
             "label": "Язык",
             "description": "Выберите предпочитаемый язык интерфейса. (Влияет только на текущую сессию)"
+        },
+        "changePassword": {
+            "label": "Сменить пароль",
+            "description": "Смените свой пароль. Вы будете разлогинены в других сессиях.",
+            "button": "Сменить"
         }
+    },
+    "changePassword": {
+        "title": "Сменить пароль",
+        "oldPassword": "Старый пароль:",
+        "newPassword": "Новый пароль:",
+        "repeatNewPassword": "Повторите новый пароль:",
+        "submit": "Сменить",
+        "cancel": "Отмена",
+        "invalidPassword": "Неверный пароль",
+        "passwordTooShort": "Пароль должен содержать не менее 8 символов",
+        "invalidPasswordConfirmation": "Неверный пароль",
+        "passwordsDontMatch": "Пароли не совпадают",
+        "invalidSession": "Неверная сессия",
+        "UNKNOWN_ERROR": "Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.",
+        "INVALID_PASSWORD": "Неверный пароль"
     },
     "createDashboard": {
         "pageTitle": "Новый дэшборд",
