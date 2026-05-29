@@ -195,6 +195,11 @@
             "label": "Change password",
             "description": "Change your password. You will be logged out of other sessions.",
             "button": "Change"
+        },
+        "deleteAccount": {
+            "label": "Delete account",
+            "description": "Delete your account. All your data will be permanently deleted.",
+            "button": "Delete account"
         }
     },
     "changePassword": {
@@ -211,6 +216,13 @@
         "invalidSession": "Invalid session",
         "UNKNOWN_ERROR": "An unknown error occurred. Please try again later.",
         "INVALID_PASSWORD": "Invalid password"
+    },
+    "deleteAccount": {
+        "title": "Delete account",
+        "subtitle": "Are you sure you want to delete your account?",
+        "paragraph1": "This action is irreversible. All your data will be permanently deleted. You will lose access to all your dashboards.",
+        "paragraph2": "If you are sure, click the button below and we will send you an email with instructions to delete your account.",
+        "delete": "Delete account"
     },
     "createDashboard": {
         "pageTitle": "New dashboard",
@@ -320,5 +332,11 @@
             "INVALID_EMAIL": "Invalid email address",
             "INVALID_PROFILE_ICON": "Invalid profile picture"
         }
+    },
+    "goodbye": {
+        "title": "Goodbye!",
+        "paragraph1": "Your account has been successfully deleted.",
+        "paragraph2": "We are sorry to see you go.",
+        "back": "Back"
     }
 }

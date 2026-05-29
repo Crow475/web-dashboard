@@ -65,6 +65,22 @@ export default function Settings() {
                     </Link>
                 </div>
                 <Separator className="my-6" />
+                <div className="flex w-full flex-row items-center justify-between px-1">
+                    <div className="flex flex-col items-start justify-start">
+                        <label className="text-base font-bold text-red-500 md:text-lg" id="languageSelect">
+                            {t("deleteAccount.label")}
+                        </label>
+                        <p className="text-xs text-neutral-500 md:text-sm">{t("deleteAccount.description")}</p>
+                    </div>
+                    <Link
+                        className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-red-300 hover:bg-red-200 hover:text-red-500 hover:shadow-red-200"
+                        href="/app/delete-account"
+                    >
+                        {t("deleteAccount.button")}
+                        <LuChevronRight className="size-4 md:size-5" />
+                    </Link>
+                </div>
+                <Separator className="my-6" />
             </ScrollArea>
         </main>
     );

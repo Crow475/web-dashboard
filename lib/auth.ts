@@ -1,12 +1,14 @@
 import { betterAuth, email } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { APIError } from "better-auth/api";
 
 import { authDB } from "@/db/drizzle";
 import { user, session, account, verification } from "@/db/auth/schema";
 
 import { sendEmail } from "@/actions/sendEmail";
 import { createProfile } from "@/actions/createProfile";
+import { deleteProfile } from "@/actions/deleteProfile";
 import { createAuthMiddleware } from "better-auth/api";
 
 export const auth = betterAuth({
@@ -98,6 +100,32 @@ export const auth = betterAuth({
                 }
             }
         }),
+    },
+    user: {
+        deleteUser: {
+            enabled: true,
+            sendDeleteAccountVerification: async ({ user, url, token }, request) => {
+                void sendEmail(
+                    user.email,
+                    "Delete your account for BOARDS",
+                    `
+                        <p>Hello ${user.name}!</p>
+                        <p>You requested to delete your account for Boards. Please click the link below to delete your account:</p>
+                        <a href="${url}" style="display: inline-block; padding: 10px 20px; background-color: #F40119; color: white; text-decoration: none; border-radius: 5px;">Delete Account</a>
+                        <p>If you did not request account deletion, please ignore this email.</p>
+                        <p>Best regards,<br/>The Boards Team</p>
+                    `,
+                );
+            },
+            beforeDelete: async (user, request) => {
+                const result = await deleteProfile(user.id);
+                if (!result) {
+                    throw new APIError("FORBIDDEN", {
+                        message: "Failed to delete profile",
+                    });
+                }
+            },
+        },
     },
     trustedOrigins: ["https://boardsproject.app", "http://localhost:3000", "https://webdashboard-project.netlify.app"],
     plugins: [nextCookies()],
