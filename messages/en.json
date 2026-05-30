@@ -187,6 +187,10 @@
     },
     "settings": {
         "title": "Settings",
+        "headers": {
+            "interface": "Interface",
+            "account": "Account"
+        },
         "language": {
             "label": "Language",
             "description": "Select your preferred interface language. (Affects only the current session)"
@@ -196,10 +200,16 @@
             "description": "Change your password. You will be logged out of other sessions.",
             "button": "Change"
         },
+        "loginMethod": {
+            "label": "Logged in with:",
+            "email": "Email",
+            "github": "GitHub",
+            "google": "Google"
+        },
         "deleteAccount": {
             "label": "Delete account",
             "description": "Delete your account. All your data will be permanently deleted.",
-            "button": "Delete account"
+            "button": "Delete"
         }
     },
     "changePassword": {

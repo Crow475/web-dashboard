@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 
 import { signIn } from "@/actions/signIn";
+import { authClient } from "@/lib/auth-client";
 
 import { LuMail, LuMoveRight, LuRectangleEllipsis } from "react-icons/lu";
 
@@ -13,6 +14,8 @@ import { useTranslations } from "next-intl";
 export default function SignInForm() {
     const t = useTranslations("signIn");
     const [state, formAction, pending] = useActionState(signIn, { messages: {}, errors: {} });
+
+    console.log("Last used login method:", authClient.getLastUsedLoginMethod());
 
     return (
         <form className="flex h-full w-[80%] flex-col items-center justify-between" action={formAction}>

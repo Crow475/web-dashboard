@@ -2,10 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import { useActionState } from "react";
 
 import { updatePassword } from "@/actions/updatePassword";
+
+import { authClient } from "@/lib/auth-client";
 
 import { Separator } from "@/components/ui/separator";
 
@@ -20,6 +23,12 @@ export default function ChangePassword() {
         messages: { oldPassword: "", newPassword: "", newPasswordConfirmation: "" },
     });
     const t = useTranslations("changePassword");
+
+    const loginMethod = authClient.getLastUsedLoginMethod();
+
+    if (loginMethod !== "email") {
+        notFound();
+    }
 
     return (
         <main className="flex h-svh w-full flex-col items-center justify-center bg-linear-to-tl from-blue-400 via-blue-300 via-10% to-white to-40% bg-cover">

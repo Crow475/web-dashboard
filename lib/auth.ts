@@ -2,6 +2,7 @@ import { betterAuth, email } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
+import { lastLoginMethod } from "better-auth/plugins";
 
 import { authDB } from "@/db/drizzle";
 import { user, session, account, verification } from "@/db/auth/schema";
@@ -128,5 +129,5 @@ export const auth = betterAuth({
         },
     },
     trustedOrigins: ["https://boardsproject.app", "http://localhost:3000", "https://webdashboard-project.netlify.app"],
-    plugins: [nextCookies()],
+    plugins: [lastLoginMethod(), nextCookies()],
 });
