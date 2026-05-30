@@ -44,7 +44,7 @@ export default async function Home({
 
     const dashboards =
         search.type === "owned"
-            ? await getOwnedDashboards(uuidToShort(profile?.profileId ?? ""), profile?.profileId ?? "")
+            ? await getOwnedDashboards(uuidToShort(profile?.profileId ?? ""), profile?.userId ?? "")
             : await getAllUserDashboards();
 
     if (!dashboards) {

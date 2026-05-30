@@ -33,7 +33,7 @@ export default function ProfileEditor({
     const t = useTranslations("editProfile");
 
     return (
-        <ScrollArea className="h-[89vh] w-[90%] overflow-y-hidden">
+        <ScrollArea className="h-[89svh] w-[90%] overflow-y-hidden">
             <div className="flex w-full flex-col items-center justify-start">
                 <form
                     className="flex w-full flex-col items-center justify-start space-y-2 py-6 md:w-2/3"

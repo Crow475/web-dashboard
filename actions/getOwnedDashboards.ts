@@ -16,6 +16,8 @@ export default async function getOwnedDashboards(profileShortId: string, request
 
     const sameUser = requestedProfile?.userId === requestUserId;
 
+    console.log("Same user:", sameUser);
+
     if (!sameUser) {
         const boards = dataDB
             .select({
