@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import type { dashboardUserSelectReturn } from "@/lib/types";
 
@@ -28,6 +29,8 @@ import { LuTrash2, LuLogOut, LuCircleAlert } from "react-icons/lu";
 import { notoColorEmoji } from "@/lib/fonts";
 
 import leaveDashboard from "@/actions/leaveDashboard";
+
+import uuidToShort from "@/lib/uuidToShort";
 
 import { toast } from "sonner";
 
@@ -92,30 +95,42 @@ export default function UserCard({
         <HoverCard openDelay={100}>
             <HoverCardTrigger
                 className={`flex w-full flex-row items-center justify-between rounded-md border border-neutral-200 px-3 py-2 shadow ${isCurrentUser ? "bg-neutral-100" : "bg-white"}`}
+                asChild
             >
-                <div className="flex flex-row items-center justify-start space-x-2">
-                    <div className={`${notoColorEmoji.className} text-xl`}>{profile.profile?.icon}</div>
-                    <span className="line-clamp-1 text-lg font-semibold">{profile.profile?.username}</span>
+                <div>
+                    <div className="flex flex-row items-center justify-start space-x-2">
+                        <div className={`${notoColorEmoji.className} text-xl`}>{profile.profile?.icon}</div>
+                        {isCurrentUser ? (
+                            <span className="line-clamp-1 text-lg font-semibold">{profile.profile?.username}</span>
+                        ) : (
+                            <Link
+                                className="line-clamp-1 text-lg font-semibold hover:underline"
+                                href={`/app/profile/${uuidToShort(profile.profile?.profileId ?? "")}`}
+                            >
+                                {profile.profile?.username}
+                            </Link>
+                        )}
+                    </div>
+                    {isCurrentUser ? (
+                        <span className="text-xs text-neutral-500">{t(profile.role ?? "viewer")}</span>
+                    ) : (
+                        <Select
+                            defaultValue={profile.role ?? ""}
+                            onValueChange={(value) => handleRoleChange(value as "viewer" | "editor" | "admin")}
+                        >
+                            <SelectTrigger className="w-[40%]">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectItem value="viewer">{t("viewer")}</SelectItem>
+                                    <SelectItem value="editor">{t("editor")}</SelectItem>
+                                    <SelectItem value="admin">{t("admin")}</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    )}
                 </div>
-                {isCurrentUser ? (
-                    <span className="text-xs text-neutral-500">{t(profile.role ?? "viewer")}</span>
-                ) : (
-                    <Select
-                        defaultValue={profile.role ?? ""}
-                        onValueChange={(value) => handleRoleChange(value as "viewer" | "editor" | "admin")}
-                    >
-                        <SelectTrigger className="w-[40%]">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectItem value="viewer">{t("viewer")}</SelectItem>
-                                <SelectItem value="editor">{t("editor")}</SelectItem>
-                                <SelectItem value="admin">{t("admin")}</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                )}
             </HoverCardTrigger>
             <HoverCardContent side="right" className="flex h-8 w-8 flex-col items-center justify-center">
                 {isCurrentUser ? (

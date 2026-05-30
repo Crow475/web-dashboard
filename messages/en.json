@@ -35,6 +35,10 @@
             "leave": "Leave",
             "error": "Failed to leave dashboard"
         },
+        "dashboardListFilter": {
+            "all": "All",
+            "owned": "Owned"
+        },
         "widgets": {
             "general": {
                 "settings": "Settings",
@@ -347,6 +351,17 @@
         "title": "Goodbye!",
         "paragraph1": "Your account has been successfully deleted.",
         "paragraph2": "We are sorry to see you go.",
+        "back": "Back"
+    },
+    "notFound": {
+        "subtitle": "Page not found",
+        "paragraph1": "The page you are looking for does not exist. Please check the URL and try again.",
+        "home": "Home"
+    },
+    "forbidden": {
+        "subtitle": "Not allowed",
+        "paragraph1": "You do not have permission to access this page.",
+        "home": "Home",
         "back": "Back"
     }
 }

@@ -10,14 +10,26 @@ import { auth } from "@/lib/auth";
 
 import getProfileOfUser from "@/actions/getProfileOfUser";
 import getAllUserDashboards from "@/actions/getAllUserDashboards";
+import getOwnedDashboards from "@/actions/getOwnedDashboards";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import DashboardListItem from "@/components/custom/dashboardListItem";
+import DashboardListFilter from "@/components/custom/dashboardListFilter";
 import DefaultHeader from "@/components/custom/defaultHeader";
 
-export default async function Home() {
+import uuidToShort from "@/lib/uuidToShort";
+
+export default async function Home({
+    searchParams,
+}: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
     const t = await getTranslations("home");
+
+    const search = await searchParams;
+
+    console.log("Search params:", search);
 
     const session = await auth.api.getSession({
         headers: await headers(),
@@ -30,7 +42,11 @@ export default async function Home() {
     const userId = session.user.id;
     const profile = await getProfileOfUser(userId);
 
-    const dashboards = await getAllUserDashboards();
+    const dashboards =
+        search.type === "owned"
+            ? await getOwnedDashboards(uuidToShort(profile?.profileId ?? ""), profile?.profileId ?? "")
+            : await getAllUserDashboards();
+
     if (!dashboards) {
         forbidden();
     }
@@ -41,7 +57,9 @@ export default async function Home() {
         <main className="flex max-h-screen w-full flex-col items-center justify-start overflow-hidden">
             <DefaultHeader title={t("title")} icon={<LuLayoutGrid size={32} />} />
             <ScrollArea className="flex h-[90vh] w-[90%] flex-col items-center justify-start px-2">
-                {/* <div className="sticky top-0 flex h-10 w-full flex-row bg-neutral-200"></div> */}
+                <div className="sticky top-0 flex w-full flex-row items-center justify-end px-2 pt-3">
+                    <DashboardListFilter defaultValue={(search.type as string) ?? "all"} />
+                </div>
                 <div className="absolute bottom-0 left-0 z-10 h-5 w-full bg-linear-to-t from-white to-transparent"></div>
                 <div className="grid w-full grid-cols-2 gap-3 px-2 py-4 md:gap-4">
                     {dashboards.map((dashboard) => (
@@ -65,7 +83,7 @@ export default async function Home() {
                             <span className="text-base font-semibold md:text-lg">{t("createNew")}</span>
                         </Link>
                     )}
-                    <div className="col-span-2 hidden h-[80svh] w-full flex-col items-center justify-between rounded-xl bg-neutral-50 px-5 py-6 only:flex md:px-10 md:py-10">
+                    <div className="col-span-2 hidden h-[78svh] w-full flex-col items-center justify-between rounded-xl bg-neutral-50 px-5 py-6 only:flex md:px-10 md:py-10">
                         <div className="flex h-3/4 flex-col items-center justify-center space-y-10">
                             <div className="flex flex-col items-center justify-center space-y-4">
                                 <LuCircleOff className="size-15 text-neutral-400 md:size-20" />

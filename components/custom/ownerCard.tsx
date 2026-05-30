@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 import { authClient } from "@/lib/auth-client";
 
 import getProfileById from "@/actions/getProfileById";
 import type { profileSelectReturn } from "@/lib/types";
+import uuidToShort from "@/lib/uuidToShort";
 
 import { notoColorEmoji } from "@/lib/fonts";
 
@@ -27,7 +29,16 @@ export default function OwnerCard({ profileId }: { profileId: string }) {
         >
             <div className="flex flex-row items-center justify-start space-x-2">
                 <div className={`${notoColorEmoji.className} text-xl`}>{profile?.icon}</div>
-                <span className="text-lg font-semibold">{profile?.username}</span>
+                {isOwner ? (
+                    <span className="line-clamp-1 text-lg font-semibold">{profile?.username}</span>
+                ) : (
+                    <Link
+                        className="line-clamp-1 text-lg font-semibold hover:underline"
+                        href={`/app/profile/${uuidToShort(profile?.profileId ?? "")}`}
+                    >
+                        {profile?.username}
+                    </Link>
+                )}
             </div>
             <span className="text-xs text-neutral-500">Owner</span>
         </div>

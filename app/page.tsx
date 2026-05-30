@@ -3,11 +3,12 @@ import Image from "next/image";
 
 import { useTranslations } from "next-intl";
 
-import { LuRocket, LuUserPlus } from "react-icons/lu";
+import { LuUserPlus } from "react-icons/lu";
 
 import { montserrat } from "@/lib/fonts";
 
 import LanguageSelector from "@/components/custom/languageSelector";
+import StartButton from "@/components/custom/startButton";
 import AboutLink from "@/components/custom/aboutLink";
 import setLocale from "@/lib/setLocale";
 
@@ -29,13 +30,7 @@ export default function LandingPage() {
                     <span>{t("register")}</span>
                     <LuUserPlus />
                 </Link>
-                <Link
-                    className="col-span-1 flex flex-row items-center justify-between space-x-2 rounded-md border border-blue-400 bg-blue-500 px-3 py-2 text-sm text-white shadow hover:bg-blue-600 md:text-base"
-                    href="/app/"
-                >
-                    <span>{t("start")}</span>
-                    <LuRocket />
-                </Link>
+                <StartButton label={t("start")} />
             </div>
             <Image
                 src="/boards-landing-bg.svg"
