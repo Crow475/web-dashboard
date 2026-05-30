@@ -101,10 +101,12 @@ export default function UserCard({
                     <div className="flex flex-row items-center justify-start space-x-2">
                         <div className={`${notoColorEmoji.className} text-xl`}>{profile.profile?.icon}</div>
                         {isCurrentUser ? (
-                            <span className="line-clamp-1 text-lg font-semibold">{profile.profile?.username}</span>
+                            <span className="line-clamp-1 text-base font-semibold md:text-lg">
+                                {profile.profile?.username}
+                            </span>
                         ) : (
                             <Link
-                                className="line-clamp-1 text-lg font-semibold hover:underline"
+                                className="line-clamp-1 text-base font-semibold hover:underline md:text-lg"
                                 href={`/app/profile/${uuidToShort(profile.profile?.profileId ?? "")}`}
                             >
                                 {profile.profile?.username}

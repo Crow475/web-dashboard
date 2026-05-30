@@ -22,7 +22,7 @@ export default function PrivateCheckbox({
     return (
         <>
             <div className="flex flex-col items-start justify-start space-y-1 py-2">
-                <div className="flex w-full flex-row items-center justify-between px-6">
+                <div className="flex w-full flex-row items-center justify-between px-2 md:px-6">
                     <label htmlFor="privateCheckbox" className="w-2/3">
                         {label}
                     </label>

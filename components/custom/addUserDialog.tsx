@@ -121,9 +121,9 @@ export default function AddUserDialog({
                                     disabled={pending}
                                 >
                                     {pending ? (
-                                        <LuLoaderCircle className="size-5 animate-spin" />
+                                        <LuLoaderCircle className="size-4 animate-spin md:size-5" />
                                     ) : (
-                                        <LuPlus className="size-5" />
+                                        <LuPlus className="size-4 md:size-5" />
                                     )}
                                 </button>
                             </div>
@@ -164,7 +164,7 @@ export default function AddUserDialog({
                 </div>
                 <DialogFooter>
                     <button
-                        className="flex cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-blue-400 bg-blue-500 px-3 py-2 text-xs text-white shadow hover:bg-blue-600 disabled:cursor-default disabled:bg-blue-300 md:text-sm"
+                        className="flex w-1/3 cursor-pointer flex-row items-center justify-between space-x-2 rounded-md border border-blue-400 bg-blue-500 px-3 py-2 text-xs text-white shadow hover:bg-blue-600 disabled:cursor-default disabled:bg-blue-300 md:text-sm"
                         type="button"
                         disabled={state.profile === undefined}
                         onClick={handleSubmit}
