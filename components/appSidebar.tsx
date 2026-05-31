@@ -33,7 +33,15 @@ import {
 
 import { notoColorEmoji } from "@/lib/fonts";
 
-import { LuLayoutGrid, LuCirclePlus, LuChevronsUpDown, LuLogOut, LuSettings, LuUser } from "react-icons/lu";
+import {
+    LuLayoutGrid,
+    LuCirclePlus,
+    LuChevronsUpDown,
+    LuLogOut,
+    LuSettings,
+    LuUser,
+    LuUserSearch,
+} from "react-icons/lu";
 import uuidToShort from "@/lib/uuidToShort";
 
 import DashboardPinnedItem from "@/components/custom/dashboardPinnedItem";
@@ -74,6 +82,14 @@ export function AppSidebar({ profile, pinned }: { profile: Profile; pinned: pinn
                                 <Link href="/app/dashboard/create">
                                     <LuCirclePlus />
                                     {t("newDashboard")}
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                        <SidebarMenuItem>
+                            <SidebarMenuButton asChild>
+                                <Link href="/app/search">
+                                    <LuUserSearch />
+                                    Find users
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

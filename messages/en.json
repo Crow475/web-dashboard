@@ -359,6 +359,12 @@
             "INVALID_PROFILE_ICON": "Invalid profile picture"
         }
     },
+    "search": {
+        "title": "Find users",
+        "placeholder": "Search username...",
+        "search": "Search",
+        "noResults": "No results found matching username"
+    },
     "goodbye": {
         "title": "Goodbye!",
         "paragraph1": "Your account has been successfully deleted.",
