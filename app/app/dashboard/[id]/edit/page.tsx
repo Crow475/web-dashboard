@@ -40,5 +40,12 @@ export default async function DashboardEditPage({ params }: { params: { id: stri
 
     const users = await getUsersOfDashboard(id);
 
-    return <DashboardEditor dashboard={dashboard} users={users ?? []} role={role ?? "owner"} />;
+    return (
+        <DashboardEditor
+            dashboard={dashboard}
+            users={users ?? []}
+            role={role ?? "owner"}
+            profileId={profile.profileId}
+        />
+    );
 }

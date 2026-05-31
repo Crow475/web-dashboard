@@ -23,14 +23,26 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import WidgetRegular from "@/components/custom/widgetRegular";
 
-function ElementAtPosition({ row, col, props }: { row: number; col: number; props: dashboardProps }) {
+function ElementAtPosition({
+    row,
+    col,
+    props,
+    id,
+    profileId,
+}: {
+    row: number;
+    col: number;
+    props: dashboardProps;
+    id: string;
+    profileId: string;
+}) {
     const element = props.elements.find((element) => element.position.row === row && element.position.col === col);
 
     if (!element) {
         return null;
     }
 
-    return <WidgetRegular widget={element} />;
+    return <WidgetRegular widget={element} dbId={id} profileId={profileId} />;
 }
 
 export default async function DashboardPage({ params }: { params: { id: string } }) {
@@ -115,13 +127,25 @@ export default async function DashboardPage({ params }: { params: { id: string }
                                     id={`${row}-1`}
                                     className="flex h-[33vh] w-full rounded-xl border border-neutral-100 empty:border-transparent md:h-[50vh]"
                                 >
-                                    <ElementAtPosition row={row} col={1} props={props} />
+                                    <ElementAtPosition
+                                        row={row}
+                                        col={1}
+                                        props={props}
+                                        id={dashboard.dashboardId}
+                                        profileId={profile.profileId}
+                                    />
                                 </div>
                                 <div
                                     id={`${row}-2`}
                                     className="flex h-[33vh] w-full rounded-xl border border-neutral-100 empty:border-transparent md:h-[50vh]"
                                 >
-                                    <ElementAtPosition row={row} col={2} props={props} />
+                                    <ElementAtPosition
+                                        row={row}
+                                        col={2}
+                                        props={props}
+                                        id={dashboard.dashboardId}
+                                        profileId={profile.profileId}
+                                    />
                                 </div>
                             </React.Fragment>
                         ))}

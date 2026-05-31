@@ -11,9 +11,12 @@ import { useTranslations } from "next-intl";
 
 export const WidgetDataContex = createContext<{
     widgetProps: unknown;
+    id: string;
     setWidgetProps: (widgetProps: { [key: string]: string }) => void;
     setShowSettings: (showSettings: boolean) => void;
-}>({ widgetProps: {}, setWidgetProps: () => {}, setShowSettings: () => {} });
+    dashboardId: string;
+    profileId: string;
+}>({ widgetProps: {}, setWidgetProps: () => {}, setShowSettings: () => {}, id: "", dashboardId: "", profileId: "" });
 
 export default function Widget({
     isDropped,
@@ -21,12 +24,16 @@ export default function Widget({
     type,
     defaultProps,
     onPropsChange,
+    dbId,
+    profileId,
 }: {
     isDropped?: boolean;
     id: string;
     type: WidgetType;
     defaultProps: { [key: string]: string };
     onPropsChange: (widgetProps: { [key: string]: string }) => void;
+    dbId: string;
+    profileId: string;
 }) {
     const handleRef = useRef<HTMLDivElement>(null);
     const [widgetProps, setWidgetProps] = useState<{ [key: string]: string }>(defaultProps);
@@ -60,6 +67,9 @@ export default function Widget({
                     widgetProps: widgetProps,
                     setWidgetProps: handlePropsChange,
                     setShowSettings: setShowSettings,
+                    id: id,
+                    dashboardId: dbId,
+                    profileId: profileId,
                 }}
             >
                 <div

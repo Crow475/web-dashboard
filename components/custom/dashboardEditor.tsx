@@ -60,10 +60,12 @@ export default function DashboardEditor({
     dashboard,
     users,
     role,
+    profileId,
 }: {
     dashboard: dashboardSelectReturn;
     users: dashboardUserSelectReturn;
     role: "admin" | "editor" | "viewer" | "owner";
+    profileId: string;
 }) {
     const router = useRouter();
     const properties = dashboard.properties as dashboardProps;
@@ -368,6 +370,8 @@ export default function DashboardEditor({
                                                 onPropsChange={(newProps) =>
                                                     handlePropsChange(`${posRow}-${posCol}-${sourceUnique}`, newProps)
                                                 }
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
                                             />
                                         ),
                                     },
@@ -411,6 +415,8 @@ export default function DashboardEditor({
                                                 type={event.operation.source?.data.type as WidgetType}
                                                 defaultProps={event.operation.source?.data.props}
                                                 onPropsChange={(newProps) => handlePropsChange(newId, newProps)}
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
                                             />
                                         ),
                                     },
@@ -486,6 +492,8 @@ export default function DashboardEditor({
                                                                     newProps,
                                                                 )
                                                             }
+                                                            dbId={dashboard.dashboardId}
+                                                            profileId={profileId}
                                                         />
                                                     )}
                                                 </WidgetSlot>
@@ -532,14 +540,14 @@ export default function DashboardEditor({
                                     <TabsContent value="widgets">
                                         <div className="relative flex h-full w-full flex-col items-start justify-start space-y-2 px-4">
                                             <DeleteTarget show={showDelete && isDragging} />
-                                            <Widget
+                                            {/* <Widget
                                                 id={`0-0-${decimalTranslator.generate()}`}
                                                 type={WidgetType.TEST}
                                                 defaultProps={{}}
                                                 onPropsChange={(newProps) =>
                                                     handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                                 }
-                                            />
+                                            /> */}
                                             <Widget
                                                 id={`0-0-${decimalTranslator.generate()}`}
                                                 type={WidgetType.CLOCK}
@@ -547,6 +555,8 @@ export default function DashboardEditor({
                                                 onPropsChange={(newProps) =>
                                                     handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                                 }
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
                                             />
                                             <Widget
                                                 id={`0-0-${decimalTranslator.generate()}`}
@@ -559,6 +569,8 @@ export default function DashboardEditor({
                                                 onPropsChange={(newProps) =>
                                                     handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                                 }
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
                                             />
                                             <Widget
                                                 id={`0-0-${decimalTranslator.generate()}`}
@@ -569,6 +581,8 @@ export default function DashboardEditor({
                                                 onPropsChange={(newProps) =>
                                                     handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                                 }
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
                                             />
                                             <Widget
                                                 id={`0-0-${decimalTranslator.generate()}`}
@@ -579,6 +593,22 @@ export default function DashboardEditor({
                                                 onPropsChange={(newProps) =>
                                                     handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
                                                 }
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
+                                            />
+                                            <Widget
+                                                id={`0-0-${decimalTranslator.generate()}`}
+                                                type={WidgetType.NOTES}
+                                                defaultProps={{
+                                                    title: "Notes",
+                                                    public: "true",
+                                                    notes: `{"public": ""}`,
+                                                }}
+                                                onPropsChange={(newProps) =>
+                                                    handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
+                                                }
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
                                             />
                                         </div>
                                     </TabsContent>

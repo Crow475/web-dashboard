@@ -76,6 +76,18 @@
                 "info": "Info",
                 "warning": "Warning",
                 "alert": "Alert"
+            },
+            "notes": {
+                "title": "Notes",
+                "undoChanges": "Undo changes",
+                "save": "Save",
+                "characters": "characters",
+                "titleLabel": "Title:",
+                "publicLabel": "Public:",
+                "saveSuccess": "Saved notes",
+                "saveFailure": "Failed to save notes",
+                "public": "Public",
+                "private": "Private"
             }
         }
     },
