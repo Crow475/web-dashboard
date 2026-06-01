@@ -36,6 +36,7 @@ export default async function deleteFromPinned(dashboardId: string) {
         .update(profiles)
         .set({
             preferences: {
+                lastOpened: preferences.lastOpened,
                 pinned: preferences.pinned.filter((id) => id !== dashboardId),
             },
         })

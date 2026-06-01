@@ -1,27 +1,28 @@
+"use client";
+
 import React from "react";
+import { useContext, useEffect } from "react";
 
-import { notFound, forbidden } from "next/navigation";
-import { headers } from "next/headers";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-import { auth } from "@/lib/auth";
 
 import { LuPencil } from "react-icons/lu";
 
-import type { dashboardProps } from "@/lib/types";
+import type { dashboardProps, profilePreferences } from "@/lib/types";
 
-import getDashboard from "@/actions/getDashboard";
-import getProfileOfUser from "@/actions/getProfileOfUser";
-import getRoleInDashboard from "@/actions/getRoleInDashboard";
+import uuidToShort from "@/lib/uuidToShort";
 
 import { notoColorEmoji } from "@/lib/fonts";
 import { themeRegistry } from "@/lib/themeRegistry";
 
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+import { DashboardContext } from "@/components/dashboardContext";
 import WidgetRegular from "@/components/custom/widgetRegular";
+
+import setLastOpened from "@/actions/setLastOpened";
 
 function ElementAtPosition({
     row,
@@ -45,35 +46,30 @@ function ElementAtPosition({
     return <WidgetRegular widget={element} dbId={id} profileId={profileId} />;
 }
 
-export default async function DashboardPage({ params }: { params: { id: string } }) {
-    const { id } = await params;
+export default function DashboardPage() {
+    const value = useContext(DashboardContext);
+    const props = value.dashboard.properties as dashboardProps;
+    const role = value.role;
+    const dashboard = value.dashboard;
+    const profile = value.profile;
+    const id = uuidToShort(dashboard.dashboardId);
 
-    const t = await getTranslations("dashboard");
+    const router = useRouter();
 
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+    useEffect(() => {
+        async function handleLastOpened() {
+            const result = (await setLastOpened(dashboard.dashboardId)) as profilePreferences | null;
+            if (result) {
+                if (!(result.lastOpened === dashboard.dashboardId)) {
+                    router.refresh();
+                }
+            }
+        }
 
-    if (!session) {
-        forbidden();
-    }
+        handleLastOpened();
+    }, [router, dashboard.dashboardId]);
 
-    const profile = await getProfileOfUser(session.user.id);
-
-    if (!profile) {
-        forbidden();
-    }
-
-    const dashboard = await getDashboard(id, profile.profileId);
-
-    if (!dashboard) {
-        notFound();
-    }
-
-    const props = dashboard.properties as dashboardProps;
-
-    console.log("Id:", id, "ProfileId:", profile.profileId);
-    const role = await getRoleInDashboard(dashboard.dashboardId, profile.profileId);
+    const t = useTranslations("dashboard");
 
     const mockRows = Array.from({ length: props.rows }, (_, i) => i + 1);
 

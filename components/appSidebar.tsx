@@ -31,6 +31,8 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
+import { Separator } from "@/components/ui/separator";
+
 import { notoColorEmoji } from "@/lib/fonts";
 
 import {
@@ -46,7 +48,15 @@ import uuidToShort from "@/lib/uuidToShort";
 
 import DashboardPinnedItem from "@/components/custom/dashboardPinnedItem";
 
-export function AppSidebar({ profile, pinned }: { profile: Profile; pinned: pinnedSelectReturn }) {
+export function AppSidebar({
+    profile,
+    pinned,
+    lastOpened,
+}: {
+    profile: Profile;
+    pinned: pinnedSelectReturn;
+    lastOpened: pinnedSelectReturn[0] | null;
+}) {
     const shortUserId = uuidToShort(profile?.profileId || "");
     const router = useRouter();
 
@@ -64,7 +74,7 @@ export function AppSidebar({ profile, pinned }: { profile: Profile; pinned: pinn
                     <SidebarMenuItem>
                         <SidebarMenuButton
                             asChild
-                            className="bg-blue-600 font-semibold text-white hover:bg-blue-700 hover:text-white active:bg-blue-800 active:text-white"
+                            className="bg-blue-600 font-semibold text-white shadow hover:bg-blue-700 hover:text-white active:bg-blue-800 active:text-white"
                         >
                             <Link href="/app/">
                                 <LuLayoutGrid />
@@ -76,9 +86,9 @@ export function AppSidebar({ profile, pinned }: { profile: Profile; pinned: pinn
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarMenu>
+                    <SidebarMenu className="space-y-1">
                         <SidebarMenuItem>
-                            <SidebarMenuButton asChild>
+                            <SidebarMenuButton asChild className="border border-neutral-200 shadow">
                                 <Link href="/app/dashboard/create">
                                     <LuCirclePlus />
                                     {t("newDashboard")}
@@ -86,15 +96,31 @@ export function AppSidebar({ profile, pinned }: { profile: Profile; pinned: pinn
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
-                            <SidebarMenuButton asChild>
+                            <SidebarMenuButton asChild className="border border-neutral-200 shadow">
                                 <Link href="/app/search">
                                     <LuUserSearch />
-                                    Find users
+                                    {t("findUsers")}
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarGroup>
+                {lastOpened && (
+                    <SidebarGroup>
+                        <SidebarGroupLabel>{t("lastOpened")}</SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu className="flex flex-col gap-1">
+                                <DashboardPinnedItem
+                                    dashboard={lastOpened}
+                                    isOwner={lastOpened.ownerId === profile?.profileId}
+                                />
+                            </SidebarMenu>
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                )}
+                <div className="flex w-full px-2">
+                    <Separator />
+                </div>
                 <SidebarGroup>
                     <SidebarGroupLabel>{t("pinned")}</SidebarGroupLabel>
                     <SidebarGroupContent>

@@ -117,7 +117,9 @@
         "pinned": "Pinned",
         "settings": "Settings",
         "profile": "View profile",
-        "logout": "Logout"
+        "logout": "Logout",
+        "findUsers": "Find users",
+        "lastOpened": "Latest"
     },
     "home": {
         "title": "Your dashboards",

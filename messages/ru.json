@@ -117,7 +117,9 @@
         "pinned": "Закрепленные",
         "settings": "Настройки",
         "profile": "Профиль",
-        "logout": "Выйти"
+        "logout": "Выйти",
+        "findUsers": "Найти людей",
+        "lastOpened": "Последний"
     },
     "home": {
         "title": "Ваши дэшборды",

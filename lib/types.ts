@@ -45,6 +45,7 @@ export type widgetCombo = {
 
 export type profilePreferences = {
     pinned: string[];
+    lastOpened: string | null;
 };
 
 export type dashboardSelectReturn = NonNullable<Awaited<ReturnType<typeof getDashboard>>>;

@@ -11,7 +11,7 @@ import type { profilePreferences } from "@/lib/types";
 
 import getProfileOfUser from "./getProfileOfUser";
 
-export default async function addToPinned(dashboardId: string) {
+export default async function setLastOpened(dashboardId: string) {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
@@ -28,24 +28,20 @@ export default async function addToPinned(dashboardId: string) {
 
     const preferences = profile.preferences as profilePreferences;
 
-    if (!preferences.pinned) {
-        preferences.pinned = [];
-    }
-
-    if (preferences.pinned.includes(dashboardId)) {
-        return null;
+    if (!preferences.lastOpened) {
+        preferences.lastOpened = dashboardId;
     }
 
     const result = await dataDB
         .update(profiles)
         .set({
             preferences: {
-                lastOpened: preferences.lastOpened,
-                pinned: [...(preferences.pinned ?? []), dashboardId],
+                lastOpened: dashboardId,
+                pinned: preferences.pinned,
             },
         })
         .where(eq(profiles.profileId, profile.profileId))
-        .returning({ updatedId: profiles.profileId });
+        .returning({ updatedPreferences: profiles.preferences });
 
     if (result.length === 0) {
         return null;
