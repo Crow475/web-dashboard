@@ -8,6 +8,8 @@ import type { actionState } from "@/lib/types";
 
 import { getTranslations } from "next-intl/server";
 
+import { z } from "zod";
+
 export type AddUserActionState = actionState & {
     messages: {
         userId?: string;
@@ -23,6 +25,10 @@ export async function addUser(_prevState: AddUserActionState, formData: FormData
 
     const t = await getTranslations("editDashboard.addUserDialog");
 
+    const schema = z.object({
+        userId: z.string(t("userNotFound")).regex(/^[a-zA-Z0-9]+$/, t("userNotFound")),
+    });
+
     if (!userId) {
         return {
             messages: {
@@ -30,6 +36,21 @@ export async function addUser(_prevState: AddUserActionState, formData: FormData
             },
             errors: {
                 userId: [t("idRequired")],
+            },
+        };
+    }
+
+    const validatedData = schema.safeParse({
+        userId: userId,
+    });
+
+    if (!validatedData.success) {
+        return {
+            messages: {
+                userId: userId,
+            },
+            errors: {
+                userId: [t("userNotFound")],
             },
         };
     }
