@@ -271,7 +271,8 @@
         "invalidProfile": "Неверный профиль"
     },
     "dashboard": {
-        "edit": "Изменить"
+        "edit": "Изменить",
+        "addWidget": "Добавьте виджет чтобы начать работу"
     },
     "editDashboard": {
         "cancel": "Отмена",

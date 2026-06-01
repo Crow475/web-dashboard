@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { LuPencil } from "react-icons/lu";
+import { LuPencil, LuMoveUpRight } from "react-icons/lu";
 
 import type { dashboardProps, profilePreferences } from "@/lib/types";
 
@@ -147,6 +147,13 @@ export default function DashboardPage() {
                         ))}
                     </div>
                     <div className="h-10 w-full" role="presentation"></div>
+                    {props.elements.length === 0 &&
+                        (dashboard.ownerId === profile.profileId || ["admin", "editor"].includes(role ?? "")) && (
+                            <div className="absolute top-3 right-3 z-10 flex flex-col items-center justify-center space-y-3 rounded-lg bg-neutral-100 px-4 py-4 shadow">
+                                <LuMoveUpRight className="size-9 text-neutral-400" />
+                                <span className="font-bold text-neutral-500">{t("addWidget")}</span>
+                            </div>
+                        )}
                 </ScrollArea>
             </div>
         </div>

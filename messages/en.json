@@ -271,7 +271,8 @@
         "invalidProfile": "Invalid profile"
     },
     "dashboard": {
-        "edit": "Edit"
+        "edit": "Edit",
+        "addWidget": "Add a widget to get started"
     },
     "editDashboard": {
         "cancel": "Cancel",
