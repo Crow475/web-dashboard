@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { LuPencil, LuMoveUpRight } from "react-icons/lu";
+import { LuPencil, LuMoveUpRight, LuLoaderCircle } from "react-icons/lu";
 
 import type { dashboardProps, profilePreferences } from "@/lib/types";
 
@@ -54,6 +54,8 @@ export default function DashboardPage() {
     const profile = value.profile;
     const id = uuidToShort(dashboard.dashboardId);
 
+    const [loading, setLoading] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -91,8 +93,13 @@ export default function DashboardPage() {
                         <Link
                             className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-amber-300 hover:bg-amber-200 hover:text-amber-500 hover:shadow-amber-200"
                             href={`/app/dashboard/${id}/edit`}
+                            onNavigate={() => setLoading(true)}
                         >
-                            <LuPencil className="size-3" />
+                            {loading ? (
+                                <LuLoaderCircle className="size-3 animate-spin" />
+                            ) : (
+                                <LuPencil className="size-3" />
+                            )}
                             <span className="text-xs md:text-sm">{t("edit")}</span>
                         </Link>
                     ) : null}

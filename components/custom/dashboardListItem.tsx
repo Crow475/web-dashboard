@@ -7,7 +7,16 @@ import { useTranslations } from "next-intl";
 
 import { notoColorEmoji } from "@/lib/fonts";
 
-import { LuEllipsis, LuChevronRight, LuTrash2, LuPin, LuLogOut, LuLink, LuPinOff } from "react-icons/lu";
+import {
+    LuEllipsis,
+    LuChevronRight,
+    LuTrash2,
+    LuPin,
+    LuLogOut,
+    LuLink,
+    LuPinOff,
+    LuLoaderCircle,
+} from "react-icons/lu";
 
 import uuidToShort from "@/lib/uuidToShort";
 import toStandardTime from "@/lib/toStandardTime";
@@ -51,6 +60,7 @@ export default function DashboardListItem({
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
     const [isPinned, setIsPinned] = useState(false);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -179,8 +189,13 @@ export default function DashboardListItem({
                 onMouseLeave={() => setLinkHovered(false)}
                 onFocus={() => setLinkHovered(true)}
                 onBlur={() => setLinkHovered(false)}
+                onNavigate={() => setLoading(true)}
             >
-                <LuChevronRight className="size-5 text-neutral-400 group-hover:text-neutral-600/50 group-focus-visible:text-neutral-600/50 md:size-8" />
+                {loading ? (
+                    <LuLoaderCircle className="size-5 animate-spin text-neutral-400 group-hover:text-neutral-600/50 group-focus-visible:text-neutral-600/50 md:size-8" />
+                ) : (
+                    <LuChevronRight className="size-5 text-neutral-400 group-hover:text-neutral-600/50 group-focus-visible:text-neutral-600/50 md:size-8" />
+                )}
                 <span className="sr-only" id="open-dashboard">
                     {t("open")}
                 </span>

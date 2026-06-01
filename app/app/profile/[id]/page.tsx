@@ -20,6 +20,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { notoColorEmoji } from "@/lib/fonts";
 import CopyUserId from "@/components/custom/copyUserId";
 import DashboardListItem from "@/components/custom/dashboardListItem";
+import ProfileEditLink from "@/components/custom/profileEditLink";
 
 function EmailLink({ email }: { email: string | null }) {
     if (!email) {
@@ -116,15 +117,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
                     </div>
                 </div>
                 <div className="flex w-full flex-row items-center justify-end">
-                    {isCurrentUser && (
-                        <Link
-                            className="flex flex-row items-center justify-start space-x-1 rounded-md border border-neutral-100 bg-white px-4 py-2 text-neutral-500 shadow hover:border-amber-300 hover:bg-amber-200 hover:text-amber-500 hover:shadow-amber-200"
-                            href={`/app/profile/${id}/edit`}
-                        >
-                            <LuPencil />
-                            <span className="text-sm md:text-base">{t("edit")}</span>
-                        </Link>
-                    )}
+                    {isCurrentUser && <ProfileEditLink id={id} label={t("edit")} />}
                 </div>
             </div>
         </main>
