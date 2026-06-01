@@ -368,6 +368,18 @@
         "search": "Search",
         "noResults": "No results found matching username"
     },
+    "inviteTo": {
+        "title": "Invite to dashboard",
+        "button": "Invite to...",
+        "paragraph": "Select a role and a dashboard to invite to.",
+        "roleLabel": "Role:",
+        "roleViewer": "Viewer",
+        "roleEditor": "Editor",
+        "roleAdmin": "Admin",
+        "failed": "Failed to add user to dashboard",
+        "success": "User added to dashboard",
+        "invite": "Invite"
+    },
     "goodbye": {
         "title": "Goodbye!",
         "paragraph1": "Your account has been successfully deleted.",

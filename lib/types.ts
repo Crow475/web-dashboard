@@ -1,4 +1,5 @@
 import getDashboard from "@/actions/getDashboard";
+import getAllUserDashboards from "@/actions/getAllUserDashboards";
 import getUsersOfDashboard from "@/actions/getUsersOfDashboard";
 import getProfileById from "@/actions/getProfileById";
 import getPinned from "@/actions/getPinned";
@@ -49,6 +50,7 @@ export type profilePreferences = {
 };
 
 export type dashboardSelectReturn = NonNullable<Awaited<ReturnType<typeof getDashboard>>>;
+export type dashboardFullSelectReturn = NonNullable<Awaited<ReturnType<typeof getAllUserDashboards>>>;
 export type dashboardUserSelectReturn = NonNullable<Awaited<ReturnType<typeof getUsersOfDashboard>>>;
 export type profileSelectReturn = NonNullable<Awaited<ReturnType<typeof getProfileById>>>;
 export type pinnedSelectReturn = NonNullable<Awaited<ReturnType<typeof getPinned>>>;

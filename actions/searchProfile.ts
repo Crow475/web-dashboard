@@ -23,6 +23,7 @@ export default async function searchProfile(search: string) {
             icon: profiles.icon,
             publicEmail: profiles.publicEmail,
             userId: profiles.userId,
+            preferences: profiles.preferences,
         })
         .from(profiles)
         .where(and(ilike(profiles.username, `%${search}%`), ne(profiles.userId, session.user.id)));

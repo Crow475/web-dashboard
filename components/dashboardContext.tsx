@@ -26,6 +26,7 @@ export const DashboardContext = createContext<{
         icon: "",
         publicEmail: "",
         userId: "",
+        preferences: {},
     },
 });
 

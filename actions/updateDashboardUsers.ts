@@ -10,6 +10,8 @@ import uuidToShort from "@/lib/uuidToShort";
 import { dataDB } from "@/db/drizzle";
 import { usersOfDashboard } from "@/db/data/schema";
 
+import getRoleInDashboard from "./getRoleInDashboard";
+
 type returnType = {
     success: boolean;
     errors?: {
@@ -60,14 +62,27 @@ export default async function updateDashboardUsers(
         };
     }
 
-    // Replace with better check for access
-    if (dashboard.ownerId !== profile.profileId) {
-        return {
-            success: false,
-            errors: {
-                auth: ["NO_ACCESS"],
-            },
-        };
+    const role = await getRoleInDashboard(dashboardId, profile.profileId);
+    const isOwner = dashboard.ownerId === profile.profileId;
+
+    if (!isOwner) {
+        if (!role) {
+            return {
+                success: false,
+                errors: {
+                    auth: ["NO_ACCESS"],
+                },
+            };
+        }
+
+        if (role !== "admin") {
+            return {
+                success: false,
+                errors: {
+                    auth: ["NO_ACCESS"],
+                },
+            };
+        }
     }
 
     const resultDelete = await dataDB

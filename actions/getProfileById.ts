@@ -16,6 +16,7 @@ export default async function getProfileById(profileId: string) {
             icon: profiles.icon,
             publicEmail: profiles.publicEmail,
             userId: profiles.userId,
+            preferences: profiles.preferences,
         })
         .from(profiles)
         .where(eq(profiles.profileId, uuidProfileId));

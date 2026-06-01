@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound, forbidden } from "next/navigation";
 import { headers } from "next/headers";
 
@@ -13,7 +12,7 @@ import { auth } from "@/lib/auth";
 
 import { getTranslations } from "next-intl/server";
 
-import { LuMail, LuPencil } from "react-icons/lu";
+import { LuMail } from "react-icons/lu";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -21,6 +20,7 @@ import { notoColorEmoji } from "@/lib/fonts";
 import CopyUserId from "@/components/custom/copyUserId";
 import DashboardListItem from "@/components/custom/dashboardListItem";
 import ProfileEditLink from "@/components/custom/profileEditLink";
+import InviteToButton from "@/components/custom/inviteToButton";
 
 function EmailLink({ email }: { email: string | null }) {
     if (!email) {
@@ -117,7 +117,11 @@ export default async function ProfilePage({ params }: { params: { id: string } }
                     </div>
                 </div>
                 <div className="flex w-full flex-row items-center justify-end">
-                    {isCurrentUser && <ProfileEditLink id={id} label={t("edit")} />}
+                    {isCurrentUser ? (
+                        <ProfileEditLink id={id} label={t("edit")} />
+                    ) : (
+                        <InviteToButton profileId={profile.profileId} />
+                    )}
                 </div>
             </div>
         </main>
