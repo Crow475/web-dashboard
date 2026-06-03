@@ -610,6 +610,19 @@ export default function DashboardEditor({
                                                 dbId={dashboard.dashboardId}
                                                 profileId={profileId}
                                             />
+                                            <Widget
+                                                id={`0-0-${decimalTranslator.generate()}`}
+                                                type={WidgetType.TASKS}
+                                                defaultProps={{
+                                                    title: "Tasks",
+                                                    tasks: `[]`,
+                                                }}
+                                                onPropsChange={(newProps) =>
+                                                    handlePropsChange(`0-0-${decimalTranslator.generate()}`, newProps)
+                                                }
+                                                dbId={dashboard.dashboardId}
+                                                profileId={profileId}
+                                            />
                                         </div>
                                     </TabsContent>
                                     <TabsContent value="settings">

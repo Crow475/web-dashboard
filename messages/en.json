@@ -88,6 +88,16 @@
                 "saveFailure": "Failed to save notes",
                 "public": "Public",
                 "private": "Private"
+            },
+            "tasks": {
+                "title": "Tasks",
+                "titleLabel": "Title:",
+                "save": "Save",
+                "undoChanges": "Undo changes",
+                "deleteLabel": "Delete task",
+                "saveSuccess": "Saved tasks",
+                "saveFailure": "Failed to save tasks",
+                "addTask": "Add task"
             }
         }
     },

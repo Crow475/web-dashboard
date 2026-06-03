@@ -5,6 +5,7 @@ import { LinksWidget } from "@/components/widgets/linksWidget";
 import { EmbedWidget } from "@/components/widgets/embedWidget";
 import { AnnouncementWidget } from "@/components/widgets/announcementWidget";
 import { NotesWidget } from "@/components/widgets/notesWidget";
+import { TasksWidget } from "@/components/widgets/tasksWidget";
 
 export enum WidgetType {
     TEST = "TEST",
@@ -13,9 +14,10 @@ export enum WidgetType {
     EMBED = "EMBED",
     ANNOUNCEMENT = "ANNOUNCEMENT",
     NOTES = "NOTES",
+    TASKS = "TASKS",
 }
 
-export const ViewerEditableWidgets: WidgetType[] = [WidgetType.NOTES];
+export const ViewerEditableWidgets: WidgetType[] = [WidgetType.NOTES, WidgetType.TASKS];
 
 export const WidgetList: { [key in WidgetType]: widgetCombo } = {
     TEST: TestWidget,
@@ -24,4 +26,5 @@ export const WidgetList: { [key in WidgetType]: widgetCombo } = {
     EMBED: EmbedWidget,
     ANNOUNCEMENT: AnnouncementWidget,
     NOTES: NotesWidget,
+    TASKS: TasksWidget,
 };

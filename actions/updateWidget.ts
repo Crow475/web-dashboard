@@ -38,6 +38,7 @@ export async function updateWidget(dashboardId: string, widgetId: string, widget
     const isOwner = dashboard.ownerId === profile.profileId;
     const role = await getRoleInDashboard(dashboardId, profile.profileId);
     if (!isOwner && !role) {
+        // console.log("Not owner and no role");
         return null;
     }
 
@@ -45,12 +46,14 @@ export async function updateWidget(dashboardId: string, widgetId: string, widget
 
     const element = props.elements.find((element) => element.id === widgetId);
     if (!element) {
+        // console.log("Element not found");
         return null;
     }
 
     const isEditableByViewer = ViewerEditableWidgets.includes(element.type as WidgetType);
     console.log("Is editable by viewer:", isEditableByViewer);
     if (!isEditableByViewer && !isOwner && !["admin", "editor"].includes(role ?? "")) {
+        // console.log("Not editable by viewer and not owner");
         return null;
     }
 
