@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 
 import getUsersOfDashboard from "@/actions/getUsersOfDashboard";
 import getRoleInDashboard from "@/actions/getRoleInDashboard";
+import getOwnerOfDashboard from "@/actions/getOwnerOfDashboard";
 
 import uuidToShort from "@/lib/uuidToShort";
 import { createTranslator } from "short-uuid";
@@ -48,12 +49,17 @@ function TasksExpanded() {
     useEffect(() => {
         async function fetchUsers() {
             const result = await getUsersOfDashboard(uuidToShort(dashboardId));
+            const owner = await getOwnerOfDashboard(dashboardId);
 
             if (!result) {
                 return;
             }
 
-            setUsers(result);
+            if (!owner) {
+                return;
+            }
+
+            setUsers([owner, ...result]);
         }
 
         async function fetchRole() {
@@ -101,7 +107,7 @@ function TasksExpanded() {
 
     return (
         <div className="flex h-full w-full flex-col items-center justify-start rounded-xl bg-white px-1 pb-2">
-            <div className="flex w-full flex-row items-center justify-between pt-2 pr-2 pl-4">
+            <div className="flex w-full flex-row items-center justify-between pt-2 pr-2 pb-1 pl-4">
                 <h1 className="text-2xl font-bold md:text-3xl">{state.title}</h1>
                 <div className="flex flex-row items-center justify-end space-x-1">
                     <button
@@ -123,7 +129,7 @@ function TasksExpanded() {
                     </button>
                 </div>
             </div>
-            <ScrollArea className="flex h-64 w-full overflow-y-hidden">
+            <ScrollArea className="flex h-68 w-full overflow-y-hidden">
                 <div className="flex h-3 w-full flex-row" />
                 {tasks
                     .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
@@ -138,6 +144,7 @@ function TasksExpanded() {
                             deleteLabel={t("deleteLabel")}
                             role={role}
                             profileId={profileId}
+                            taskPlaceholder={t("taskPlaceholder")}
                         />
                     ))}
                 <div className="flex w-full flex-row items-center justify-start space-x-1 py-1 pr-4 pl-2">
@@ -209,12 +216,17 @@ function TasksRegular() {
     useEffect(() => {
         async function fetchUsers() {
             const result = await getUsersOfDashboard(uuidToShort(dashboardId));
+            const owner = await getOwnerOfDashboard(dashboardId);
 
             if (!result) {
                 return;
             }
 
-            setUsers(result);
+            if (!owner) {
+                return;
+            }
+
+            setUsers([owner, ...result]);
         }
 
         async function fetchRole() {
@@ -258,7 +270,7 @@ function TasksRegular() {
 
     return (
         <div className="flex h-full w-full flex-col items-center justify-start rounded-xl bg-white px-1 pb-2">
-            <div className="flex w-full flex-row items-center justify-between pt-2 pr-2 pl-4">
+            <div className="flex w-full flex-row items-center justify-between pt-2 pr-2 pb-1 pl-4">
                 <h1 className="text-2xl font-bold md:text-3xl">{state.title}</h1>
                 <div className="flex flex-row items-center justify-end space-x-1">
                     <button
@@ -280,7 +292,7 @@ function TasksRegular() {
                     </button>
                 </div>
             </div>
-            <ScrollArea className="flex h-64 w-full overflow-y-hidden">
+            <ScrollArea className="flex h-64 w-full overflow-y-hidden md:h-80">
                 <div className="flex h-3 w-full flex-row" />
                 {tasks
                     .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
@@ -295,6 +307,7 @@ function TasksRegular() {
                             deleteLabel={t("deleteLabel")}
                             role={role}
                             profileId={profileId}
+                            taskPlaceholder={t("taskPlaceholder")}
                         />
                     ))}
                 <div className="flex w-full flex-row items-center justify-start space-x-1 py-1 pr-4 pl-2">
@@ -316,7 +329,7 @@ function TasksRegular() {
                         }}
                     >
                         <LuCirclePlus className="text-neutral-500" />
-                        <span className="text-neutral-500">{t("addTask")}</span>
+                        <span className="text-sm text-neutral-500 md:text-base">{t("addTask")}</span>
                     </button>
                 </div>
             </ScrollArea>

@@ -22,6 +22,7 @@ export default function TaskElement({
     deleteLabel,
     role,
     profileId,
+    taskPlaceholder,
 }: {
     users: dashboardUserSelectReturn;
     setEdited: (value: boolean) => void;
@@ -31,16 +32,17 @@ export default function TaskElement({
     deleteLabel: string;
     role: "admin" | "editor" | "viewer" | null;
     profileId: string;
+    taskPlaceholder: string;
 }) {
     console.log("Current task: ", currenttask);
 
     return (
         <HoverCard>
             <HoverCardTrigger asChild>
-                <div className="flex w-full flex-row items-center justify-start space-x-1 py-1 pr-4 pl-2">
+                <div className="flex w-full flex-row items-center justify-start space-x-1 py-1 pr-2 pl-1 md:pr-4 md:pl-2">
                     <Select
                         disabled={role === "viewer"}
-                        value={currenttask.user}
+                        value={users.length > 1 ? currenttask.user : (users[0]?.profile?.profileId ?? "")}
                         onValueChange={(e) => {
                             setTasks([
                                 ...tasks.filter((task) => task.id !== currenttask.id),
@@ -49,16 +51,16 @@ export default function TaskElement({
                             setEdited(true);
                         }}
                     >
-                        <SelectTrigger className="w-1/4 rounded-md border border-neutral-200 px-1 py-1">
+                        <SelectTrigger className="w-[17%] rounded-md border border-neutral-200 px-0.5 py-1 md:w-1/4 md:px-1">
                             <SelectValue />
                             <SelectContent>
                                 {users.map((user) => (
                                     <SelectItem key={user.profile?.profileId} value={user.profile?.profileId ?? ""}>
-                                        <span className={`${notoColorEmoji.className} text-lg`}>
+                                        <span className={`${notoColorEmoji.className} text-base md:text-lg`}>
                                             {user.profile?.icon}
                                         </span>
                                         <span
-                                            className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} font-semibold`}
+                                            className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} text-sm font-semibold md:text-base`}
                                         >
                                             {user.profile?.username}
                                         </span>
@@ -72,6 +74,7 @@ export default function TaskElement({
                         type="text"
                         id="text"
                         name="text"
+                        placeholder={taskPlaceholder}
                         value={currenttask.text}
                         onChange={(e) => {
                             setTasks([
@@ -80,19 +83,21 @@ export default function TaskElement({
                             ]);
                             setEdited(true);
                         }}
-                        className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} w-1/2 rounded-md border border-neutral-200 px-1 py-1 disabled:border-neutral-100 disabled:text-neutral-400`}
+                        className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} w-1/2 rounded-md border border-neutral-200 px-1 py-1 text-sm disabled:border-neutral-100 disabled:text-neutral-400 md:text-base`}
                         autoComplete="off"
                     />
                     <Popover>
                         <PopoverTrigger asChild>
                             <button
-                                className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} felx-row group flex w-[20%] flex-row items-center justify-between rounded-md border border-neutral-200 px-1.5 py-1 disabled:border-neutral-100`}
+                                className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} felx-row group flex w-[23%] flex-row items-center justify-between rounded-md border border-neutral-200 px-1.5 py-1.5 disabled:border-neutral-100 md:w-[20%] md:py-1`}
                                 disabled={role === "viewer"}
                             >
-                                <LuCalendarDays className="text-neutral-500 group-disabled:text-neutral-300" />
+                                <LuCalendarDays className="size-3 text-neutral-500 group-disabled:text-neutral-300 md:size-4" />
                                 {currenttask.dueDate ? (
-                                    <span className="group-disabled:text-neutral-400">
-                                        {currenttask.dueDate.toLocaleDateString("ru-RU")}
+                                    <span className="text-xs group-disabled:text-neutral-400 md:text-base">
+                                        <span>{String(currenttask.dueDate.getDate()).padStart(2, "0")}.</span>
+                                        <span>{String(currenttask.dueDate.getMonth() + 1).padStart(2, "0")}</span>
+                                        <span className="hidden md:inline">.{currenttask.dueDate.getFullYear()}</span>
                                     </span>
                                 ) : (
                                     <span className="group-disabled:text-neutral-400">Due date</span>
@@ -114,7 +119,7 @@ export default function TaskElement({
                         </PopoverContent>
                     </Popover>
                     <button
-                        className="group flex w-[5%] flex-row items-center justify-end"
+                        className="group flex w-1/10 flex-row items-center justify-end md:w-[5%]"
                         disabled={role === "viewer" && currenttask.user !== profileId}
                         onClick={() => {
                             setTasks([
@@ -135,7 +140,11 @@ export default function TaskElement({
                 </div>
             </HoverCardTrigger>
             {role !== "viewer" && (
-                <HoverCardContent side="right" className="flex h-8 w-8 flex-col items-center justify-center">
+                <HoverCardContent
+                    side="right"
+                    sideOffset={-5}
+                    className="flex h-8 w-8 flex-col items-center justify-center"
+                >
                     <button
                         className="flex cursor-pointer rounded-lg border border-neutral-300 bg-white p-2 text-neutral-500 hover:bg-red-300 hover:text-red-950 focus-visible:text-neutral-600"
                         type="button"

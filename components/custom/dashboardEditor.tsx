@@ -106,6 +106,7 @@ export default function DashboardEditor({
     const [submitted, setSubmitted] = useState(false);
 
     const t = useTranslations("editDashboard");
+    const tcw = useTranslations("component.widgets");
     const decimalTranslator = createTranslator("0123456789");
 
     const mockRows = Array.from({ length: rowCount }, (_, i) => i + 1);
@@ -562,7 +563,7 @@ export default function DashboardEditor({
                                                 id={`0-0-${decimalTranslator.generate()}`}
                                                 type={WidgetType.ANNOUNCEMENT}
                                                 defaultProps={{
-                                                    title: "Announcement",
+                                                    title: tcw("announcement.defaultTitle"),
                                                     paragraph: "",
                                                     type: "info",
                                                 }}
@@ -576,6 +577,7 @@ export default function DashboardEditor({
                                                 id={`0-0-${decimalTranslator.generate()}`}
                                                 type={WidgetType.LINKS}
                                                 defaultProps={{
+                                                    title: tcw("links.defaultTitle"),
                                                     links: `[{"label": "", "url": ""}]`,
                                                 }}
                                                 onPropsChange={(newProps) =>
@@ -600,7 +602,7 @@ export default function DashboardEditor({
                                                 id={`0-0-${decimalTranslator.generate()}`}
                                                 type={WidgetType.NOTES}
                                                 defaultProps={{
-                                                    title: "Notes",
+                                                    title: tcw("notes.defaultTitle"),
                                                     public: "true",
                                                     notes: `{"public": ""}`,
                                                 }}
@@ -614,7 +616,7 @@ export default function DashboardEditor({
                                                 id={`0-0-${decimalTranslator.generate()}`}
                                                 type={WidgetType.TASKS}
                                                 defaultProps={{
-                                                    title: "Tasks",
+                                                    title: tcw("tasks.defaultTitle"),
                                                     tasks: `[]`,
                                                 }}
                                                 onPropsChange={(newProps) =>

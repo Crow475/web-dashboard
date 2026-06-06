@@ -55,6 +55,7 @@
             "links": {
                 "title": "Ссылки",
                 "titleLabel": "Заголовок",
+                "defaultTitle": "Ссылки",
                 "linkLabelLabel": "Название",
                 "linkUrlLabel": "Url",
                 "linkLabelPlaceholder": "Ссылка",
@@ -71,6 +72,7 @@
                 "title": "Объявление",
                 "type": "Тип",
                 "titleLabel": "Заголовок",
+                "defaultTitle": "Объявление",
                 "paragraphLabel": "Параграф",
                 "titlePlaceholder": "Объявление",
                 "info": "Информация",
@@ -79,6 +81,7 @@
             },
             "notes": {
                 "title": "Заметки",
+                "defaultTitle": "Заметки",
                 "undoChanges": "Отменить изменения",
                 "save": "Сохранить",
                 "characters": "символов",
@@ -91,13 +94,15 @@
             },
             "tasks": {
                 "title": "Задачи",
+                "defaultTitle": "Задачи",
                 "titleLabel": "Заголовок:",
                 "save": "Сохранить",
                 "undoChanges": "Отменить изменения",
                 "deleteLabel": "Удалить задачу",
                 "saveSuccess": "Задачи сохранены",
                 "saveFailure": "Не удалось сохранить задачи",
-                "addTask": "Добавить задачу"
+                "addTask": "Добавить задачу",
+                "taskPlaceholder": "Задача"
             }
         }
     },

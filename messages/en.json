@@ -55,6 +55,7 @@
             "links": {
                 "title": "Links",
                 "titleLabel": "Title",
+                "defaultTitle": "Links",
                 "linkLabelLabel": "Label",
                 "linkUrlLabel": "Url",
                 "linkLabelPlaceholder": "Link",
@@ -71,6 +72,7 @@
                 "title": "Announcement",
                 "type": "Type",
                 "titleLabel": "Title",
+                "defaultTitle": "Объявление",
                 "paragraphLabel": "Paragraph",
                 "titlePlaceholder": "Announcement",
                 "info": "Info",
@@ -79,6 +81,7 @@
             },
             "notes": {
                 "title": "Notes",
+                "defaultTitle": "Notes",
                 "undoChanges": "Undo changes",
                 "save": "Save",
                 "characters": "characters",
@@ -91,13 +94,15 @@
             },
             "tasks": {
                 "title": "Tasks",
+                "defaultTitle": "Tasks",
                 "titleLabel": "Title:",
                 "save": "Save",
                 "undoChanges": "Undo changes",
                 "deleteLabel": "Delete task",
                 "saveSuccess": "Saved tasks",
                 "saveFailure": "Failed to save tasks",
-                "addTask": "Add task"
+                "addTask": "Add task",
+                "taskPlaceholder": "Task"
             }
         }
     },
