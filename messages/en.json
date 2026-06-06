@@ -72,7 +72,7 @@
                 "title": "Announcement",
                 "type": "Type",
                 "titleLabel": "Title",
-                "defaultTitle": "Объявление",
+                "defaultTitle": "Announcement",
                 "paragraphLabel": "Paragraph",
                 "titlePlaceholder": "Announcement",
                 "info": "Info",
