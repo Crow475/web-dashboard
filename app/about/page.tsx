@@ -38,26 +38,26 @@ export default function About() {
                         src="/about/paragraph1.svg"
                         role="presentation"
                         alt="Paragraph 1 Image"
-                        className="w-full md:w-1/4"
+                        className="w-1/2 md:w-1/4"
                         unoptimized
                         width={50}
                         height={50}
                     />
                     <div className="flex w-full flex-col items-start justify-start space-y-4 md:w-1/3">
                         <h2 className="text-2xl font-bold">{t("heading1")}</h2>
-                        <p className="text-lg">{t("paragraph1")}</p>
+                        <p className="text-base md:text-lg">{t("paragraph1")}</p>
                     </div>
                 </section>
                 <section className="flex w-full flex-col-reverse items-center justify-around space-y-8 py-14 md:flex-row md:space-y-0 md:py-20">
                     <div className="flex w-full flex-col items-start justify-start space-y-4 md:w-1/3">
                         <h2 className="text-2xl font-bold">{t("heading2")}</h2>
-                        <p className="text-lg">{t("paragraph2")}</p>
+                        <p className="text-base md:text-lg">{t("paragraph2")}</p>
                     </div>
                     <Image
                         src="/about/paragraph2.svg"
                         role="presentation"
                         alt="Paragraph 2 Image"
-                        className="w-full md:w-1/4"
+                        className="w-1/2 md:w-1/4"
                         unoptimized
                         width={50}
                         height={50}
@@ -68,18 +68,18 @@ export default function About() {
                         src="/about/paragraph3.svg"
                         role="presentation"
                         alt="Paragraph 3 Image"
-                        className="w-full md:w-1/4"
+                        className="w-1/2 md:w-1/4"
                         unoptimized
                         width={50}
                         height={50}
                     />
                     <div className="flex w-full flex-col items-start justify-start space-y-4 md:w-1/3">
                         <h2 className="text-2xl font-bold">{t("heading3")}</h2>
-                        <p className="text-xl">{t("paragraph3")}</p>
+                        <p className="text-base md:text-lg">{t("paragraph3")}</p>
                     </div>
                 </section>
             </div>
-            <footer className="mt-10 mb-30 flex w-[70%] flex-row items-center justify-between rounded-lg border border-neutral-200 bg-white px-20 py-10 shadow">
+            <footer className="mt-10 mb-30 flex w-[90%] flex-col items-center justify-between space-y-8 rounded-lg border border-neutral-200 bg-white px-10 py-10 shadow md:w-[70%] md:flex-row md:space-y-0 md:px-20">
                 <Image
                     src="brds_small.svg"
                     alt="Footer Image"
@@ -89,7 +89,7 @@ export default function About() {
                     height={50}
                 />
                 <span className="text-sm text-neutral-500">© 2026 BOARDS. {t("ARR")}</span>
-                <div className="flex flex-col items-start justify-center space-y-2 font-bold">
+                <div className="flex flex-row items-start justify-center space-y-0 space-x-4 font-bold md:flex-col md:space-y-2 md:space-x-0">
                     <Link href="/" className="text-sm text-blue-500 hover:underline">
                         {t("home")}
                     </Link>
