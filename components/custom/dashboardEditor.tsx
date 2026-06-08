@@ -32,6 +32,7 @@ import AddUserDialog from "@/components/custom/addUserDialog";
 import UserCard from "@/components/custom/userCard";
 import OwnerCard from "@/components/custom/ownerCard";
 import PrivateCheckbox from "@/components/custom/privateCheckbox";
+import DeleteDashboardButton from "@/components/custom/deleteDashboardButton";
 
 import Widget from "@/components/custom/widget";
 
@@ -664,6 +665,16 @@ export default function DashboardEditor({
                                                     setUsersChanged={setUsersChanged}
                                                 />
                                             )}
+                                            {role === "owner" && (
+                                                <DeleteDashboardButton
+                                                    label={t("deleteDashboardLabel")}
+                                                    buttonText={t("deleteDashboardButton")}
+                                                    description={t("deleteDashboardDescription")}
+                                                    dashboardId={dashboard.dashboardId}
+                                                    dashboardTitle={dashboard.title}
+                                                    dashboardIcon={dashboard.icon ?? "🚫"}
+                                                />
+                                            )}
                                         </div>
                                     </TabsContent>
                                     <TabsContent value="users">
@@ -831,6 +842,16 @@ export default function DashboardEditor({
                                         label={t("private")}
                                         description={t("privateDescription")}
                                         setUsersChanged={setUsersChanged}
+                                    />
+                                )}
+                                {role === "owner" && (
+                                    <DeleteDashboardButton
+                                        label={t("deleteDashboardLabel")}
+                                        buttonText={t("deleteDashboardButton")}
+                                        description={t("deleteDashboardDescription")}
+                                        dashboardId={dashboard.dashboardId}
+                                        dashboardTitle={dashboard.title}
+                                        dashboardIcon={dashboard.icon ?? "🚫"}
                                     />
                                 )}
                             </div>
