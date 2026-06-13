@@ -218,11 +218,12 @@ function TasksRegular() {
             const result = await getUsersOfDashboard(uuidToShort(dashboardId));
             const owner = await getOwnerOfDashboard(dashboardId);
 
-            if (!result) {
+            if (!owner) {
                 return;
             }
 
-            if (!owner) {
+            if (!result) {
+                setUsers([owner]);
                 return;
             }
 

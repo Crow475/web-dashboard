@@ -89,12 +89,12 @@ export default function TaskElement({
                     <Popover>
                         <PopoverTrigger asChild>
                             <button
-                                className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} felx-row group flex w-[23%] flex-row items-center justify-between rounded-md border border-neutral-200 px-1.5 py-1.5 disabled:border-neutral-100 md:w-[20%] md:py-1`}
+                                className={`${currenttask.completed ? "text-neutral-500 line-through decoration-2" : ""} felx-row group flex w-[23%] flex-row items-center justify-between rounded-md border border-neutral-200 px-1.5 py-1.5 disabled:border-neutral-100 md:w-[20%]`}
                                 disabled={role === "viewer"}
                             >
                                 <LuCalendarDays className="size-3 text-neutral-500 group-disabled:text-neutral-300 md:size-4" />
                                 {currenttask.dueDate ? (
-                                    <span className="text-xs group-disabled:text-neutral-400 md:text-base">
+                                    <span className="text-xs group-disabled:text-neutral-400 md:text-sm">
                                         <span>{String(currenttask.dueDate.getDate()).padStart(2, "0")}.</span>
                                         <span>{String(currenttask.dueDate.getMonth() + 1).padStart(2, "0")}</span>
                                         <span className="hidden md:inline">.{currenttask.dueDate.getFullYear()}</span>
